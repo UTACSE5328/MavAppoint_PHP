@@ -23,6 +23,14 @@ class DatabaseManager{
         return $this->impl->createAppointment($apt, $email);
     }
 
+    function addTimeSlot(AllocateTime $time, $id){
+        return $this->impl->addTimeSlot($time, $id);
+    }
+
+    function deleteTimeSlot(AllocateTime $time, $id){
+        return $this->impl->deleteTimeSlot($time, $id);
+    }
+
     function cancelAppointment($id){
         return $this->impl->cancelAppointment($id);
     }

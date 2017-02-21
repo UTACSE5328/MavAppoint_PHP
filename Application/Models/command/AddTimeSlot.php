@@ -5,27 +5,42 @@
  * Date: 2017/2/14
  * Time: 14:59
  */
+include_once dirname(dirname(__FILE__))."/helper/TimeSlotHelper.php";
+include_once dirname(dirname(__FILE__))."/bean/AllocateTime.php";
+
 class AddTimeSlot extends SQLCmd {
-    private $time,$id;
+    private $time,$id,$helper,$timeSlot;
 
     function __construct(AllocateTime $time, $id) {
         $this->time = $time;
         $this->id = $id;
+        $this->helper = new TimeSlotHelper();
+        $this->timeSlot = $this->helper->count($time->getStartTime(),$time->getEndTime());
     }
 
     function queryDB(){
-        $cmd = new GetUserIdByEmail($this->time->getEmail());
-        $userid = $cmd->execute();
-        $date = $this->time->getData();
+        $date = $this->time->getDate();
         $start = $this->time->getStartTime();
         $end = $this->time->getEndTime();
 
-        $query = "SELECT COUNT(*) FROM  ADVISING_SCHEDULE WHERE date='$date' AND start >='$start' AND end <='$end' AND userid='$userid'";
-        $res = ($this->conn->query($query)->fetch_assoc())['count(*)'];
+        $query = "SELECT COUNT(*) FROM  ADVISING_SCHEDULE 
+                  WHERE date='$date' 
+                  AND start >='$start' 
+                  AND end <='$end' 
+                  AND userid='$this->id'";
+        $res = ($this->conn->query($query)->fetch_assoc());
 
-        if($res == 0) {
-            $query = "INSERT INTO ADVISING_SCHEDULE (date,start,end,studentid,userid) VALUES(?,?,?,null,?)";
-            $this->result = $this->conn->query($query)->fetch_assoc();
+        if($res['COUNT(*)'] == "0") {
+            $date = $this->time->getDate();
+
+            for($i = 0; $i < count($this->timeSlot); $i++) {
+                $start = $this->timeSlot[$i]['start'];
+                $end = $this->timeSlot[$i]['end'];
+
+                $query = "INSERT INTO ADVISING_SCHEDULE (date,start,end,studentid,userid) 
+                      VALUES('$date','$start','$end',null,'$this->id')";
+                $this->result = $this->conn->query($query);
+            }
         }
     }
 

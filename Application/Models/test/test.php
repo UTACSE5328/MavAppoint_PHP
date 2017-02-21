@@ -201,3 +201,22 @@ echo "getMajorsOfDepartment</br>";
 $res = $manager->getMajorsOfDepartment("CSE");
 echo json_encode($res).'</br>';
 echo "==============================</br>";
+
+echo "addTimeSlot</br>";
+include_once dirname(dirname(__FILE__))."/bean/AllocateTime.php";
+$time = new AllocateTime();
+$time->setDate("2016-02-22");
+$time->setStartTime("10:55");
+$time->setEndTime("11:15");
+$res = $manager->addTimeSlot($time, '99');
+echo json_encode($res).'</br>';
+echo "==============================</br>";
+
+echo "deleteTimeSlot</br>";
+$time = new AllocateTime();
+$time->setDate("2016-02-22");
+$time->setStartTime("10:55");
+$time->setEndTime("11:15");
+$res = $manager->deleteTimeSlot($time, '99');
+echo json_encode($res).'</br>';
+echo "==============================</br>";

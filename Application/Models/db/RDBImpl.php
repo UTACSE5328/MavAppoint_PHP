@@ -45,11 +45,6 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
-    function getAppointmentsUnderAdvisor($advisor)
-    {
-        // TODO: Implement getAppointmentsUnderAdvisor() method.
-    }
-
     function addAppointmentType(AdvisorUser $user, AppointmentType $type)
     {
         include_once dirname(dirname(__FILE__))."/command/AddAppointmentType.php";
@@ -140,11 +135,6 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
-    function getAdvisorSchedule($name)
-    {
-        // TODO: Implement getAdvisorSchedule() method.
-    }
-
     function getAdvisorSchedules(array $advisorUsers)
     {
         include_once dirname(dirname(__FILE__)) . "/command/GetAdvisorSchedules.php";
@@ -204,22 +194,24 @@ class RDBImpl implements DBImplInterface{
 
     function createWaitlist(WaitList $list)
     {
-        // TODO: Implement createWaitlist() method.
     }
 
-    function addTimeSlot(AllocateTime $at)
+    function addTimeSlot(AllocateTime $at,$id)
     {
-        // TODO: Implement addTimeSlot() method.
+        include_once dirname(dirname(__FILE__)) . "/command/AddTimeSlot.php";
+        $cmd = new AddTimeSlot($at,$id);
+        return $cmd->execute();
     }
 
-    function deleteTimeSlot(AllocateTime $at)
+    function deleteTimeSlot(AllocateTime $at, $id)
     {
-        // TODO: Implement deleteTimeSlot() method.
+        include_once dirname(dirname(__FILE__)) . "/command/DeleteTimeSlot.php";
+        $cmd = new DeleteTimeSlot($at,$id);
+        return $cmd->execute();
     }
 
     function updateCutOffTime(AdvisorUser $user, $time)
     {
-        // TODO: Implement updateCutOffTime() method.
     }
 
     function getDepartment($id)

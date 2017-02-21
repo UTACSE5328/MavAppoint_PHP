@@ -13,7 +13,6 @@ interface DBImplInterface
     function cancelAppointment($id);
     function getAppointment($d,$e);
     function getAppointments($user);
-    function getAppointmentsUnderAdvisor($advisor);
 
     function addAppointmentType(AdvisorUser $user, AppointmentType $type);
     function getAppointmentTypes($pName);
@@ -29,7 +28,6 @@ interface DBImplInterface
     function getAdvisor($email);
     function getAdvisors();
     function getAdvisorsOfDepartment($department);
-    function getAdvisorSchedule($name);
     function getAdvisorSchedules(array $advisorUsers);
     function getAdvisorWaitlistSchedules(array $advisorUsers);
     function deleteAdvisor($id);
@@ -44,8 +42,8 @@ interface DBImplInterface
 
     function createWaitlist(WaitList $list);
 
-    function addTimeSlot(AllocateTime $at);
-    function deleteTimeSlot(AllocateTime $at);
+    function addTimeSlot(AllocateTime $at, $id);
+    function deleteTimeSlot(AllocateTime $at, $id);
 
     function updateCutOffTime(AdvisorUser $user, $time);
 

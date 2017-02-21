@@ -8,8 +8,7 @@
 include_once dirname(dirname(__FILE__))."/login/AdvisorUser.php";
 
 class GetAdvisorSchedules extends SQLCmd{
-    private $advisors;
-    private $available;
+    private $advisors,$available;
 
     function __construct(array $advisors, $available) {
         $this->advisors = $advisors;
@@ -21,23 +20,24 @@ class GetAdvisorSchedules extends SQLCmd{
         $arr = array();
         for($i=0;$i<$num;++$i) {
             $advisor = $this->advisors[$i];
-            if ($this->available) {
-                $query = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor 
-                        WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid 
-                        AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$advisor' AND studentId is null";
-                $res = $this->conn->query($query)->fetch_assoc();
-                if($res != null)
-                array_push($arr, $res);
-            } else {
-                $query = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor 
-                            WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid 
-                            AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$advisor' AND studentId is not null";
-                $res = $this->conn->query($query)->fetch_assoc();
-                if($res != null)
-                    array_push($arr, $res);
+
+            if($this->available)
+                $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor 
+                            WHERE User_Advisor.userid=Advising_Schedule.userid 
+                            AND User_Advisor.pname='$advisor' 
+                            AND Advising_Schedule.studentId is null";
+            else
+                $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor 
+                            WHERE User_Advisor.userid=Advising_Schedule.userid 
+                            AND User_Advisor.pname='$advisor' 
+                            AND Advising_Schedule.studentId is not null";
+
+            $res = $this->conn->query($query);
+
+            while($rs = mysqli_fetch_assoc($res)){
+                array_push($arr, $rs);
             }
         }
-
         $this->result = $arr;
     }
 

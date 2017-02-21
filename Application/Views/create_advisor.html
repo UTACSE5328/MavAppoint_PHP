@@ -131,25 +131,31 @@
     </div>
 </div>
 
-<script> function FormSubmit(){
-    var email = document.getElementById("emailAddress").value;
-    var pname = document.getElementById("pname").value;
-    var drp_department = document.getElementById("drp_department").value;
-    var params = ('emailAddress='+email+'&pname='+pname+'&drp_department='+drp_department);
-    var xmlhttp;
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange=function(){
-        if (xmlhttp.readyState==4){
-            document.getElementById("result").innerHTML = xmlhttp.responseText;
-        }
+<script>
+
+    function getApartments(){
+
     }
-    xmlhttp.open("POST","?c=admin&a=createNewAdvisor",true);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.setRequestHeader("Content-length",params.length);
-    xmlhttp.setRequestHeader("Connection","close");
-    xmlhttp.send(params);
-    document.getElementById("result").innerHTML = "Attempting to create new Advisor...";
-}
+
+    function FormSubmit(){
+        var email = document.getElementById("emailAddress").value;
+        var pname = document.getElementById("pname").value;
+        var drp_department = document.getElementById("drp_department").value;
+        var params = ('emailAddress='+email+'&pname='+pname+'&drp_department='+drp_department);
+        var xmlhttp;
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4){
+                document.getElementById("result").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("POST","?c=admin&a=createNewAdvisor",true);
+        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.setRequestHeader("Content-length",params.length);
+        xmlhttp.setRequestHeader("Connection","close");
+        xmlhttp.send(params);
+        document.getElementById("result").innerHTML = "Attempting to create new Advisor...";
+    }
 </script>
 <script type="text/javascript" src="./Application/Views/js/allInPage.js"></script>
 <footer>

@@ -36,7 +36,7 @@ class advisorModel
         for($i=0 ; $i<sizeof($res); $i++){
             if($res[$i]['date']<$nowtime){
                 $displayArr=[
-                    'title'=> $res[$i]['pname'],
+                    'title'=> $res[$i]['pName'],
                     'start'=> $res[$i]['date'].'T'.$res[$i]['start'],
                     'end'=> $res[$i]['date'].'T'.$res[$i]['end'],
                     'id' =>$i,

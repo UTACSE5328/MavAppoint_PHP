@@ -123,13 +123,13 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "getAdvisorSchedules</br>";
-$arr = array('Lin Gao', 'Zhenyu Chen');
+$arr = array('Lin Gao');
 $res = $manager->getAdvisorSchedules($arr);
 echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "getAdvisorWaitlistSchedules</br>";
-$arr = array('Lin Gao', 'Zhenyu Chen');
+$arr = array('Lin Gao');
 $res = $manager->getAdvisorWaitlistSchedules($arr);
 echo json_encode($res).'</br>';
 echo "==============================</br>";

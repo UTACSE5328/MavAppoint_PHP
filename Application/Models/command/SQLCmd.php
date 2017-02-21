@@ -29,7 +29,6 @@ abstract class SQLCmd {
 			"CSE5328Spring16",
 			"er1ja@18xs@3",
 			"mavappointdb2s");
-		//mysqli_select_db($this->conn, "mavappointdb2s");
 	}
 
 	abstract function queryDB();

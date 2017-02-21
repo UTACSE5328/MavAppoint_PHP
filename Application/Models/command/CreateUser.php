@@ -24,7 +24,6 @@ class CreateUser extends SQLCmd {
 		$res   = $this->conn->query($query);
 
 		if ($res == true) {
-			$this->result = true;
 			$cmd          = new GetUserIdByEmail($email);
 			$id           = ($cmd->execute());
 
@@ -43,9 +42,8 @@ class CreateUser extends SQLCmd {
 				$query = "INSERT INTO department_user (name, userId) VALUES ('$dep','$id')";
 				$this->conn->query($query);
 			}
-		} else {
 
-			$this->result = false;
+            $this->result = $id;
 		}
 	}
 

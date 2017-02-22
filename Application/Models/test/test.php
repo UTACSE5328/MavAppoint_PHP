@@ -123,7 +123,7 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "getAdvisorSchedules</br>";
-$arr = array('Lin Gao');
+$arr = array('test4');
 $res = $manager->getAdvisorSchedules($arr);
 echo json_encode($res).'</br>';
 echo "==============================</br>";

@@ -26,7 +26,7 @@ class adminController
         $loginUser = new LoginUser();
         $loginUser->setEmail($email);
         $loginUser->setPassword("12345678");
-        $loginUser->setRole("Advisor");
+        $loginUser->setRole("advisor");
         $loginUser->setDepartments(($department));
 
         $id = $manager->createUser($loginUser);
@@ -39,9 +39,16 @@ class adminController
         $Advisor->setNameHigh("Z");
         $Advisor->setDegType("7");
 
-        echo $manager->createAdvisor($Advisor);
+        $res=$manager->createAdvisor($Advisor);
+        if($res)
+        {
+            echo "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password";
+        }
+        else{
+            echo "Failed";
+        }
 
-        echo "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password";
+
 
 
 //        echo "department:".$department."<br>";

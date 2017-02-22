@@ -7,6 +7,7 @@
  */
 include_once dirname(dirname(__FILE__))."/helper/TimeSlotHelper.php";
 include_once dirname(dirname(__FILE__))."/bean/AllocateTime.php";
+include_once "SQLCmd.php";
 
 class AddTimeSlot extends SQLCmd {
     private $time,$id,$helper,$timeSlot;
@@ -41,7 +42,8 @@ class AddTimeSlot extends SQLCmd {
                       VALUES('$date','$start','$end',null,'$this->id')";
                 $this->result = $this->conn->query($query);
             }
-        }
+        }else
+            $this->result = false;
     }
 
     function processResult(){

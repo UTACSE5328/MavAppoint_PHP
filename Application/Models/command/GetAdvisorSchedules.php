@@ -24,8 +24,7 @@ class GetAdvisorSchedules extends SQLCmd{
             if($this->available)
                 $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor 
                             WHERE User_Advisor.userid=Advising_Schedule.userid 
-                            AND User_Advisor.pname='$advisor' 
-                            AND Advising_Schedule.studentId is null";
+                            AND User_Advisor.pname='$advisor' ";
             else
                 $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor 
                             WHERE User_Advisor.userid=Advising_Schedule.userid 

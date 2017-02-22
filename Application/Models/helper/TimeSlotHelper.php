@@ -30,7 +30,7 @@ class TimeSlotHelper {
 		}else
             for ($i = $start_h; $i <= $end_h; $i++){
                 if($i == $start_h){
-                    for ($j = $start_m; $j < 60; $j=$j+5){
+                    for ($j = $start_m; $j < 55; $j=$j+5){
                         $timeArr = array(
                             "start"=> ($start_h.":".$j),
                             "end"=>($start_h.":".($j+5))
@@ -38,9 +38,16 @@ class TimeSlotHelper {
 
                         array_push($arr,$timeArr);
                     }
+
+                    $timeArr = array(
+                        "start"=> ($start_h.":55"),
+                        "end"=>(($start_h+1).":00")
+                    );
+
+                    array_push($arr,$timeArr);
                 }
                 elseif ($i != $end_h && count($arr) != 0){
-                    for ($j = 0; $j < 60; $j = $j + 5){
+                    for ($j = 0; $j < 55; $j = $j + 5){
                         $timeArr = array(
                             "start"=> ($i.":".$j),
                             "end"=>($i.":".($j+5))
@@ -48,6 +55,13 @@ class TimeSlotHelper {
 
                         array_push($arr,$timeArr);
                     }
+
+                    $timeArr = array(
+                        "start"=> ($i.":55"),
+                        "end"=>(($i+1).":00")
+                    );
+
+                    array_push($arr,$timeArr);
                 }
                 elseif ($i == $end_h){
                     for($j=0;$j<$end_m;$j=$j+5){

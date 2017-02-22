@@ -31,6 +31,10 @@ class LoginController extends BasicController{
         $set->setEmail("$email");
         $set->setPassword("$password");
         $res = $manager->checkUser($set);
+
+
+
+
         if(!$res){
             die("login failed");
         }else{
@@ -39,6 +43,7 @@ class LoginController extends BasicController{
             session_start();
             $_SESSION['email'] = $email;
             $_SESSION['role'] = $res['role'];
+            $_SESSION['uid'] = $manager->getUserIdByEmail($email);
             if($res['role']=='admin'){
                 include VIEW_PATH."admin_home_page.html";
 //                header('Location:'.ROOT_URL.'/view/admin_page.php');
@@ -60,6 +65,13 @@ class LoginController extends BasicController{
         }
 
     }
+
+    function LogoutAction(){
+        session_start();
+        session_destroy();
+        $this->DefaultAction();
+    }
+
 
 
 }

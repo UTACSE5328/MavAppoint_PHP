@@ -50,7 +50,7 @@ class advisorController extends BasicController
 //        }
 
 
-        include VIEW_PATH."advisor_update_schedule.html";
+        include VIEW_PATH."advisor_update_schedule.php";
     }
 
     function AddTimeSlotAction(){

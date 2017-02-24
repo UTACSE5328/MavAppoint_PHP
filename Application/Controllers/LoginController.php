@@ -1,19 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gaolin
- * Date: 2/16/17
- * Time: 5:44 PM
- */
+namespace App\Controllers;
+
+use Models\Db\DatabaseManager;
+use Models\Bean\GetSet;
 
 //session_start();
 //$_SESSION['name'] = $name;
 //session_destroy();
 require "BasicController.php";
 //require MODEL_PATH."db/DatabaseManager.php";
-class LoginController extends BasicController{
+class LoginController{
     function DefaultAction(){
-        include VIEW_PATH.'loginPage.html';
+        include VIEW_PATH.'loginPage.php';
 
     }
 
@@ -45,13 +43,13 @@ class LoginController extends BasicController{
             $_SESSION['role'] = $res['role'];
             $_SESSION['uid'] = $manager->getUserIdByEmail($email);
             if($res['role']=='admin'){
-                include VIEW_PATH."admin_home_page.html";
+                include VIEW_PATH."admin_home_page.php";
 //                header('Location:'.ROOT_URL.'/view/admin_page.php');
 
             }
             elseif($res['role']=='advisor'){
                 //echo "advisor's page has not set";
-                include VIEW_PATH."advisor_home_page.html";
+                include VIEW_PATH."advisor_home_page.php";
 
             } elseif($res['role']=='student'){
                 $this->GotoUrl("student's page has not implemented!",'?c=Login&a=Default',3);

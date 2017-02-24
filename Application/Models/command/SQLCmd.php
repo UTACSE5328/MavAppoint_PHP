@@ -25,10 +25,10 @@ abstract class SQLCmd {
 
 	function connectDB() {
 		$this->conn = new mysqli(
-			"localhost",
-			"CSE5328Spring16",
-			"er1ja@18xs@3",
-			"mavappointdb2s");
+			env("DB_HOST"),
+			env("DB_USERNAME"),
+			env("DB_PASSWORD"),
+			env("DB_DATABASE"));
 	}
 
 	abstract function queryDB();

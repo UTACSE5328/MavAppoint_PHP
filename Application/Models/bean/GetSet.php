@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jarvis
- * Date: 2017/2/13
- * Time: 2:19
- */
+namespace Models\Bean;
 
 class GetSet{
     private $password;

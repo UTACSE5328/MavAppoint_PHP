@@ -1,10 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jarvis
- * Date: 2017/2/13
- * Time: 3:25
- */
+namespace Models\Db;
+
+use Models\Db\RDBImpl;
+use Models\Bean\GetSet;
 
 include_once dirname(__FILE__)."/RDBImpl.php";
 

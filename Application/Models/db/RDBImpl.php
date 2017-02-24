@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jarvis
- * Date: 2017/2/13
- * Time: 3:24
- */
+namespace Models\Db;
 
 include_once dirname(__FILE__)."/DBImplInterface.php";
 

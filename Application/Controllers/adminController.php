@@ -12,7 +12,7 @@ include_once dirname(dirname(__FILE__))."/Models/login/AdvisorUser.php";
 class adminController
 {
     function loadHtmlAction(){
-        include VIEW_PATH."create_advisor.html";
+        include VIEW_PATH."create_advisor.php";
 
     }
 

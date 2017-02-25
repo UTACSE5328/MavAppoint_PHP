@@ -1,4 +1,32 @@
 <?php
+use App\Application;
+
+if (! function_exists('config')) {
+    /**
+     * Gets the values in config file
+     *
+     * @param string $key
+     * @param null $default
+     * @return mixed
+     */
+    function config($key, $default = null)
+    {
+        if(isset(Application::$container["config"])) {
+            $config = Application::$container["config"];
+            $keys = explode(".", $key);
+            foreach ($keys as $key) {
+                if(!isset($config[$key])) {
+                    return $default;
+                }
+                $config = $config[$key];
+            }
+            return $config;
+        }
+
+        return $default;
+    }
+}
+
 if (! function_exists('env')) {
     /**
      * Gets the value of an environment variable. Supports boolean, empty and null.

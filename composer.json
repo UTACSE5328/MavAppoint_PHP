@@ -1,18 +1,19 @@
 {
   "name": "MavAppoint",
   "description": "Project for advising appointment.",
-  "keywords": ["mavAppoint"],
+  "keywords": [
+    "mavAppoint"
+  ],
   "type": "project",
-
   "autoload": {
     "psr-4": {
-      "App\\": "Application/",
-      "Models\\": "Application/Models/"
-    }
+      "App\\": "app/",
+      "Models\\": "app/Models/"
+    },
+    "files": [
+      "misc/helpers.php"
+    ]
   },
-  "files": [
-    "Application/misc/helpers.php"
-  ],
   "require": {
     "vlucas/phpdotenv": "^2.4"
   }

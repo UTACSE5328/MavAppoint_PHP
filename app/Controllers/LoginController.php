@@ -7,15 +7,19 @@ use Models\Bean\GetSet;
 //session_start();
 //$_SESSION['name'] = $name;
 //session_destroy();
-require "BasicController.php";
+//require "BasicController.php";
 //require MODEL_PATH."db/DatabaseManager.php";
 class LoginController{
-    function DefaultAction(){
-        include VIEW_PATH.'loginPage.php';
+    public function defaultAction(){
+        var_dump([
+            "config" => config("testKey1.testKey2"),
+            "env" => env("DB_DATABASE")
+        ]);
+//        include VIEW_PATH.'loginPage.php';
 
     }
 
-    function CheckAction(){
+    public function checkAction(){
 
 
         $email = $_POST['email'];
@@ -64,7 +68,7 @@ class LoginController{
 
     }
 
-    function LogoutAction(){
+    public function logoutAction(){
         session_start();
         session_destroy();
         $this->DefaultAction();

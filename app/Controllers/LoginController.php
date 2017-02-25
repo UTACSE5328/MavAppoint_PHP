@@ -11,10 +11,10 @@ use Models\Bean\GetSet;
 //require MODEL_PATH."db/DatabaseManager.php";
 class LoginController{
     public function defaultAction(){
-        var_dump([
+        return [
             "config" => config("testKey1.testKey2"),
             "env" => env("DB_DATABASE")
-        ]);
+        ];
 //        include VIEW_PATH.'loginPage.php';
 
     }

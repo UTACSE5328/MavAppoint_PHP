@@ -22,23 +22,23 @@
     <script src=â€http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.jsâ€></script>
     <![endif]â€“>
     <link rel="stylesheet"
-          href="./Application/Views/components/bootstrap3/css/bootstrap.css">
+          href="./app/Views/components/bootstrap3/css/bootstrap.css">
     <link rel="stylesheet" href="components/bootstrap3/css/bootstrap-datetimepicker.min.css">
-    <link href="./Application/Views/components/mavappoint.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="./Application/Views/css/fullcalendar.css">
-    <link rel="icon" href="./Application/Views/img/mavlogo.gif" type="image/x-icon">
+    <link href="./app/Views/components/mavappoint.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./app/Views/css/fullcalendar.css">
+    <link rel="icon" href="./app/Views/img/mavlogo.gif" type="image/x-icon">
 
-    <script type="text/javascript" src="./Application/Views/components/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="./app/Views/components/jquery/jquery.min.js"></script>
     <script type="text/javascript"
-            src="./Application/Views/components/underscore/underscore-min.js"></script>
+            src="./app/Views/components/underscore/underscore-min.js"></script>
     <script type="text/javascript"
-            src="./Application/Views/components/bootstrap3/js/bootstrap.min.js"></script>
+            src="./app/Views/components/bootstrap3/js/bootstrap.min.js"></script>
     <script type="text/javascript"
-            src="./Application/Views/components/jstimezonedetect/jstz.min.js"></script>
-    <script type="text/javascript" src="./Application/Views/js/lib/moment.min.js"></script>
-    <script type="text/javascript" src="./Application/Views/js/fullcalendar.js"></script>
+            src="./app/Views/components/jstimezonedetect/jstz.min.js"></script>
+    <script type="text/javascript" src="./app/Views/js/lib/moment.min.js"></script>
+    <script type="text/javascript" src="./app/Views/js/fullcalendar.js"></script>
     <script type="text/javascript"
-            src="./Application/Views/components/bootstrap3/js/bootstrap-datetimepicker.min.js"></script>
+            src="./app/Views/components/bootstrap3/js/bootstrap-datetimepicker.min.js"></script>
 </head>
 
 <body onload="" >
@@ -54,7 +54,7 @@
             <ul class="nav navbar-nav">
 
                 <li><a href="changePassword"><font style="color: #e67e22" size="3">Change Password</font></a></li>
-                <li><a href="?c=admin&a=loadHtml"><font style="color: #e67e22" size="3">Add New Advisor </font></a></li>
+                <li><a href="?c=admin&a=showCreateAdvisorForm"><font style="color: #e67e22" size="3">Add New Advisor </font></a></li>
                 <li><a href="delete_advisor"><font style="color: #e67e22" size="3">Delete Advisor </font></a></li>
                 <li><a href="appointments"><font style="color: #e67e22" size="3">Show Department Schedule</font></a></li>
                 <li><a href="assign_students"><font style="color: #e67e22" size="3">Assign Students To Advisors</font></a></li>
@@ -63,7 +63,7 @@
 
                 <li><a href="#"><font style="color: #e67e22" size="3">You are
                     logged in as an Admin.</font></a></li>
-                <li><a href="?c=Login&a=Logout"><span class="glyphicon glyphicon-log-in"><font style="color: #e67e22" size="3">Logout</font></a></li>
+                <li><a href="?c=login&a=logout"><span class="glyphicon glyphicon-log-in"><font style="color: #e67e22" size="3">Logout</font></a></li>
             </ul>
         </div>
     </div>
@@ -157,7 +157,7 @@
         document.getElementById("result").innerHTML = "Attempting to create new Advisor...";
     }
 </script>
-<script type="text/javascript" src="./Application/Views/js/allInPage.js"></script>
+<script type="text/javascript" src="./app/Views/js/allInPage.js"></script>
 <footer>
 </footer>
 </body>

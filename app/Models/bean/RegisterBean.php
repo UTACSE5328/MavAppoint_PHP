@@ -5,6 +5,7 @@
  * Date: 2017/2/13
  * Time: 2:22
  */
+namespace Models\Bean;
 
 class RegisterBean{
     private $email;

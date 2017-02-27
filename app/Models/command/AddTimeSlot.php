@@ -1,13 +1,14 @@
 <?php
+namespace Models\Command;
 /**
  * Created by PhpStorm.
  * User: Jarvis
  * Date: 2017/2/14
  * Time: 14:59
  */
-include_once dirname(dirname(__FILE__))."/helper/TimeSlotHelper.php";
-include_once dirname(dirname(__FILE__))."/bean/AllocateTime.php";
-include_once "SQLCmd.php";
+//include_once dirname(dirname(__FILE__))."/helper/TimeSlotHelper.php";
+//include_once dirname(dirname(__FILE__))."/bean/AllocateTime.php";
+//include_once "SQLCmd.php";
 
 class AddTimeSlot extends SQLCmd {
     private $time,$id,$helper,$timeSlot;

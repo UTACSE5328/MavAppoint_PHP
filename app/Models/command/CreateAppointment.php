@@ -5,9 +5,10 @@
  * Date: 2017/2/14
  * Time: 9:29
  */
-
+namespace Models\Command;
 class CreateAppointment extends SQLCmd {
 	private $apt, $email;
+
 
 	function __construct(Appointment $apt, $email) {
 		$this->apt   = $apt;

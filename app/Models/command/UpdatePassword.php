@@ -1,4 +1,5 @@
 <?php
+namespace Models\Command;
 /**
  * Created by PhpStorm.
  * User: Jarvis

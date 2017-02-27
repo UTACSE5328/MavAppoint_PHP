@@ -5,7 +5,8 @@
  * Date: 2017/2/14
  * Time: 6:53
  */
-include_once dirname(dirname(__FILE__))."/login/StudentUser.php";
+namespace Models\Command;
+//include_once dirname(dirname(__FILE__))."/login/StudentUser.php";
 class CreateStudent extends SQLCmd{
     private $user;
 

@@ -11,7 +11,7 @@ $content = json_decode($content, true);
 <body>
 
 
-<form action="?c=Login&a=Check" method="POST">
+<form action="?c=login&a=check" method="POST">
     Email:<input type="text" name="email"/><br>
     Password:<input type="password" name="password"><br>
     <input type="submit" value="submit">

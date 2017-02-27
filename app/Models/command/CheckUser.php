@@ -5,9 +5,10 @@
  * Date: 2017/2/14
  * Time: 6:44
  */
-
-include_once dirname(dirname(__FILE__))."/command/SQLCmd.php";
-include_once dirname(dirname(__FILE__))."/bean/GetSet.php";
+namespace Models\Command;
+use Models\Bean\GetSet;
+//include_once dirname(dirname(__FILE__))."/command/SQLCmd.php";
+//include_once dirname(dirname(__FILE__))."/bean/GetSet.php";
 
 class CheckUser extends SQLCmd{
     private $set;

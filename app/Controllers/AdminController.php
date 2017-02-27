@@ -1,29 +1,30 @@
 <?php
-
+namespace App\Controllers;
 /**
  * Created by PhpStorm.
  * User: gaolin
  * Date: 2/20/17
  * Time: 12:58 AM
  */
-include_once dirname(dirname(__FILE__))."/Models/login/LoginUser.php";
-include_once dirname(dirname(__FILE__))."/Models/login/AdvisorUser.php";
-
+//include_once dirname(dirname(__FILE__))."/Models/login/LoginUser.php";
+//include_once dirname(dirname(__FILE__))."/Models/login/AdvisorUser.php";
+use Models\Db as db;
+use Models\Login as login;
 class adminController
 {
-    function loadHtmlAction(){
-        include VIEW_PATH."create_advisor.php";
+    function showCreateAdvisorFormAction(){
+//        include VIEW_PATH."create_advisor.php";
 
     }
 
     function createNewAdvisorAction(){
-        $manager = new DatabaseManager();
+        $manager = new db\DatabaseManager();
 
         $department = $_POST['drp_department'];
         $email = $_POST['emailAddress'];
         $name = $_POST['pname'];
 
-        $loginUser = new LoginUser();
+        $loginUser = new login\LoginUser();
         $loginUser->setEmail($email);
         $loginUser->setPassword("12345678");
         $loginUser->setRole("advisor");
@@ -31,7 +32,7 @@ class adminController
 
         $id = $manager->createUser($loginUser);
 
-        $Advisor = new AdvisorUser();
+        $Advisor = new login\AdvisorUser();
         $Advisor->setUserId($id);
         $Advisor->setPName($name);
         $Advisor->setNotification("Yes");
@@ -42,10 +43,10 @@ class adminController
         $res=$manager->createAdvisor($Advisor);
         if($res)
         {
-            echo "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password";
+            return "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password";
         }
         else{
-            echo "Failed";
+            return "Failed";
         }
 
 

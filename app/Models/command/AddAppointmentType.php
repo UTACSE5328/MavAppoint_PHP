@@ -5,7 +5,8 @@
  * Date: 2017/2/14
  * Time: 6:17
  */
-include_once dirname(dirname(__FILE__))."/bean/AppointmentType.php";
+namespace Models\Command;
+//include_once dirname(dirname(__FILE__))."/bean/AppointmentType.php";
 
 class AddAppointmentType extends SQLCmd{
 

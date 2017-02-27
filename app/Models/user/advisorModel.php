@@ -1,5 +1,5 @@
 <?php
-
+namespace Models\User;
 /**
  * Created by PhpStorm.
  * User: gaolin
@@ -7,7 +7,7 @@
  * Time: 1:25 PM
  */
 //require MODEL_PATH."/db/DatabaseManager.php";
-
+use Models\Db\DatabaseManager;
 class advisorModel
 {
 //    private $email=null;
@@ -97,40 +97,6 @@ class advisorModel
                         }
 
                     }
-//                        if ($res[$i]['date']==$date && $res[$i]['start']==$endtime ){
-//                            $endtime=$res[$i]['end'];
-//                        }
-//                        else{//can not integrate time
-//                            $displayArr=[
-//                                'title'=> $res[$i]['pName'],
-//                                'start'=> $date.'T'.$starttime,
-//                                'end'=> $date.'T'.$endtime,
-//                                'id' =>$id,
-//                                'backgroundColor' => 'blue'
-//                            ];
-//                            array_push($arrForDisplay,$displayArr);
-//
-//                            $date=$res[$i]['date'];
-//                            $starttime=$res[$i]['start'];
-//                            $endtime=$res[$i]['end'];
-//                            $id++;
-//                        }
-//
-//                        if($i==sizeof($res)-1){
-//                            $displayArr=[
-//                                'title'=> $res[$i]['pName'],
-//                                'start'=> $date.'T'.$starttime,
-//                                'end'=> $date.'T'.$endtime,
-//                                'id' =>$id,
-//                                'backgroundColor' => 'blue'
-//                            ];
-//                            array_push($arrForDisplay,$displayArr);
-//
-//                        }
-
-
-
-
 
                 }
 
@@ -152,59 +118,6 @@ class advisorModel
                 }
 
             }
-
-
-//            $firstAppointIndex=0;
-//            for($i=0; $i<sizeof($res);$i++){
-//                if(!($res[$i]['studentId']!=null)){
-//                    $firstAppointIndex=$i;
-//                    break;
-//
-//                }
-//            }
-
-//            if($firstAppointIndex<sizeof($res)){
-//                $date=$res[$firstAppointIndex]['date'];
-//                $starttime=$res[$firstAppointIndex]['start'];
-//                $endtime=$res[$firstAppointIndex]['end'];
-//                $id=-1;
-//                for($i=$firstAppointIndex+1 ; $i<sizeof($res); $i++){
-//                    if ($res[$i]['date']==$date && $res[$i]['start']==$endtime && $res[$i]['studentId']!=null){
-//                        $endtime=$res[$i]['end'];
-//                    }
-//                    else{//can not integrate time
-//                        $displayArr=[
-//                            'title'=> $res[$i]['pName'],
-//                            'start'=> $date.'T'.$starttime,
-//                            'end'=> $date.'T'.$endtime,
-//                            'id' =>$id,
-//                            'backgroundColor' => 'orange'
-//                        ];
-//                        array_push($arrForDisplay,$displayArr);
-//
-//                        $date=$res[$i]['date'];
-//                        $starttime=$res[$i]['start'];
-//                        $endtime=$res[$i]['end'];
-//                        $id--;
-//                    }
-//
-//                    if($i==sizeof($res)-1){
-//                        $displayArr=[
-//                            'title'=> $res[$i]['pName'],
-//                            'start'=> $date.'T'.$starttime,
-//                            'end'=> $date.'T'.$endtime,
-//                            'id' =>$id,
-//                            'backgroundColor' => 'orange'
-//                        ];
-//                        array_push($arrForDisplay,$displayArr);
-//
-//                    }
-//
-//                }
-//
-//
-//
-//            }
 
 
 

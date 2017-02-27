@@ -5,13 +5,15 @@
  * Date: 2017/2/13
  * Time: 22:12
  */
-include_once dirname(dirname(__FILE__))."/login/LoginUser.php";
-include_once dirname(dirname(__FILE__))."/command/GetUserIdByEmail.php";
+namespace Models\Command;
+//include_once dirname(dirname(__FILE__))."/login/LoginUser.php";
+//include_once dirname(dirname(__FILE__))."/command/GetUserIdByEmail.php";
+use Models\Login as login;
 
 class CreateUser extends SQLCmd {
 	private $user;
 
-	function __construct(LoginUser $user) {
+	function __construct(login\LoginUser $user) {
 		$this->user = $user;
 	}
 

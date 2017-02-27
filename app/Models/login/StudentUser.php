@@ -5,6 +5,7 @@
  * Date: 2017/2/13
  * Time: 3:06
  */
+namespace Models\Login;
 
 Class StudentUser extends LoginUser{
     private $studentId;

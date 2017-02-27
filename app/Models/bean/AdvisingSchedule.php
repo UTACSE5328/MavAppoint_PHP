@@ -1,4 +1,5 @@
 <?php
+namespace Models\Bean;
 /**
  * Created by PhpStorm.
  * User: Jarvis

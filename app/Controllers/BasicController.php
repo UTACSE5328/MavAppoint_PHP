@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Controllers;
 /**
  * Created by PhpStorm.
  * User: gaolin

@@ -1,11 +1,12 @@
 <?php
+namespace Models\Command;
 /**
  * Created by PhpStorm.
  * User: Jarvis
  * Date: 2017/2/14
  * Time: 8:04
  */
-include_once dirname(dirname(__FILE__))."/login/AdvisorUser.php";
+//include_once dirname(dirname(__FILE__))."/login/AdvisorUser.php";
 
 class GetAdvisorSchedules extends SQLCmd{
     private $advisors,$available;

@@ -1,20 +1,21 @@
 <?php
-
+namespace App\Controllers;
 /**
  * Created by PhpStorm.
  * User: gaolin
  * Date: 2/20/17
  * Time: 12:58 AM
  */
-require "BasicController.php";
-require MODEL_PATH."user/advisorModel.php";
-include_once MODEL_PATH."/bean/AllocateTime.php";
+use Models\User\advisorModel;
+//require MODEL_PATH."user/advisorModel.php";
+//include_once MODEL_PATH."/bean/AllocateTime.php";
 class advisorController extends BasicController
 {
     private $email;
     private $uid;
     function __construct()
     {
+        parent::__construct();
         session_start();
         $this->email=$_SESSION['email'];
         $this->uid=$_SESSION['uid'];
@@ -31,8 +32,9 @@ class advisorController extends BasicController
         array_push($arr,$advisor['pName']);
 
 
-        $schedules = $advisormodel->getAdvisorSchedules($arr);
+//        $schedules = $advisormodel->getAdvisorSchedules($arr);
 
+        return $advisormodel->getAdvisorSchedules($arr);
 
 
 //        echo json_encode($schedules).'</br>';
@@ -50,7 +52,7 @@ class advisorController extends BasicController
 //        }
 
 
-        include VIEW_PATH."advisor_update_schedule.php";
+//        include VIEW_PATH."advisor_update_schedule.php";
     }
 
     function AddTimeSlotAction(){

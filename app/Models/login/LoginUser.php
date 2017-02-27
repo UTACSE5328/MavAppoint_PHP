@@ -1,5 +1,5 @@
 <?php
-
+namespace Models\Login;
 /**
  * Created by PhpStorm.
  * User: Jarvis

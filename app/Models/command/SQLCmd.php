@@ -1,4 +1,5 @@
 <?php
+namespace Models\Command;
 /**
  * Created by PhpStorm.
  * User: Jarvis
@@ -16,7 +17,7 @@ abstract class SQLCmd {
 			$this->queryDB();
 			$this->result = $this->processResult();
 			$this->disconnect();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->disconnect();
 		}
 
@@ -24,7 +25,7 @@ abstract class SQLCmd {
 	}
 
 	function connectDB() {
-		$this->conn = new mysqli(
+		$this->conn = new \mysqli(
 			env("DB_HOST"),
 			env("DB_USERNAME"),
 			env("DB_PASSWORD"),

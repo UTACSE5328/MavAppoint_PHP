@@ -6,6 +6,7 @@ namespace Models\Command;
  * Date: 2017/2/21
  * Time: 14:33
  */
+use Models\Bean\AllocateTime;
 class DeleteTimeSlot extends SQLCmd{
     private $time, $id;
 

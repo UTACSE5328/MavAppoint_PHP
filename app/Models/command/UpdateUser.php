@@ -6,6 +6,7 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 16:25
  */
+use Models\Login\LoginUser;
 class UpdateUser extends SQLCmd{
     private $user;
 

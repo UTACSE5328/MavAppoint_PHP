@@ -109,6 +109,9 @@ class DatabaseManager{
     function getAppointment($date,$email){
         return $this->impl->getAppointment($date,$email);
     }
+    function getAppointmentByStuId($id,$date){
+        return $this->impl->getAppointmentByStuId($id,$date);
+    }
 
     function getAppointments(login\LoginUser $user){
         return $this->impl->getAppointments($user);

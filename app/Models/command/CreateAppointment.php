@@ -6,6 +6,7 @@
  * Time: 9:29
  */
 namespace Models\Command;
+use Models\Bean\Appointment;
 class CreateAppointment extends SQLCmd {
 	private $apt, $email;
 

@@ -15,6 +15,7 @@ $content = json_decode($content, true);
     Email:<input type="text" name="email"/><br>
     Password:<input type="password" name="password"><br>
     <input type="submit" value="submit">
+    <a href="?c=login&a=test">test DB</a>
 
 </form>
 

@@ -6,6 +6,7 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 16:58
  */
+use Models\Login\LoginUser;
 class UpdateNotification extends SQLCmd{
 
     private $user,$notification;

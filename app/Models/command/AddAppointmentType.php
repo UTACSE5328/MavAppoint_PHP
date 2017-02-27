@@ -6,6 +6,7 @@
  * Time: 6:17
  */
 namespace Models\Command;
+use Models\Bean\AppointmentType;
 //include_once dirname(dirname(__FILE__))."/bean/AppointmentType.php";
 
 class AddAppointmentType extends SQLCmd{

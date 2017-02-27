@@ -36,6 +36,13 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
+    function getAppointmentByStuId($id,$date)
+    {
+//        include_once dirname(dirname(__FILE__))."/command/GetAppointment.php";
+        $cmd = new command\GetAppointmentByStuId($id,$date);
+        return $cmd->execute();
+    }
+
     function getAppointments($user)
     {
         include_once dirname(dirname(__FILE__))."/command/GetAppointments.php";
@@ -163,7 +170,7 @@ class RDBImpl implements DBImplInterface{
 
     function createStudent(login\StudentUser $user)
     {
-        include_once dirname(dirname(__FILE__))."/command/CreateStudent.php";
+//        include_once dirname(dirname(__FILE__))."/command/CreateStudent.php";
         $cmd = new command\CreateStudent($user);
         return $cmd->execute();
     }

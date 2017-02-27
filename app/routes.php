@@ -4,7 +4,8 @@ return [
     "login" => [
         "default" => "LoginView",
         "check" => "switch_page",
-        "logout" => "LoginView"
+        "logout" => "LoginView",
+        "test" => "test"
     ],
     "admin" => [
         "showCreateAdvisorForm" => "create_advisor",
@@ -12,7 +13,7 @@ return [
     ],
     "advisor" => [
         "ShowSchedule" => "advisor_update_schedule",
-        "AddTimeSlot" => ""
+        "AddTimeSlot" =>  "advisor_update_schedule"
 
     ]
 ];

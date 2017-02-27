@@ -6,10 +6,11 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 15:15
  */
+use Models\Bean as bean;
 class UpdateAppointment extends SQLCmd {
 	private $apt;
 
-	function __construct(Appointment $apt) {
+	function __construct(bean\Appointment $apt) {
 		$this->apt = $apt;
 	}
 

@@ -6,11 +6,12 @@
  * Time: 6:53
  */
 namespace Models\Command;
+use Models\Login as login;
 //include_once dirname(dirname(__FILE__))."/login/StudentUser.php";
 class CreateStudent extends SQLCmd{
     private $user;
 
-    function __construct(StudentUser $user) {
+    function __construct(login\StudentUser $user) {
         $this->user = $user;
     }
 

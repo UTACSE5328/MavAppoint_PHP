@@ -6,9 +6,9 @@ namespace App\Controllers;
  * Date: 2/20/17
  * Time: 12:58 AM
  */
-use Models\User\advisorModel;
-//require MODEL_PATH."user/advisorModel.php";
-//include_once MODEL_PATH."/bean/AllocateTime.php";
+use Models\User\ProcessAdvisorSchedule;
+use Models\Db\DatabaseManager;
+use Models\Bean\AllocateTime;
 class advisorController extends BasicController
 {
     private $email;
@@ -21,38 +21,14 @@ class advisorController extends BasicController
         $this->uid=$_SESSION['uid'];
     }
 
-    function ShowScheduleAction(){
-
-        $advisormodel = new advisorModel();
-        $advisor = $advisormodel->getAdvisor($this->email);
-//        echo json_encode($advisor).'</br>';
-//        echo "==============================</br>";
+    function ShowScheduleAction(){;
+        $processSchedule = new ProcessAdvisorSchedule();
+        $advisor = $processSchedule->getAdvisor($this->email);
         $arr =array();
-
         array_push($arr,$advisor['pName']);
+        return $processSchedule->getModifiedSchedulesForShow($arr);
 
 
-//        $schedules = $advisormodel->getAdvisorSchedules($arr);
-
-        return $advisormodel->getAdvisorSchedules($arr);
-
-
-//        echo json_encode($schedules).'</br>';
-//        echo "==============================</br>";
-
-//        date_default_timezone_set('UTC');
-//        $nowtime= date("Y-m-d");
-//        $testtime = '2017-02-19';
-//        if($nowtime>$testtime){
-//            echo "nowtime:".$nowtime." >" ."testtime:".$testtime;
-//
-//        }
-//        else{
-//            echo "testtime:".$testtime." >" ."nowtime:".$nowtime;
-//        }
-
-
-//        include VIEW_PATH."advisor_update_schedule.php";
     }
 
     function AddTimeSlotAction(){
@@ -62,7 +38,7 @@ class advisorController extends BasicController
         $time->setStartTime($_POST['starttime']);
         $time->setEndTime($_POST['endtime']);
         $res = $manager->addTimeSlot($time, $this->uid);
-        $this->ShowScheduleAction();
+        return $this->ShowScheduleAction();
 
 
 

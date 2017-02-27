@@ -1,13 +1,16 @@
 <?php
+namespace Models\test;
 /**
  * Created by PhpStorm.
  * User: Jarvis
  * Date: 2017/2/13
  * Time: 17:25
  */
-include dirname(dirname(__FILE__))."/db/DatabaseManager.php";
-
-$manager = new DatabaseManager();
+////include dirname(dirname(__FILE__))."/db/DatabaseManager.php";
+use Models\Db as db;
+use Models\Login as login;
+use Models\Bean as bean;
+$manager = new db\DatabaseManager();
 
 echo "getUserIdByEmail</br>";
 $res = $manager->getUserIdByEmail("admin@uta.edu");
@@ -15,8 +18,8 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "createUser</br>";
-include_once dirname(dirname(__FILE__))."/login/LoginUser.php";
-$user = new LoginUser();
+////include_once dirname(dirname(__FILE__))."/login/LoginUser.php";
+$user = new login\LoginUser();
 $user->setEmail("aaaa@uta.edu");
 $user->setPassword("12345678");
 $user->setRole("student");
@@ -27,8 +30,8 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "CreateStudent</br>";
-include_once dirname(dirname(__FILE__))."/login/StudentUser.php";
-$studentUser = new StudentUser();
+////include_once dirname(dirname(__FILE__))."/login/StudentUser.php";
+$studentUser = new login\StudentUser();
 $studentUser->setUserId("11");
 $studentUser->setStudentId("1001455666");
 $studentUser->setDegType("1");
@@ -45,8 +48,8 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "createAdvisor</br>";
-include_once dirname(dirname(__FILE__))."/login/AdvisorUser.php";
-$advisorUser = new AdvisorUser();
+//include_once dirname(dirname(__FILE__))."/login/AdvisorUser.php";
+$advisorUser = new login\AdvisorUser();
 $advisorUser->setUserId("99");
 $advisorUser->setPName("abcd");
 $advisorUser->setNotification("no");
@@ -68,8 +71,8 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "AddAppointmentType</br>";
-include_once dirname(dirname(__FILE__))."/bean/AppointmentType.php";
-$at = new AppointmentType();
+//include_once dirname(dirname(__FILE__))."/bean/AppointmentType.php";
+$at = new bean\AppointmentType();
 $at->setType("type_test");
 $at->setDuration("10");
 $at->setEmail("ad1@uta.edu");
@@ -78,14 +81,14 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "DeleteAppointmentType</br>";
-include_once dirname(dirname(__FILE__))."/bean/AppointmentType.php";
+//include_once dirname(dirname(__FILE__))."/bean/AppointmentType.php";
 $res = $manager->deleteAppointmentType($advisorUser, $at);
 echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "CheckUser</br>";
-include_once dirname(dirname(__FILE__))."/bean/GetSet.php";
-$set = new GetSet();
+//include_once dirname(dirname(__FILE__))."/bean/GetSet.php";
+$set = new bean\GetSet();
 $set->setEmail("cathysui307@gmail.com");
 $set->setPassword("123456789");
 $res = $manager->checkUser($set);
@@ -108,8 +111,8 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "createAppointment</br>";
-include_once dirname(dirname(__FILE__))."/bean/Appointment.php";
-$apt = new Appointment();
+//include_once dirname(dirname(__FILE__))."/bean/Appointment.php";
+$apt = new bean\Appointment();
 $apt->setPname("Lin Gao");
 $apt->setAppointmentId("1");
 $apt->setAdvisingDate("2017-02-14");
@@ -140,7 +143,7 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "getAppointments</br>";
-$studentUser = new StudentUser();
+$studentUser = new login\StudentUser();
 $studentUser->setEmail("shaoying.li@mavs.uta.edu");
 $studentUser->setUserId("99");
 $res = $manager->getAppointments($studentUser);
@@ -203,8 +206,8 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "addTimeSlot</br>";
-include_once dirname(dirname(__FILE__))."/bean/AllocateTime.php";
-$time = new AllocateTime();
+//include_once dirname(dirname(__FILE__))."/bean/AllocateTime.php";
+$time = new bean\AllocateTime();
 $time->setDate("2016-02-22");
 $time->setStartTime("10:55");
 $time->setEndTime("11:15");
@@ -213,7 +216,7 @@ echo json_encode($res).'</br>';
 echo "==============================</br>";
 
 echo "deleteTimeSlot</br>";
-$time = new AllocateTime();
+$time = new bean\AllocateTime();
 $time->setDate("2016-02-22");
 $time->setStartTime("10:55");
 $time->setEndTime("11:15");

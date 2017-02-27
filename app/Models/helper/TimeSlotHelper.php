@@ -1,4 +1,5 @@
 <?php
+namespace Models\Helper;
 /**
  * Created by PhpStorm.
  * User: Jarvis

@@ -6,6 +6,8 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 14:59
  */
+use Models\Helper\TimeSlotHelper;
+use Models\Bean\AllocateTime;
 //include_once dirname(dirname(__FILE__))."/helper/TimeSlotHelper.php";
 //include_once dirname(dirname(__FILE__))."/bean/AllocateTime.php";
 //include_once "SQLCmd.php";

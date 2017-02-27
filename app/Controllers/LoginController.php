@@ -73,6 +73,9 @@ class LoginController{
         session_destroy();
 //        $this->DefaultAction();
     }
+    public function testAction(){
+        include dirname(dirname(__FILE__))."/Models/test/test.php";
+    }
 
 
 

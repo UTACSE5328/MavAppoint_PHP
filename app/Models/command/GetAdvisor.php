@@ -20,9 +20,13 @@ class GetAdvisor extends SQLCmd {
 		$cmd = new GetUserIdByEmail($this->email);
 		$id  = $cmd->execute();
 
-		$query = "SELECT password,validated,pName,name_low,name_high,degree_types,Department_User.name,Major_User.name,cutOffTime
-                      FROM User,User_Advisor,Department_User,Major_User
-                      WHERE USER.userId='$id' and User_Advisor.userId='$id' and Department_User.userId='$id' and Major_User.userId='$id'";
+        $query = "SELECT password,validated,pName,name_low,name_high,degree_types,cutOffTime
+       FROM User,User_Advisor
+       WHERE USER.userId='$id' and User_Advisor.userId='$id' ";
+
+//		$query = "SELECT password,validated,pName,name_low,name_high,degree_types,Department_User.name,Major_User.name,cutOffTime
+//                      FROM User,User_Advisor,Department_User,Major_User
+//                      WHERE USER.userId='$id' and User_Advisor.userId='$id' and Department_User.userId='$id' and Major_User.userId='$id'";
 
 		$this->result = $this->conn->query($query)->fetch_assoc();
 	}

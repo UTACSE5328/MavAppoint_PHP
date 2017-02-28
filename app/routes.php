@@ -13,7 +13,9 @@ return [
     ],
     "advisor" => [
         "ShowSchedule" => "advisor_update_schedule",
-        "AddTimeSlot" =>  "advisor_update_schedule"
+        "AddTimeSlot" =>  "advisor_update_schedule",
+        "ShowSettingForm" => "customize_settings",
+        "SetCutOffTime" => "customize_settings"
 
     ]
 ];

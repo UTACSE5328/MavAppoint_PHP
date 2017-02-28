@@ -43,7 +43,7 @@ class adminController
         $res=$manager->createAdvisor($Advisor);
         if($res)
         {
-            return "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password";
+            return "Advisor created successfully. An email has been sent to the advisor's account with his or her temporary password";
         }
         else{
             return "Failed";

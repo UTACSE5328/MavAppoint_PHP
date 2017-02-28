@@ -36,6 +36,7 @@ class ProcessAdvisorSchedule
     function getModifiedSchedulesForShow($advisorName)
     {// Can only get one advisor's schedule each time.
         $res = $this->manager->getAdvisorSchedules($advisorName);
+
         if ($res == null) return null;
 
         $arrForDisplay = array();
@@ -111,7 +112,7 @@ class ProcessAdvisorSchedule
 
 
         //↓ process unavailable schedules:
-        $benginDateIndex = 0;
+        $benginDateIndex = null;
         for ($i = 0; $i < sizeof($res); $i++) {
             if ($res[$i]['studentId'] != null) {
                 $benginDateIndex = $i;

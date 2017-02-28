@@ -60,7 +60,7 @@
                     Update Schedule</font> </a></li>
                 <li><a href="appointments"><font style="color: #e67e22" size="3">
                     Appointments</font> </a></li>
-                <li><a href="customize"><font style="color: #e67e22" size="3">Customize
+                <li><a href="?c=advisor&a=ShowSettingForm"><font style="color: #e67e22" size="3">Customize
                     Settings</font></a></li>
 
 
@@ -87,6 +87,7 @@
 
 <div class="container-fluid">
     <script>
+
 //         var schedules= <?php //echo json_encode($schedules);?>//;
          var schedules= <?php echo $content;?>;
         $(document).ready(function(){
@@ -226,6 +227,7 @@
 <script type="text/javascript" src="./app/Views/js/allInPage.js"></script>
 <footer>
 </footer>
+
 </body>
 
 </html>

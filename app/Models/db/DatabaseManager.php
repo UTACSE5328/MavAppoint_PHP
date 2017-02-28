@@ -14,8 +14,12 @@ class DatabaseManager{
         $this->impl = new RDBImpl();
     }
 
+    function setCutOffTime($id, $time){
+        return $this->impl->setCutOffTime($id,$time);
+    }
+
     function addAppointmentType(login\AdvisorUser $user, bean\AppointmentType $at){
-       return $this->impl->addAppointmentType($user,$at);
+        return $this->impl->addAppointmentType($user,$at);
     }
 
     function createAppointment(bean\Appointment $apt, $email){

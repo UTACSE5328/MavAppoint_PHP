@@ -8,6 +8,10 @@ namespace Models\Command;
  */
 
 abstract class SQLCmd {
+
+	/**
+	 * @var \mysqli
+	 */
 	public $conn;
 	public $result;
 

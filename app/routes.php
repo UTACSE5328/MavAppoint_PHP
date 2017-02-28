@@ -3,9 +3,11 @@
 return [
     "login" => [
         "default" => "LoginView",
-        "check" => "switch_page",
-        "logout" => "LoginView",
-        "test" => "test"
+        "check" => "check",
+        "logout" => "IndexView",
+    ],
+    "index" => [
+        "default" => "IndexView"
     ],
     "admin" => [
         "showCreateAdvisorForm" => "create_advisor",

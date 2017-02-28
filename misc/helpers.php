@@ -130,7 +130,7 @@ if( !function_exists('mav_encrypt')) {
      * @return string
      */
     function mav_encrypt($data){
-        return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5(env("APP_KEY")), $data, MCRYPT_MODE_CBC, md5(md5(env("APP_KEY")))));
+        return my_simple_crypt($data, "e");
     }
 }
 
@@ -142,6 +142,26 @@ if( !function_exists('mav_decrypt')) {
      * @return string
      */
     function mav_decrypt($encrypted){
-        return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5(env("APP_KEY")), base64_decode($encrypted), MCRYPT_MODE_CBC, md5(md5(env("APP_KEY")))), "\0");;
+        return my_simple_crypt($encrypted, "d");
     }
+}
+
+function my_simple_crypt( $string, $action = 'e' ) {
+    // you may change these values to your own
+    $secret_key = 'my_simple_secret_key';
+    $secret_iv = 'my_simple_secret_iv';
+
+    $output = false;
+    $encrypt_method = "AES-256-CBC";
+    $key = hash( 'sha256', $secret_key );
+    $iv = substr( hash( 'sha256', $secret_iv ), 0, 16 );
+
+    if( $action == 'e' ) {
+        $output = base64_encode( openssl_encrypt( $string, $encrypt_method, $key, 0, $iv ) );
+    }
+    else if( $action == 'd' ){
+        $output = openssl_decrypt( base64_decode( $string ), $encrypt_method, $key, 0, $iv );
+    }
+
+    return $output;
 }

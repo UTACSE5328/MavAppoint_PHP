@@ -107,7 +107,7 @@ class RDBImpl implements DBImplInterface{
 
     function createAdvisor(Login\AdvisorUser $user)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/CreateAdvisor.php";
+//        include_once dirname(dirname(__FILE__))."/Command/CreateAdvisorView.php";
         $cmd = new Command\CreateAdvisor($user);
         return $cmd->execute();
     }

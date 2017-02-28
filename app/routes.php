@@ -10,7 +10,7 @@ return [
         "default" => "IndexView"
     ],
     "admin" => [
-        "showCreateAdvisorForm" => "create_advisor",
+        "addAdvisor" => "CreateAdvisorView",
         "createNewAdvisor" => "createNewAdvisor"
     ],
     "advisor" => [

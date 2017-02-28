@@ -21,6 +21,35 @@ $(function(){
                 }
             }
         });
-        return false;
-    })
+    });
+
+    $("#createAdvisorSubmit").on("click", function(){
+        var email = $("#emailAdvisor").val();
+        var pname = $("#pname").val();
+        var drp_department = $("#drp_department").val();
+
+        $.ajax({
+            url: "/MavAppoint_PHP/",
+            type: "post",
+            data: {
+                c : $("#adminController").val(),
+                a : $("#createNewAdvisorAction").val(),
+                email : email,
+                pname : pname,
+                drp_department : drp_department
+            },
+            success: function(data){
+                var data = JSON.parse(data);
+                if (data.error == 0) {
+                    alert(data.data.message);
+                    $("#addAdvisorResult").text(data.data.message);
+                    //window.location.href = "/MavAppoint_PHP?c=" + $("#indexController").val() + "&role=" + data.data.role;
+                }else{
+                    alert(data.data.message);
+                    $("#addAdvisorResult").text(data.data.message);
+                }
+            }
+        });
+    });
+
 });

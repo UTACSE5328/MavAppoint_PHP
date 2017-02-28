@@ -12,17 +12,33 @@ use Models\Db as db;
 use Models\Login as login;
 class adminController
 {
-    function showCreateAdvisorFormAction(){
-//        include VIEW_PATH."create_advisor.php";
-
+    public function addAdvisorAction(){
+//        $manager = new db\DatabaseManager();
+//        $manager->getDepartments()
+        return [
+            "department" => [
+                0 => [
+                    "name" => "CSE"
+                ],
+                1 => [
+                    "name" => "MATH"
+                ],
+                2 => [
+                    "name" => "MAE"
+                ],
+                3 => [
+                    "name" => "ARCH"
+                ],
+            ]
+        ];
     }
 
     function createNewAdvisorAction(){
         $manager = new db\DatabaseManager();
 
-        $department = $_POST['drp_department'];
-        $email = $_POST['emailAddress'];
-        $name = $_POST['pname'];
+        $department = $_REQUEST['drp_department'];
+        $email = $_REQUEST['email'];
+        $name = $_REQUEST['pname'];
 
         $loginUser = new login\LoginUser();
         $loginUser->setEmail($email);
@@ -43,10 +59,21 @@ class adminController
         $res=$manager->createAdvisor($Advisor);
         if($res)
         {
-            return "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password";
-        }
-        else{
-            return "Failed";
+            return [
+                "error" => 0,
+                "data" => [
+                    "message" => "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password"
+                ]
+            ];
+//            return "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password";
+        } else {
+            return [
+                "error" => 1,
+                "data" => [
+                    "message" => "Fail"
+                ]
+            ];
+//            return "Failed";
         }
 
 

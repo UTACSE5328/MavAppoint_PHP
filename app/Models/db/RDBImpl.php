@@ -8,9 +8,14 @@ use Models\Command as Command;
 
 class RDBImpl implements DBImplInterface{
 
+    function setCutOffTime($id, $time)
+    {
+        $cmd = new Command\SetCutOffTime($time, $id);
+        return $cmd->execute();
+    }
+
     function createAppointment(Bean\Appointment $a, $email)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/CreateAppointment.php";
         $cmd = new Command\CreateAppointment($a, $email);
         return $cmd->execute();
     }

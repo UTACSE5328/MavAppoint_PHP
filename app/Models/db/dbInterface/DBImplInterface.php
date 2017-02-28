@@ -11,6 +11,7 @@ use Models\Login as login;
 
 interface DBImplInterface
 {
+    function setCutOffTime($id,$time);
     function createAppointment(bean\Appointment $a, $email);
     function updateAppointment(bean\Appointment $a);
     function cancelAppointment($id);

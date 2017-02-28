@@ -223,3 +223,8 @@ $time->setEndTime("11:15");
 $res = $manager->deleteTimeSlot($time, '99');
 echo json_encode($res).'</br>';
 echo "==============================</br>";
+
+echo "setCutOffTime</br>";
+$res = $manager->setCutOffTime("99","1");
+echo json_encode($res).'</br>';
+echo "==============================</br>";

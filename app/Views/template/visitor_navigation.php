@@ -1,5 +1,6 @@
 <?php
 $loginController = mav_encrypt("login");
+
 ?>
 <div>
     <ul class="nav navbar-nav">

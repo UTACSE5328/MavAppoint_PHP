@@ -90,6 +90,10 @@ class DatabaseManager{
         return $this->impl->getFaculty($email);
     }
 
+    function getAdvisorSchedule($name){
+        return$this->impl->getAdvisorSchedule($name);
+    }
+
     function getAdvisorSchedules(array $advisorUsers){
         return $this->impl->getAdvisorSchedules($advisorUsers);
     }

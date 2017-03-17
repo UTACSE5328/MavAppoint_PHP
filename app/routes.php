@@ -3,8 +3,10 @@
 return [
     "login" => [
         "default" => "LoginView",
-        "check" => "check",
+        "test" => "testView",
+        "check" => "UserView",
         "logout" => "IndexView",
+
     ],
     "index" => [
         "default" => "IndexView"
@@ -14,8 +16,8 @@ return [
         "createNewAdvisor" => "createNewAdvisor"
     ],
     "advisor" => [
-        "ShowSchedule" => "advisor_update_schedule",
-        "AddTimeSlot" =>  "advisor_update_schedule"
+        "showSchedule" => "AdvisorScheduleView",
+        "addTimeSlot" =>  "AdvisorScheduleView"
 
     ]
 ];

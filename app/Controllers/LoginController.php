@@ -17,12 +17,18 @@ class LoginController{
 //            "env" => env("DB_DATABASE")
 //        ];
 //        include VIEW_PATH.'loginPage.php';
+
     }
 
     public function checkAction(){
 
-        $email = $_REQUEST['email'];
+        $email = $_REQUEST['emailAddress'];
         $password = $_REQUEST['password'];
+//        echo "email:";
+//        echo $email."<br>";
+//        echo "password:";
+//        echo $password;
+//        die();
 
         $manager = new DatabaseManager();
 
@@ -38,7 +44,7 @@ class LoginController{
         }
 
         session_start();
-//        $_SESSION['email'] = $email;
+        $_SESSION['email'] = $email;
         $_SESSION['role'] = $res['role'];
         $_SESSION['uid'] = $manager->getUserIdByEmail($email);
 //        if($res['role']=='admin'){
@@ -73,6 +79,12 @@ class LoginController{
     public function logoutAction(){
         session_start();
         session_destroy();
+    }
+
+    public function testAction(){
+        return [
+            "error" => 0
+        ];
     }
 
 }

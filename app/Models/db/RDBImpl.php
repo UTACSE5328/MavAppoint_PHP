@@ -5,8 +5,28 @@ use Models\Db\DbInterface\DBImplInterface;
 use Models\Bean as Bean;
 use Models\Login as Login;
 use Models\Command as Command;
+use Models\PrimitiveTimeSlot as PrimitiveTimeSlot;
+use Models\Helper as Helper;
 
 class RDBImpl implements DBImplInterface{
+
+    function connectDB() {
+        try {
+            $conn = new \mysqli(
+                env("DB_HOST"),
+                env("DB_USERNAME"),
+                env("DB_PASSWORD"),
+                env("DB_DATABASE"));
+
+            return $conn;
+        } catch (\Exception $e) {
+            echo "Can not connect DB.";
+        }
+        return null;
+
+
+    }
+
 
     function setCutOffTime($id, $time)
     {
@@ -143,6 +163,48 @@ class RDBImpl implements DBImplInterface{
 //        include_once dirname(dirname(__FILE__))."/Command/GetAdvisorsOfDepartment.php";
         $cmd = new Command\GetAdvisorsOfDepartment($department);
         return $cmd->execute();
+    }
+
+    function getAdvisorSchedule($name)
+    {
+        $PrimitiveTimeSlotArr = array();
+        try {
+            $conn = $this->connectDB();
+            if($name === "all"){
+                $command = "SELECT pname,date,start,end,id FROM user,Advising_Schedule,User_Advisor "
+                . "WHERE user.userid=User_Advisor.userid AND user.userid=Advising_Schedule.userid AND studentId is null";
+            }
+            else{
+                $command = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor "
+                    . "WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$name' AND studentId is null";
+            }
+
+            $res = $conn->query($command);
+
+            while($rs = mysqli_fetch_assoc($res)){
+                $set = new PrimitiveTimeSlot();
+                $set->setName($rs["pname"]);
+                $set->setDate($rs["date"]);
+                $set->setStartTime($rs["start"]);
+                $set->setEndTime($rs["end"]);
+                $set->setUniqueId($rs["id"]);
+                array_push($PrimitiveTimeSlotArr, serialize($set));
+            }
+
+            $compositeTimeSlotArr = Helper\TimeSlotHelper::createCompositeTimeSlot($PrimitiveTimeSlotArr);
+
+
+            $conn->close();
+
+        } catch (\Exception $e) {
+
+        }
+
+        return $compositeTimeSlotArr;
+
+//          return unserialize($compositeTimeSlotArr[1])->getDate()."=====".unserialize($compositeTimeSlotArr[1])->getStartTime()."~~".unserialize($compositeTimeSlotArr[1])->getEndTime();
+
+
     }
 
     function getAdvisorSchedules(array $advisorUsers)

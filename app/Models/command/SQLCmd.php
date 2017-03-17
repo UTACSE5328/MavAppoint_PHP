@@ -15,6 +15,8 @@ abstract class SQLCmd {
 	public $conn;
 	public $result;
 
+	function getResult(){return $this->result;}
+
 	function execute() {
 		try {
 			$this->connectDB();

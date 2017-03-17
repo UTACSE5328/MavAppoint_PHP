@@ -1,5 +1,5 @@
 <?php
-namespace Models\test;
+
 /**
  * Created by PhpStorm.
  * User: Jarvis
@@ -123,6 +123,14 @@ $apt->setDescription("description");
 $apt->setStudentPhoneNumber("1111111111");
 $res = $manager->createAppointment($apt, "shaoying.li@mavs.uta.edu");
 echo json_encode($res).'</br>';
+echo "==============================</br>";
+
+
+echo "getAdvisorSchedule</br>";
+$name = "Lin Gao";
+$res = $manager->getAdvisorSchedule($name);
+var_dump($res);
+echo '</br>';
 echo "==============================</br>";
 
 echo "getAdvisorSchedules</br>";

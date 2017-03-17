@@ -32,6 +32,7 @@ interface DBImplInterface
     function getAdvisor($email);
     function getAdvisors();
     function getAdvisorsOfDepartment($department);
+    function getAdvisorSchedule($name);
     function getAdvisorSchedules(array $advisorUsers);
     function getAdvisorWaitlistSchedules(array $advisorUsers);
     function deleteAdvisor($id);

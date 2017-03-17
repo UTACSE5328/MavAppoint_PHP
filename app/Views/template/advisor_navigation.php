@@ -1,6 +1,9 @@
 <?php
 $loginController = mav_encrypt("login");
 $logoutAction = mav_encrypt("logout");
+$advisorController = mav_encrypt("advisor");
+$showScheduleAction = mav_encrypt("showSchedule");
+$addTimeSlotAction = mav_encrypt("addTimeSlot");
 ?>
 
 <div>
@@ -8,7 +11,7 @@ $logoutAction = mav_encrypt("logout");
 
         <li><a href="changePassword"><font style="color: #e67e22" size="3">Change Password</font></a></li>
 
-        <li><a href="availability"><font style="color: #e67e22" size="3">
+        <li><a href="?c=<?=$advisorController?>&a=<?=$showScheduleAction?>"><font style="color: #e67e22" size="3">
                     Update Schedule</font> </a></li>
         <li><a href="appointments"><font style="color: #e67e22" size="3">
                     Appointments</font> </a></li>

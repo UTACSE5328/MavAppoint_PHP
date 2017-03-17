@@ -162,5 +162,9 @@ class LoginUser
         $this->msg = $msg;
     }
 
+    public function accept(){
+
+    }
+
 
 }

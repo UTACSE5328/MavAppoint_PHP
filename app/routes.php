@@ -13,11 +13,14 @@ return [
     ],
     "admin" => [
         "addAdvisor" => "CreateAdvisorView",
-        "createNewAdvisor" => "createNewAdvisor"
+        "createNewAdvisor" => "createNewAdvisor",
+        "showDepartmentSchedule" => "DepartmentScheduleView",
+        "deleteTimeSlot" => "DepartmentScheduleView",
     ],
     "advisor" => [
         "showSchedule" => "AdvisorScheduleView",
-        "addTimeSlot" =>  "AdvisorScheduleView"
+        "addTimeSlot" =>  "AdvisorScheduleView",
+        "deleteTimeSlot" => "AdvisorScheduleView"
 
     ]
 ];

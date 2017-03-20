@@ -268,17 +268,17 @@ class RDBImpl implements DBImplInterface{
     {
     }
 
-    function addTimeSlot(Bean\AllocateTime $at,$id)
+    function addTimeSlot(Bean\AllocateTime $at, $id)
     {
 //        include_once dirname(dirname(__FILE__)) . "/Command/AddTimeSlot.php";
         $cmd = new Command\AddTimeSlot($at,$id);
         return $cmd->execute();
     }
 
-    function deleteTimeSlot(Bean\AllocateTime $at, $id)
+    function deleteTimeSlot(Bean\AllocateTime $at)
     {
 //        include_once dirname(dirname(__FILE__)) . "/Command/DeleteTimeSlot.php";
-        $cmd = new Command\DeleteTimeSlot($at,$id);
+        $cmd = new Command\DeleteTimeSlot($at);
         return $cmd->execute();
     }
 

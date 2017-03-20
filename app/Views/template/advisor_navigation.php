@@ -4,6 +4,7 @@ $logoutAction = mav_encrypt("logout");
 $advisorController = mav_encrypt("advisor");
 $showScheduleAction = mav_encrypt("showSchedule");
 $addTimeSlotAction = mav_encrypt("addTimeSlot");
+$deleteTimeSlotAction = mav_encrypt("deleteTimeSlot");
 ?>
 
 <div>

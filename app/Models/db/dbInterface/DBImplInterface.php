@@ -48,7 +48,7 @@ interface DBImplInterface
     function createWaitlist(bean\WaitList $list);
 
     function addTimeSlot(bean\AllocateTime $at, $id);
-    function deleteTimeSlot(bean\AllocateTime $at, $id);
+    function deleteTimeSlot(bean\AllocateTime $at);
 
     function updateCutOffTime(login\AdvisorUser $user, $time);
 

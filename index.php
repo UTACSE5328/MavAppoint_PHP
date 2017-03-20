@@ -37,4 +37,3 @@ $config = require(__DIR__ . '/config/web.php');
 //$controller->$action();
 
 
-//include VIEW_PATH.'loginPage.php';

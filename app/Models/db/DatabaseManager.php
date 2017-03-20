@@ -30,8 +30,8 @@ class DatabaseManager{
         return $this->impl->addTimeSlot($time, $id);
     }
 
-    function deleteTimeSlot(bean\AllocateTime $time, $id){
-        return $this->impl->deleteTimeSlot($time, $id);
+    function deleteTimeSlot(bean\AllocateTime $time){
+        return $this->impl->deleteTimeSlot($time);
     }
 
     function cancelAppointment($id){

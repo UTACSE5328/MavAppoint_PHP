@@ -17,7 +17,6 @@ class advisorController extends BasicController
     private $role;
     function __construct()
     {
-        parent::__construct();
         session_start();
         $this->email = isset($_SESSION['email']) ? $_SESSION['email']: null;
         $this->uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : null;
@@ -100,12 +99,40 @@ class advisorController extends BasicController
 
 
 
-        return $this->showScheduleAction();
-
+        $this->showScheduleAction();
+        return[
+          "error" => 0,
+            "isDispatch" => true,
+        ];
 
 
 
     }
+
+
+    function deleteTimeSlotAction(){
+        $startTime = isset($_POST['StartTime2']) ? $_POST['StartTime2'] : null;
+        $endTime = isset($_POST['EndTime2']) ? $_POST['EndTime2'] : null;
+        $date = isset($_POST['Date']) ? $_POST['Date'] : null;
+        $pName = isset($_POST['pname']) ? $_POST['pname'] : null;
+        $repeat = isset($_POST['delete_repeat']) ? intval($_POST['delete_repeat']) : null;
+        $reason = isset($_POST['delete_reason']) ? $_POST['delete_reason'] : null;
+
+        $msg = DeleteTimeSlotController::deleteTimeSlot($date,$startTime,$endTime,$pName,$repeat,$reason);
+
+        $this->showScheduleAction();
+
+
+
+        return [
+            "error" => 0,
+            "msg" => $msg,
+            "isDispatch" => true,
+
+
+        ];
+    }
+
 
 
 }

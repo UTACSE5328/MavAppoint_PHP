@@ -81,7 +81,7 @@ class TimeSlotHelper {
      * @param $amount =1(default)
      * @return string : the date + 7days (yyyy-mm-dd)
      */
-    public static function addDate($date , $amount){
+    public static function addDate($date , $amount=1){
         $start = explode("-",$date);
         $st_y = $start[0];
         $st_m = $start[1];

@@ -16,7 +16,7 @@ class LoginController{
 //            "config" => config("testKey1.testKey2"),
 //            "env" => env("DB_DATABASE")
 //        ];
-//        include VIEW_PATH.'loginPage.php';
+
 
     }
 

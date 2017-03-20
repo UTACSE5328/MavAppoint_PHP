@@ -17,7 +17,9 @@ class advisorController extends BasicController
     private $role;
     function __construct()
     {
-        session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         $this->email = isset($_SESSION['email']) ? $_SESSION['email']: null;
         $this->uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : null;
         $this->role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
@@ -49,7 +51,9 @@ class advisorController extends BasicController
                     }
 
                 }
-                session_start();
+                if (!isset($_SESSION)) {
+                    session_start();
+                }
                 $_SESSION['schedule'] = $validSchedule;
 
 

@@ -9,8 +9,10 @@ use Models\Bean\GetSet;
 //session_destroy();
 //require "BasicController.php";
 //require MODEL_PATH."db/DatabaseManager.php";
-class LoginController{
-    public function defaultAction(){
+class LoginController
+{
+    public function defaultAction()
+    {
 //        return [
 //            "error" => 0,
 //            "config" => config("testKey1.testKey2"),
@@ -20,7 +22,8 @@ class LoginController{
 
     }
 
-    public function checkAction(){
+    public function checkAction()
+    {
 
         $email = $_REQUEST['emailAddress'];
         $password = $_REQUEST['password'];
@@ -37,13 +40,15 @@ class LoginController{
         $set->setPassword($password);
         $res = $manager->checkUser($set);
 
-        if(!$res){
+        if (!$res) {
             return [
                 "error" => 1
             ];
         }
 
-        session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         $_SESSION['email'] = $email;
         $_SESSION['role'] = $res['role'];
         $_SESSION['uid'] = $manager->getUserIdByEmail($email);
@@ -76,12 +81,16 @@ class LoginController{
 
     }
 
-    public function logoutAction(){
-        session_start();
-        session_destroy();
+    public function logoutAction()
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+            session_destroy();
+        }
     }
 
-    public function testAction(){
+    public function testAction()
+    {
         return [
             "error" => 0
         ];

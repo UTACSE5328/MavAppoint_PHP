@@ -1,6 +1,6 @@
 <?php
-include ("template/header.php");
 session_start();
+include ("template/header.php");
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : "visitor";
 include ("template/" . $role . "_navigation.php");
 ?>

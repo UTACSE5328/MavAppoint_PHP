@@ -23,10 +23,7 @@ class RDBImpl implements DBImplInterface{
             echo "Can not connect DB.";
         }
         return null;
-
-
     }
-
 
     function setCutOffTime($id, $time)
     {
@@ -42,125 +39,107 @@ class RDBImpl implements DBImplInterface{
 
     function updateAppointment(Bean\Appointment $a)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/UpdateAppointment.php";
         $cmd = new Command\UpdateAppointment($a);
         return $cmd->execute();
     }
 
     function cancelAppointment($id)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/CancelAppointment.php";
         $cmd = new Command\CancelAppointment($id);
         return $cmd->execute();
     }
 
     function getAppointment($d, $e)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/GetAppointment.php";
         $cmd = new Command\GetAppointment($d, $e);
         return $cmd->execute();
     }
 
     function getAppointmentByStuId($id,$date)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/GetAppointment.php";
         $cmd = new Command\GetAppointmentByStuId($id,$date);
         return $cmd->execute();
     }
 
     function getAppointments($user)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/GetAppointments.php";
         $cmd = new Command\GetAppointments($user);
         return $cmd->execute();
     }
 
     function addAppointmentType(Login\AdvisorUser $user, Bean\AppointmentType $type)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/AddAppointmentType.php";
         $cmd = new Command\AddAppointmentType($type, $user->getUserId());
         return $cmd->execute();
     }
 
     function getAppointmentTypes($pName)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/GetAppointmentTypes.php";
         $cmd = new Command\GetAppointmentTypes($pName);
         return $cmd->execute();
     }
 
     function deleteAppointmentType(Login\AdvisorUser $user, Bean\AppointmentType $type)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/DeleteAppointmentType.php";
         $cmd = new Command\DeleteAppointmentType($type, $user->getUserId());
         return $cmd->execute();
     }
 
     function createUser(Login\LoginUser $user)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/CreateUser.php";
         $cmd = new Command\CreateUser($user);
         return $cmd->execute();
     }
 
     function updateUser(Login\LoginUser $user)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/UpdateUser.php";
         $cmd = new Command\UpdateUser($user);
         return $cmd->execute();
     }
 
     function checkUser(Bean\GetSet $set)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/CheckUser.php";
         $cmd = new Command\CheckUser($set);
         return $cmd->execute();
     }
 
     function getUserIdByEmail($email){
-//        include_once dirname(dirname(__FILE__))."/Command/GetUserIdByEmail.php";
         $cmd = new Command\GetUserIdByEmail($email);
         return $cmd->execute();
     }
 
     function updatePassword($email, $password)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/UpdatePassword.php";
         $cmd = new Command\UpdatePassword($email,$password);
         return $cmd->execute();
     }
 
     function createAdvisor(Login\AdvisorUser $user)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/CreateAdvisorView.php";
         $cmd = new Command\CreateAdvisor($user);
         return $cmd->execute();
     }
 
     function updateAdvisor(Login\AdvisorUser $advisorUser)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/UpdateAdvisor.php";
         $cmd = new Command\UpdateAdvisor($advisorUser);
         return $cmd->execute();
     }
 
     function getAdvisor($email)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/GetAdvisor.php";
         $cmd = new Command\GetAdvisor($email);
         return $cmd->execute();
     }
 
     function getAdvisors()
     {
-//        include_once dirname(dirname(__FILE__))."/Command/GetAdvisors.php";
         $cmd = new Command\GetAdvisors();
         return $cmd->execute();
     }
 
     function getAdvisorsOfDepartment($department)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/GetAdvisorsOfDepartment.php";
         $cmd = new Command\GetAdvisorsOfDepartment($department);
         return $cmd->execute();
     }
@@ -201,22 +180,16 @@ class RDBImpl implements DBImplInterface{
         }
 
         return $compositeTimeSlotArr;
-
-//          return unserialize($compositeTimeSlotArr[1])->getDate()."=====".unserialize($compositeTimeSlotArr[1])->getStartTime()."~~".unserialize($compositeTimeSlotArr[1])->getEndTime();
-
-
     }
 
     function getAdvisorSchedules(array $advisorUsers)
     {
-//        include_once dirname(dirname(__FILE__)) . "/Command/GetAdvisorSchedules.php";
         $cmd = new Command\GetAdvisorSchedules($advisorUsers,true);
         return $cmd->execute();
     }
 
     function getAdvisorWaitlistSchedules(array $advisorUsers)
     {
-//        include_once dirname(dirname(__FILE__)) . "/Command/GetAdvisorSchedules.php";
         $cmd = new Command\GetAdvisorSchedules($advisorUsers,false);
         return $cmd->execute();
     }

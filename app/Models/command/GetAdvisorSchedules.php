@@ -6,7 +6,7 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 8:04
  */
-//include_once dirname(dirname(__FILE__))."/login/AdvisorUser.php";
+use Models\bean\AdvisingSchedule;
 
 class GetAdvisorSchedules extends SQLCmd{
     private $advisors,$available;
@@ -42,6 +42,21 @@ class GetAdvisorSchedules extends SQLCmd{
     }
 
     function processResult(){
-        return $this->result;
+        $num = count($this->result);
+        $arr = array();
+        for($i=0;$i<$num;++$i){
+            $rs = $this->result[$i];
+
+            $set = new AdvisingSchedule();
+            $set->setUniqueid($rs["id"]);
+            $set->setName($rs["pName"]);
+            $set->setStartTime($rs["start"]);
+            $set->setEndTime($rs["end"]);
+            $set->setStudentId($rs["studentId"]);
+            array_push($arr, serialize($set));
+
+        }
+
+        return $arr;
     }
 }

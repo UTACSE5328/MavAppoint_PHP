@@ -7,7 +7,7 @@
  */
 
 namespace Models\Command;
-
+use Models\bean\Appointment;
 
 class GetAppointmentByStuId extends SQLCmd
 {
@@ -21,11 +21,21 @@ class GetAppointmentByStuId extends SQLCmd
     function queryDB(){
         $query = "SELECT date,start,end,type FROM appointments a 
                   WHERE a.studentId='$this->studentId' AND date ='$this->date' ";
-        $this->result = $this->conn->query($query)->fetch_assoc();
+        $this->result = $this->conn->query($query);
     }
 
     function processResult(){
-        return $this->result;
+        $arr = array();
+        while($rs = mysqli_fetch_array($this->result)){
+            $set = new Appointment();
+            $set->setAdvisingDate($rs["date"]);
+            $set->setAdvisingStartTime($rs["start"]);
+            $set->setAdvisingEndTime($rs["end"]);
+            $set->setAppointmentType($rs["type"]);
+            array_push($arr, $set);
+        }
+
+        return $arr;
     }
 
 }

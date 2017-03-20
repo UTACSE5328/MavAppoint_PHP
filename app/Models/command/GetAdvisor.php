@@ -6,8 +6,7 @@ namespace Models\Command;
  * Date: 2017/2/13
  * Time: 17:06
  */
-//include_once dirname(dirname(__FILE__))."/login/AdvisorUser.php";
-//include_once dirname(dirname(__FILE__))."/command/GetUserIdByEmail.php";
+use Models\Login\AdvisorUser;
 
 class GetAdvisor extends SQLCmd {
 	private $email;
@@ -28,6 +27,16 @@ class GetAdvisor extends SQLCmd {
 	}
 
 	function processResult() {
-		return $this->result;
+        $set = new AdvisorUser();
+        $set->setPassword($this->result["password"]);
+        $set->setValidated($this->result["validated"]);
+        $set->setPName($this->result["pName"]);
+        $set->setNameLow($this->result["name_low"]);
+        $set->setNameHigh($this->result["name_high"]);
+        $set->setDegType($this->result["degree_types"]);
+        $set->setDepartments($this->result["name"]);
+        //$set->setMajors($this->result["name1"]);
+        $set->setCutOffPreference($this->result["cutOffTime"]);
+		return ($set);
 	}
 }

@@ -23,9 +23,5 @@ abstract class TimeSlotComponent{
     abstract public function getDate();
     abstract public function getEvent($m);
     abstract public function expandTimeSlots( $tsArr);
-
-
-
-
 }
 

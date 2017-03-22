@@ -25,7 +25,7 @@ class LoginController
     public function checkAction()
     {
 
-        $email = $_REQUEST['emailAddress'];
+        $email = $_REQUEST['email'];
         $password = $_REQUEST['password'];
 //        echo "email:";
 //        echo $email."<br>";

@@ -41,7 +41,7 @@ $testAction = mav_encrypt("test");
                         <strong>Sign in to continue</strong>
                     </div>
                     <div class="panel-body">
-                        <form action="?c=<?=$loginController?>&a=<?=$checkAction?>" method="POST" role="form">
+                        <form id="loginForm" role="form">
                             <fieldset>
                                 <div class="row">
                                     <div class="center-block">
@@ -54,7 +54,7 @@ $testAction = mav_encrypt("test");
                                             <div class="input-group">
 											<span class="input-group-addon"> <i
                                                     class="glyphicon glyphicon-user"></i>
-											</span> <input type="text" class="form-control" id="email" name=emailAddress
+											</span> <input type="text" class="form-control" id="email" name=email
                                                            placeholder="yourname@mavs.uta.edu">
                                             </div>
                                         </div>

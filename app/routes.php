@@ -4,7 +4,7 @@ return [
     "login" => [
         "default" => "LoginView",
         "test" => "testView",
-        "check" => "UserView",
+        "check" => "check",
         "logout" => "IndexView",
 
     ],

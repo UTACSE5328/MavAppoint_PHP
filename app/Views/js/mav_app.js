@@ -1,6 +1,8 @@
 $(function(){
 
-    $("#signIn").on("click", function () {
+    $("#signIn").on("click", function (e) {
+        e.preventDefault();
+
         var passhash = md5($("#password").val());
         console.log(passhash);
         $.ajax({
@@ -21,6 +23,11 @@ $(function(){
                 }
             }
         });
+    });
+
+    $('#loginForm').submit(function (event) {
+        event.preventDefault();
+        window.history.back();
     });
 
     $("#createAdvisorSubmit").on("click", function(){

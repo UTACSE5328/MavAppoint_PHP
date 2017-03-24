@@ -6,6 +6,9 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 10:25
  */
+
+use Models\bean\Appointment;
+
 class GetAppointment extends SQLCmd{
     private $date,$email;
 
@@ -17,10 +20,18 @@ class GetAppointment extends SQLCmd{
     function queryDB(){
         $query = "SELECT date,start,end,type FROM appointments a,user u 
                   WHERE a.student_userid=u.userid AND u.email='$this->email' AND date >='$this->date' ORDER BY date,start LIMIT 1";
-        $this->result = $this->conn->query($query)->fetch_assoc();
+        $res          = $this->conn->query($query);
+        $this->result = mysqli_fetch_array($res);
     }
 
     function processResult(){
-        return $this->result;
+        $set = new Appointment();
+        $rs = $this->result;
+        $set->setAdvisingDate($rs["date"]);
+        $set->setAdvisingStartTime($rs["start"]);
+        $set->setAdvisingEndTime($rs["end"]);
+        $set->setAppointmentType($rs["type"]);
+
+        return $set;
     }
 }

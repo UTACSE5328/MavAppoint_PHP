@@ -13,6 +13,23 @@ class AdvisingSchedule
     private $date;
     private $startTime;
     private $endTime;
+    private $studentId;
+
+    /**
+     * @return mixed
+     */
+    public function getStudentId()
+    {
+        return $this->studentId;
+    }
+
+    /**
+     * @param mixed $studentId
+     */
+    public function setStudentId($studentId)
+    {
+        $this->studentId = $studentId;
+    }
 
     /**
      * @return mixed

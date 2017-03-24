@@ -7,6 +7,8 @@ namespace Models\Command;
  * Time: 10:43
  */
 use Models\Login as login;
+use Models\bean\Appointment;
+
 class GetAppointments extends SQLCmd{
     private $user;
 
@@ -37,17 +39,20 @@ class GetAppointments extends SQLCmd{
                        AND department_user.userId = user.userId AND appointments.advisor_userId = user.userId 
                        AND user_advisor.userId = user.userId;";
         }
-        $arr=array();
-        $res = $this->conn->query($query);
-        while($rs = mysqli_fetch_assoc($res)){
-            array_push($arr, $rs);
-        }
-        $this->result = $arr;
-//        $this->result = mysqli_fetch_assoc($res);
-//        $this->result = $this->conn->query($query)->fetch_assoc();
+        $this->result = $this->conn->query($query);
     }
 
     function processResult(){
-        return $this->result;
+        $arr = array();
+        while($rs = mysqli_fetch_array($this->result)){
+            $set = new Appointment();
+            $set->setAdvisingDate($rs["date"]);
+            $set->setAdvisingStartTime($rs["start"]);
+            $set->setAdvisingEndTime($rs["end"]);
+            $set->setAppointmentType($rs["type"]);
+            array_push($arr, $set);
+        }
+
+        return $arr;
     }
 }

@@ -27,7 +27,6 @@ class CreateAdvisor extends SQLCmd{
         $query = "INSERT INTO User_Advisor (userid,pname,notification,name_low,name_high,degree_types, cutOffTime) 
                     values('$userId','$pName','$notification','$name_low','$name_high','$degree_type','0')";
 
-//        $this->result= mysqli_query($this->conn,$query);
         $this->result = $this->conn->query($query);
     }
 

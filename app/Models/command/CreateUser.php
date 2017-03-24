@@ -19,7 +19,7 @@ class CreateUser extends SQLCmd {
 
 	function queryDB() {
 		$email    = $this->user->getEmail();
-		$password = $this->user->getPassword();
+		$password = md5($this->user->getPassword());
 		$role     = $this->user->getRole();
 
 		$query = "INSERT INTO user (email,password,role) values('$email','$password','$role')";

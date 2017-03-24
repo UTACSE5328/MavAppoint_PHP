@@ -16,12 +16,6 @@ class GetAdvisors extends SQLCmd{
     }
 
     function processResult(){
-        $arr = array();
-
-        while ($row = $this->result->fetch_assoc()) {
-            array_push($arr,$row['pname']);
-        }
-
-        return $arr;
+        return mysqli_fetch_array($this->result);
     }
 }

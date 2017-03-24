@@ -10,8 +10,21 @@ namespace App\Controllers;
 //include_once dirname(dirname(__FILE__))."/Models/login/AdvisorUser.php";
 use Models\Db as db;
 use Models\Login as login;
-class adminController
+
+
+class adminController extends BasicController
 {
+    private $email;
+    private $uid;
+    private $role;
+    function __construct()
+    {
+        session_start();
+        $this->email = isset($_SESSION['email']) ? $_SESSION['email']: null;
+        $this->uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : null;
+        $this->role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
+    }
+
     public function addAdvisorAction(){
 //        $manager = new db\DatabaseManager();
 //        $manager->getDepartments()
@@ -85,5 +98,61 @@ class adminController
 
 
     }
+
+    function showDepartmentScheduleAction()
+    {
+        if ($this->role == "admin" && $this->email != null) {
+            $dbm = new db\DatabaseManager();
+            $schedules = $dbm->getAdvisorSchedule("all");
+            if (sizeof($schedules) != 0) {
+                $validSchedule = array();
+                for ($i = 0; $i < sizeof($schedules); $i++) {
+
+                    $schedule = unserialize($schedules[$i]);
+                    $startDate = $schedule->getDate();
+                    date_default_timezone_set('UTC');
+                    $todayDate = date("Y-m-d");
+
+                    if ($startDate > $todayDate) {
+                        array_push($validSchedule, serialize($schedule));
+                    }
+
+                }
+                session_start();
+                $_SESSION['departmentSchedule'] = $validSchedule;
+
+
+            }
+
+        }
+    }
+
+
+    function deleteTimeSlotAction(){
+        $startTime = isset($_POST['StartTime2']) ? $_POST['StartTime2'] : null;
+        $endTime = isset($_POST['EndTime2']) ? $_POST['EndTime2'] : null;
+        $date = isset($_POST['Date']) ? $_POST['Date'] : null;
+        $pName = isset($_POST['pname']) ? $_POST['pname'] : null;
+        $repeat = isset($_POST['delete_repeat']) ? intval($_POST['delete_repeat']) : null;
+        $reason = isset($_POST['delete_reason']) ? $_POST['delete_reason'] : null;
+
+        $msg = DeleteTimeSlotController::deleteTimeSlot($date,$startTime,$endTime,$pName,$repeat,$reason);
+
+
+        $this->showDepartmentScheduleAction();
+
+
+
+        return [
+            "error" => 0,
+            "msg" => $msg,
+            "isDispatch" => true,
+
+
+        ];
+
+    }
+
+
 
 }

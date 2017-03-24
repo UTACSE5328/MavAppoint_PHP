@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require __DIR__ . '/vendor/autoload.php';
 
 try {
@@ -37,4 +37,3 @@ $config = require(__DIR__ . '/config/web.php');
 //$controller->$action();
 
 
-//include VIEW_PATH.'loginPage.php';

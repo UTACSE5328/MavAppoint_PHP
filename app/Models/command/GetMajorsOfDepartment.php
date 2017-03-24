@@ -16,10 +16,15 @@ class GetMajorsOfDepartment extends SQLCmd{
     function queryDB(){
         $query = "SELECT name from major where dep_name='$this->name'";
 
-        $this->result = $this->conn->query($query)->fetch_assoc();
+        $this->result          = $this->conn->query($query);
     }
 
     function processResult(){
-        return $this->result;
+        $arr = array();
+        while($rs = mysqli_fetch_array($this->result)){
+            array_push($arr, ($rs['name']));
+        }
+
+        return $arr;
     }
 }

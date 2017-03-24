@@ -1,5 +1,7 @@
 <?php
 namespace Models\Command;
+use Models\Login\LoginUser;
+
 /**
  * Created by PhpStorm.
  * User: Jarvis
@@ -19,6 +21,12 @@ class GetAdmin extends SQLCmd{
     }
 
     function processResult(){
-        return $this->result;
+        $set = new LoginUser();
+        $set->setUserId($this->result["userId"]);
+        $set->setEmail($this->result["email"]);
+        $set->setRole($this->result["role"]);
+        $set->setValidated($this->result["validated"]);
+
+        return ($set);
     }
 }

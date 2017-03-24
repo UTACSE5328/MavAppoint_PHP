@@ -9,20 +9,29 @@ use Models\Bean\GetSet;
 //session_destroy();
 //require "BasicController.php";
 //require MODEL_PATH."db/DatabaseManager.php";
-class LoginController{
-    public function defaultAction(){
+class LoginController
+{
+    public function defaultAction()
+    {
 //        return [
 //            "error" => 0,
 //            "config" => config("testKey1.testKey2"),
 //            "env" => env("DB_DATABASE")
 //        ];
-//        include VIEW_PATH.'loginPage.php';
+
+
     }
 
-    public function checkAction(){
+    public function checkAction()
+    {
 
         $email = $_REQUEST['email'];
         $password = $_REQUEST['password'];
+//        echo "email:";
+//        echo $email."<br>";
+//        echo "password:";
+//        echo $password;
+//        die();
 
         $manager = new DatabaseManager();
 
@@ -31,14 +40,14 @@ class LoginController{
         $set->setPassword($password);
         $res = $manager->checkUser($set);
 
-        if(!$res){
+        if (!$res) {
             return [
                 "error" => 1
             ];
         }
 
-        session_start();
-//        $_SESSION['email'] = $email;
+
+        $_SESSION['email'] = $email;
         $_SESSION['role'] = $res['role'];
         $_SESSION['uid'] = $manager->getUserIdByEmail($email);
 //        if($res['role']=='admin'){
@@ -70,9 +79,17 @@ class LoginController{
 
     }
 
-    public function logoutAction(){
-        session_start();
+    public function logoutAction()
+    {
+        session_unset();
         session_destroy();
+    }
+
+    public function testAction()
+    {
+        return [
+            "error" => 0
+        ];
     }
 
 }

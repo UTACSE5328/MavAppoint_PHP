@@ -17,10 +17,10 @@ class GetAdvisorsOfDepartment extends SQLCmd{
         $query = "select User_advisor.userId 
                     from user_advisor,department_user 
                     where department_user.userid=user_advisor.userid and department_user.name = '$this->dep'";
-        $this->result = $this->conn->query($query)->fetch_assoc();
+        $this->result = $this->conn->query($query);
     }
 
     function processResult(){
-        return $this->result;
+        return mysqli_fetch_array($this->result);
     }
 }

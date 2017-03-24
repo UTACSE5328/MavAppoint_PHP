@@ -6,6 +6,8 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 7:15
  */
+use Models\login\StudentUser;
+
 class GetStudent extends SQLCmd {
 	private $email;
 
@@ -26,6 +28,15 @@ class GetStudent extends SQLCmd {
 	}
 
 	function processResult() {
-		return $this->result;
+	    $set = new StudentUser();
+	    $set->setStudentId($this->result["student_id"]);
+        $set->setDegType($this->result["degree_type"]);
+        $set->setPhoneNumber($this->result["phone_num"]);
+        $set->setLastNameInitial($this->result["last_name_initial"]);
+        $set->setNotification($this->result["notification"]);
+        $set->setPassword($this->result["password"]);
+        $set->setValidated($this->result["validated"]);
+
+		return ($set);
 	}
 }

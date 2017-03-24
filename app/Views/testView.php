@@ -1,5 +1,5 @@
 <?php
-namespace Models\test;
+
 /**
  * Created by PhpStorm.
  * User: Jarvis
@@ -14,7 +14,7 @@ $manager = new db\DatabaseManager();
 
 echo "getUserIdByEmail</br>";
 $res = $manager->getUserIdByEmail("admin@uta.edu");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "createUser</br>";
@@ -26,7 +26,7 @@ $user->setRole("student");
 $user->setMajors(array("m1"));
 $user->setDepartments(array("dep1"));
 $res = $manager->createUser($user);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "CreateStudent</br>";
@@ -39,12 +39,12 @@ $studentUser->setPhoneNumber("1231321111");
 $studentUser->setLastNameInitial("A");
 $studentUser->setNotification("Yes");
 $res = $manager->createStudent($studentUser);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getStudent</br>";
 $res = $manager->getStudent("shaoying.li@mavs.uta.edu");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "createAdvisor</br>";
@@ -57,17 +57,17 @@ $advisorUser->setNameLow("a");
 $advisorUser->setNameHigh("b");
 $advisorUser->setDegType("1");
 $res = $manager->createAdvisor($advisorUser);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getAdvisor</br>";
 $res = $manager->getAdvisor("ad1@uta.edu");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getAdvisors</br>";
 $res = $manager->getAdvisors();
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "AddAppointmentType</br>";
@@ -77,13 +77,13 @@ $at->setType("type_test");
 $at->setDuration("10");
 $at->setEmail("ad1@uta.edu");
 $res = $manager->addAppointmentType($advisorUser, $at);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "DeleteAppointmentType</br>";
 //include_once dirname(dirname(__FILE__))."/bean/AppointmentType.php";
 $res = $manager->deleteAppointmentType($advisorUser, $at);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "CheckUser</br>";
@@ -92,22 +92,22 @@ $set = new bean\GetSet();
 $set->setEmail("cathysui307@gmail.com");
 $set->setPassword("123456789");
 $res = $manager->checkUser($set);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getAdmin</br>";
 $res = $manager->getAdmin("cathysui307@gmail.com");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getFaculty</br>";
 $res = $manager->getFaculty("cathysui307@gmail.com");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "updatePassword</br>";
 $res = $manager->updatePassword("cathysui307@gmail.com", "123456789");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "createAppointment</br>";
@@ -122,24 +122,32 @@ $apt->setAppointmentType("1");
 $apt->setDescription("description");
 $apt->setStudentPhoneNumber("1111111111");
 $res = $manager->createAppointment($apt, "shaoying.li@mavs.uta.edu");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
+
+
+//echo "getAdvisorSchedule</br>";
+//$name = "Lin Gao";
+//$res = $manager->getAdvisorSchedule($name);
+//var_dump($res);
+//echo '</br>';
+//echo "==============================</br>";
 
 echo "getAdvisorSchedules</br>";
 $arr = array('test4');
 $res = $manager->getAdvisorSchedules($arr);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getAdvisorWaitlistSchedules</br>";
 $arr = array('Lin Gao');
 $res = $manager->getAdvisorWaitlistSchedules($arr);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getAppointment</br>";
 $res = $manager->getAppointment("2017-02-14", "shaoying.li@mavs.uta.edu");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getAppointments</br>";
@@ -147,62 +155,62 @@ $studentUser = new login\StudentUser();
 $studentUser->setEmail("shaoying.li@mavs.uta.edu");
 $studentUser->setUserId("99");
 $res = $manager->getAppointments($studentUser);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getAppointmentTypes</br>";
 $res = $manager->getAppointmentTypes('Lin Gao');
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "updateAppointment</br>";
 $res = $manager->updateAppointment($apt);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "cancelAppointments</br>";
 $res = $manager->cancelAppointment('1');
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getMajor</br>";
 $res = $manager->getMajor(null);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getAdvisorsOfDepartment</br>";
 $res = $manager->getAdvisorsOfDepartment('CSE');
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "updateAdvisor</br>";
 $res = $manager->updateAdvisor($advisorUser);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "updateUser</br>";
 $res = $manager->updateUser($user);
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "deleteAdvisor</br>";
 $res = $manager->deleteAdvisor('8');
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "updateNotification</br>";
 $res = $manager->updateUserNotification($advisorUser, "new notice");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getDepartment</br>";
 $res = $manager->getDepartment("98");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getMajorsOfDepartment</br>";
 $res = $manager->getMajorsOfDepartment("CSE");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "addTimeSlot</br>";
@@ -212,7 +220,7 @@ $time->setDate("2016-02-22");
 $time->setStartTime("10:55");
 $time->setEndTime("11:15");
 $res = $manager->addTimeSlot($time, '99');
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "deleteTimeSlot</br>";
@@ -221,10 +229,10 @@ $time->setDate("2016-02-22");
 $time->setStartTime("10:55");
 $time->setEndTime("11:15");
 $res = $manager->deleteTimeSlot($time, '99');
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "setCutOffTime</br>";
 $res = $manager->setCutOffTime("99","1");
-echo json_encode($res).'</br>';
+var_dump($res);echo '</br>';
 echo "==============================</br>";

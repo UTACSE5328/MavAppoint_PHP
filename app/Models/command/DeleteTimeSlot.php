@@ -8,23 +8,22 @@ namespace Models\Command;
  */
 use Models\Bean\AllocateTime;
 class DeleteTimeSlot extends SQLCmd{
-    private $time, $id;
+    private $time;
 
-    function __construct(AllocateTime $time, $id) {
+    function __construct(AllocateTime $time) {
         $this->time = $time;
-        $this->id = $id;
+
     }
 
     function queryDB(){
         $date = $this->time->getDate();
         $start = $this->time->getStartTime();
         $end = $this->time->getEndTime();
+        $pname = $this->time->getEmail();// 'email' of the AllocateTime object stored pname
 
-        $query = "DELETE from Advising_schedule 
-                    WHERE userId = '$this->id'
-                    AND date = '$date'
-                    AND start >= '$start'
-                    AND end <= '$end'";
+        $query = "DELETE a FROM advising_schedule a JOIN User_Advisor b ON a.userid=b.userid WHERE date='$date' AND start >='$start' AND end <='$end'"
+            ."AND b.pname='$pname'";
+
         $this->result = $this->conn->query($query);
     }
 

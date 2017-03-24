@@ -20,10 +20,15 @@ class GetDepartment extends SQLCmd{
         else
             $query = "select name from department_user where userId ='$this->id'";
 
-        $this->result = $this->conn->query($query)->fetch_assoc();
+        $this->result = $this->conn->query($query);
     }
 
     function processResult(){
-        return $this->result;
+        $arr = array();
+        while($rs = mysqli_fetch_array($this->result)){
+            array_push($arr, ($rs['name']));
+        }
+
+        return $arr;
     }
 }

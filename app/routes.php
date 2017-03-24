@@ -3,19 +3,24 @@
 return [
     "login" => [
         "default" => "LoginView",
+        "test" => "testView",
         "check" => "check",
         "logout" => "IndexView",
+
     ],
     "index" => [
         "default" => "IndexView"
     ],
     "admin" => [
         "addAdvisor" => "CreateAdvisorView",
-        "createNewAdvisor" => "createNewAdvisor"
+        "createNewAdvisor" => "createNewAdvisor",
+        "showDepartmentSchedule" => "DepartmentScheduleView",
+        "deleteTimeSlot" => "DepartmentScheduleView",
     ],
     "advisor" => [
-        "ShowSchedule" => "advisor_update_schedule",
-        "AddTimeSlot" =>  "advisor_update_schedule"
+        "showSchedule" => "AdvisorScheduleView",
+        "addTimeSlot" =>  "AdvisorScheduleView",
+        "deleteTimeSlot" => "AdvisorScheduleView"
 
     ]
 ];

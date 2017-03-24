@@ -188,6 +188,11 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
+    function getStudentByNetID($netid){
+        $cmd = new Command\GetStudentByNetID($netid);
+        return $cmd->execute();
+    }
+
     function getAdmin($email)
     {
 //        include_once dirname(dirname(__FILE__)) . "/Command/GetAdmin.php";

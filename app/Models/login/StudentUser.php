@@ -11,6 +11,7 @@ Class StudentUser extends LoginUser{
     private $studentId;
     private $phoneNumber;
     private $lastNameInitial;
+    private $carrier;
     private $notification;
 
     /**

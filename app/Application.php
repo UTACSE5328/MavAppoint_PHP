@@ -27,7 +27,7 @@ class Application
 
         $c = isset($_REQUEST['c']) ? mav_decrypt($_REQUEST['c']) : "index"; //Default Login
         $a = isset($_REQUEST['a']) ? mav_decrypt($_REQUEST['a']) : "default"; //Use defaultAction() as default
-//        echo $c."<br>".$a."<br>";
+
         if(isset(self::$container["route"][$c]) && isset(self::$container["route"][$c][$a])){
             $controller = "App\\Controllers\\" . ucfirst($c) . "Controller";
             $controller = new $controller();

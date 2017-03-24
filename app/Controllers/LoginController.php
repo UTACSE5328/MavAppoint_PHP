@@ -46,9 +46,7 @@ class LoginController
             ];
         }
 
-        if (!isset($_SESSION)) {
-            session_start();
-        }
+
         $_SESSION['email'] = $email;
         $_SESSION['role'] = $res['role'];
         $_SESSION['uid'] = $manager->getUserIdByEmail($email);
@@ -83,10 +81,8 @@ class LoginController
 
     public function logoutAction()
     {
-        if (!isset($_SESSION)) {
-            session_start();
-            session_destroy();
-        }
+        session_unset();
+        session_destroy();
     }
 
     public function testAction()

@@ -12,6 +12,17 @@ use Models\Login as login;
 use Models\Bean as bean;
 $manager = new db\DatabaseManager();
 
+echo "getCSEStudent</br>";
+$res = $manager->getCSEStudent("1001455617");
+var_dump($res);echo '</br>';
+echo "==============================</br>";
+
+echo "getCSEUser</br>";
+$res = $manager->getCSEUser("User1");
+var_dump($res);echo '</br>';
+echo "==============================</br>";
+
+
 echo "getUserIdByEmail</br>";
 $res = $manager->getUserIdByEmail("admin@uta.edu");
 var_dump($res);echo '</br>';

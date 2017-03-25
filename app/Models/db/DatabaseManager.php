@@ -14,6 +14,14 @@ class DatabaseManager{
         $this->impl = new RDBImpl();
     }
 
+    function getCSEUser($pName){
+        return $this->impl->getCSEUser($pName);
+    }
+
+    function getCSEStudent($studentId){
+        return $this->impl->getCSEStudent($studentId);
+    }
+
     function setCutOffTime($id, $time){
         return $this->impl->setCutOffTime($id,$time);
     }

@@ -56,4 +56,7 @@ interface DBImplInterface
     function getDepartment($id);
     function getMajorsOfDepartment($name);
     function getMajor($id);
+
+    function getCSEUser($pName);
+    function getCSEStudent($studentId);
 }

@@ -6,8 +6,6 @@
  * Time: 22:12
  */
 namespace Models\Command;
-//include_once dirname(dirname(__FILE__))."/login/LoginUser.php";
-//include_once dirname(dirname(__FILE__))."/command/GetUserIdByEmail.php";
 use Models\Login as login;
 
 class CreateUser extends SQLCmd {

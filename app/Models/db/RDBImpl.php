@@ -280,9 +280,17 @@ class RDBImpl implements DBImplInterface{
 
     function getMajor($id)
     {
-//        include_once dirname(dirname(__FILE__)) . "/Command/GetMajor.php";
         $cmd = new Command\GetMajor($id);
         return $cmd->execute();
     }
 
+    function getCSEUser($pName){
+        $cmd = new Command\GetCSEUser($pName);
+        return $cmd->execute();
+    }
+
+    function getCSEStudent($studentId){
+        $cmd = new Command\GetCSEStudent($studentId);
+        return $cmd->execute();
+    }
 }

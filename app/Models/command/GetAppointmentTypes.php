@@ -28,7 +28,7 @@ class GetAppointmentTypes extends SQLCmd{
             $set = new AppointmentType();
             $set->setType($rs["type"]);
             $set->setDuration($rs["duration"]);
-            $set->setType($rs["type"]);
+            $set->setEmail($rs["email"]);
             array_push($arr, ($set));
         }
 

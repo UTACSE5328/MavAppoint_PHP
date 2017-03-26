@@ -13,7 +13,7 @@ $manager = new db\DatabaseManager();
 
 echo "getAdvisorsOfDepartment</br>";
 $res = $manager->getAdvisorsOfDepartment("CSE");
-var_dump($res);echo '</br>';
+print_r($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getCSEStudent</br>";

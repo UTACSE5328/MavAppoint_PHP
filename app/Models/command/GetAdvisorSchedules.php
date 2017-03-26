@@ -54,7 +54,6 @@ class GetAdvisorSchedules extends SQLCmd{
             $set->setEndTime($rs["end"]);
             $set->setStudentId($rs["studentId"]);
             array_push($arr, serialize($set));
-
         }
 
         return $arr;

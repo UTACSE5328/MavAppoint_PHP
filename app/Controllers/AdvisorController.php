@@ -26,56 +26,37 @@ class advisorController extends BasicController
     }
 
     function showScheduleAction(){;
-//        $processSchedule = new ProcessAdvisorSchedule();
-//        $advisor = $processSchedule->getAdvisor($this->email);
-//        $arr =array();
-//        array_push($arr,$advisor['pName']);
-//        return $processSchedule->getModifiedSchedulesForShow($arr);
-
         if($this->role =="advisor" && $this->email!=null){
             $dbm = new DatabaseManager();
             $advisor = $dbm->getAdvisor($this->email);
-            $schedules = $dbm->getAdvisorSchedule($advisor['pName']);
-            if(sizeof($schedules)!=0){
-                $validSchedule = array();
-                for($i=0;$i<sizeof($schedules);$i++){
+            $scheduleObjectArr = $dbm->getAdvisorSchedule($advisor->getPName());
+            if (sizeof($scheduleObjectArr) != 0) {
+                $schedules = array();
+                for ($i = 0; $i < sizeof($scheduleObjectArr); $i++) {
 
-                    $schedule = unserialize($schedules[$i]);
-                    $startDate = $schedule->getDate();
-                    date_default_timezone_set('UTC');
-                    $todayDate = date("Y-m-d");
-
-                    if($startDate>$todayDate)
-                    {
-                        array_push($validSchedule, serialize($schedule));
-                    }
+                    $scheduleObject = $scheduleObjectArr[$i];
+                    array_push($schedules,
+                        [
+                            "title" => $scheduleObject->getName(),
+                            "start" => $scheduleObject->getDate() . "T" . $scheduleObject->getStartTime(),
+                            "end" => $scheduleObject->getDate() . "T" . $scheduleObject->getEndTime(),
+                            "id" => $i,
+                            "backgroundColor" => 'blue'
+                        ]
+                    );
 
                 }
-                if (!isset($_SESSION)) {
-                    session_start();
-                }
-                $_SESSION['schedule'] = $validSchedule;
 
 
             }
-
-
-
-//            if(isset($schedule)){
-//                session_start();
-//                $_SESSION['schedule'] = $schedule;
-//            }
-
         }
-
-
         return [
             "error" => 0,
             "data" => [
                 "email" =>$this->email,
-                "advisorName" => $advisor['pName'],
+                "advisorName" => $advisor->getPName(),
                 "role" => $this->role,
-                "validSchedule" =>$validSchedule
+                "schedule" =>$schedules
             ]
         ];
 
@@ -95,19 +76,34 @@ class advisorController extends BasicController
         }catch (\Exception $e){
             $rep = 0;
         }
-        $dbm->addTimeSlot($time, $this->uid);
+
+        date_default_timezone_set('America/Chicago');
+        $todayDate = date("Y-m-d");
+        if($time->getDate()<=$todayDate){
+            return[
+                "error" => 0,
+                "dispatch" => "failure",
+            ];
+        }
+        $flag = $dbm->addTimeSlot($time, $this->uid);
         for($i=0;$i<$rep;$i++){
             $time->setDate(TimeSlotHelper::addDate($time->getDate(),1) );
-            $dbm->addTimeSlot($time, $this->uid);
+            $flag = $dbm->addTimeSlot($time, $this->uid);
         }
 
+        if($flag == false){
+            return[
+                "error" => 0,
+                "dispatch" => "failure",
+            ];
+        }
+        else
+            return[
+                "error" => 0,
+                "dispatch" => "success",
+            ];
 
 
-        $this->showScheduleAction();
-        return[
-          "error" => 0,
-            "isDispatch" => true,
-        ];
 
 
 
@@ -124,14 +120,14 @@ class advisorController extends BasicController
 
         $msg = DeleteTimeSlotController::deleteTimeSlot($date,$startTime,$endTime,$pName,$repeat,$reason);
 
-        $this->showScheduleAction();
+
 
 
 
         return [
             "error" => 0,
             "msg" => $msg,
-            "isDispatch" => true,
+            "dispatch" => "success",
 
 
         ];

@@ -11,15 +11,21 @@ include ("template/header.php");
 session_start();
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : "visitor";
 include ("template/" . $role . "_navigation.php");
-$schedule = isset($_SESSION['departmentSchedule']) ? $_SESSION['departmentSchedule'] : null;
+//$schedule = isset($_SESSION['departmentSchedule']) ? $_SESSION['departmentSchedule'] : null;
 $content = json_decode($content, true);
-$isDispatch = isset($content['isDispatch']) ? $content['isDispatch'] : false;
-if($isDispatch){   ?>
+$schedule = isset($content['data']['schedule']) ? $content['data']['schedule'] : null;
+$dispatch = isset($content['dispatch']) ? $content['dispatch'] : null;
+if($dispatch=="success") { ?>
     <script type='text/javascript'>
-        window.location.href="app/Views/success.php";
+        window.location.href = "app/Views/success.php";
     </script>
-    <?php  unset($content['isDispatch']);
-                }  ?>
+    <?php unset($content['dispatch']);
+        };
+    if($dispatch == "failure"){?>
+    <script type='text/javascript'>
+        window.location.href="app/Views/failure.php";
+    </script>
+<?php  unset($content['dispatch']); } ?>
 
 
 
@@ -68,19 +74,11 @@ if($isDispatch){   ?>
                         updateAppt.submit();
                     }
                 },
-                events: [
-                    <?php for($i=0; $i<sizeof($schedule); $i++) { $scheduleObject=unserialize($schedule[$i]); ?>
-                    {
-                        title:'<?php echo $scheduleObject->getName(); ?>',
-                        start:'<?php echo $scheduleObject->getDate()."T".$scheduleObject->getStartTime(); ?>',
-                        end:'<?php echo $scheduleObject->getDate()."T".$scheduleObject->getEndTime(); ?>',
-                        id:<?=$i?>,
-                        backgroundColor: 'blue'
-                    } <?php if($i!= sizeof($schedule) - 1) {?> ,  <?php }?>
-                    <?php }?>
+                events: <?=json_encode($schedule) ?>
 
 
-                ] <?php } ?>
+
+                 <?php } ?>
 
             });
         });

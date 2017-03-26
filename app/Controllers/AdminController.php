@@ -103,28 +103,36 @@ class adminController extends BasicController
     {
         if ($this->role == "admin" && $this->email != null) {
             $dbm = new db\DatabaseManager();
-            $schedules = $dbm->getAdvisorSchedule("all");
-            if (sizeof($schedules) != 0) {
-                $validSchedule = array();
-                for ($i = 0; $i < sizeof($schedules); $i++) {
+            $scheduleObjectArr = $dbm->getAdvisorSchedule("all");
+            if (sizeof($scheduleObjectArr) != 0) {
+                $schedules = array();
+                for ($i = 0; $i < sizeof($scheduleObjectArr); $i++) {
 
-                    $schedule = unserialize($schedules[$i]);
-                    $startDate = $schedule->getDate();
-                    date_default_timezone_set('UTC');
-                    $todayDate = date("Y-m-d");
-
-                    if ($startDate > $todayDate) {
-                        array_push($validSchedule, serialize($schedule));
-                    }
+                    $scheduleObject = $scheduleObjectArr[$i];
+                    array_push($schedules,
+                        [
+                            "title" => $scheduleObject->getName(),
+                            "start" => $scheduleObject->getDate() . "T" . $scheduleObject->getStartTime(),
+                            "end" => $scheduleObject->getDate() . "T" . $scheduleObject->getEndTime(),
+                            "id" => $i,
+                            "backgroundColor" => 'blue'
+                        ]
+                        );
 
                 }
-                session_start();
-                $_SESSION['departmentSchedule'] = $validSchedule;
 
 
             }
 
         }
+        return [
+            "error" => 0,
+            "data" => [
+                "email" =>$this->email,
+                "role" => $this->role,
+                "schedule" =>$schedules
+            ]
+        ];
     }
 
 
@@ -139,14 +147,13 @@ class adminController extends BasicController
         $msg = DeleteTimeSlotController::deleteTimeSlot($date,$startTime,$endTime,$pName,$repeat,$reason);
 
 
-        $this->showDepartmentScheduleAction();
 
 
 
         return [
             "error" => 0,
             "msg" => $msg,
-            "isDispatch" => true,
+            "dispatch" => "success",
 
 
         ];

@@ -147,20 +147,20 @@ class RDBImpl implements DBImplInterface{
     function getAdvisorSchedule($name)
     {
         $PrimitiveTimeSlotArr = array();
+        $scheduleForDisplay = array();
         try {
             $conn = $this->connectDB();
-            if($name === "all"){
+            if ($name === "all") {
                 $command = "SELECT pname,date,start,end,id FROM user,Advising_Schedule,User_Advisor "
-                . "WHERE user.userid=User_Advisor.userid AND user.userid=Advising_Schedule.userid AND studentId is null";
-            }
-            else{
+                    . "WHERE user.userid=User_Advisor.userid AND user.userid=Advising_Schedule.userid AND studentId is null";
+            } else {
                 $command = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor "
                     . "WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$name' AND studentId is null";
             }
 
             $res = $conn->query($command);
 
-            while($rs = mysqli_fetch_assoc($res)){
+            while ($rs = mysqli_fetch_assoc($res)) {
                 $set = new PrimitiveTimeSlot();
                 $set->setName($rs["pname"]);
                 $set->setDate($rs["date"]);
@@ -173,12 +173,36 @@ class RDBImpl implements DBImplInterface{
             $compositeTimeSlotArr = Helper\TimeSlotHelper::createCompositeTimeSlot($PrimitiveTimeSlotArr);
 
 
+            for ($i = 0; $i < sizeof($compositeTimeSlotArr); $i++) {
+                $scheduleObject = unserialize($compositeTimeSlotArr[$i]);
+                $startDate = $scheduleObject->getDate();
+                date_default_timezone_set('America/Chicago');
+                $todayDate = date("Y-m-d");
+                if($startDate>$todayDate)
+                {
+                    array_push($scheduleForDisplay,$scheduleObject);
+//                    array_push($scheduleForDisplay,
+//                        [
+//                            "title" => $scheduleObject->getName(),
+//                            "start" => $scheduleObject->getDate() . "T" . $scheduleObject->getStartTime(),
+//                            "end" => $scheduleObject->getDate() . "T" . $scheduleObject->getEndTime(),
+//                            "id" => $id++,
+//                            "backgroundColor" => 'blue'
+//                        ]
+//                    );
+                }
+
+
+
+            }
             $conn->close();
 
         } catch (\Exception $e) {
 
         }
-        return $compositeTimeSlotArr;
+//        echo json_encode($scheduleForDisplay);
+//        die();
+        return $scheduleForDisplay;
     }
 
     function getAdvisorSchedules(array $advisorUsers)

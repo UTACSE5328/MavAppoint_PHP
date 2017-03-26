@@ -6,7 +6,6 @@
  * Date: 2017/2/13
  * Time: 17:25
  */
-////include dirname(dirname(__FILE__))."/db/DatabaseManager.php";
 use Models\Db as db;
 use Models\Login as login;
 use Models\Bean as bean;
@@ -215,7 +214,7 @@ var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getDepartment</br>";
-$res = $manager->getDepartment("98");
+$res = $manager->getDepartment(null);
 var_dump($res);echo '</br>';
 echo "==============================</br>";
 

@@ -6,6 +6,8 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 7:06
  */
+use Models\Login\AdvisorUser;
+
 class GetAdvisors extends SQLCmd{
     function __construct() {
     }
@@ -16,6 +18,11 @@ class GetAdvisors extends SQLCmd{
     }
 
     function processResult(){
-        return mysqli_fetch_array($this->result);
+        $arr = array();
+        while($rs = mysqli_fetch_array($this->result)){
+            array_push($arr, $rs['pname']);
+        }
+
+        return $arr;
     }
 }

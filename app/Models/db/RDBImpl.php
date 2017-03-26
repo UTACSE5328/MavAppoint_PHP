@@ -178,7 +178,6 @@ class RDBImpl implements DBImplInterface{
         } catch (\Exception $e) {
 
         }
-
         return $compositeTimeSlotArr;
     }
 
@@ -196,28 +195,24 @@ class RDBImpl implements DBImplInterface{
 
     function deleteAdvisor($id)
     {
-//        include_once dirname(dirname(__FILE__)) . "/Command/DeleteAdvisor.php";
         $cmd = new Command\DeleteAdvisor($id);
         return $cmd->execute();
     }
 
     function updateNotification($user, $notification)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/UpdateNotification.php";
         $cmd = new Command\UpdateNotification($user,$notification);
         return $cmd->execute();
     }
 
     function createStudent(Login\StudentUser $user)
     {
-//        include_once dirname(dirname(__FILE__))."/Command/CreateStudent.php";
         $cmd = new Command\CreateStudent($user);
         return $cmd->execute();
     }
 
     function getStudent($email)
     {
-//        include_once dirname(dirname(__FILE__)) . "/Command/GetStudent.php";
         $cmd = new Command\GetStudent($email);
 
         return $cmd->execute();

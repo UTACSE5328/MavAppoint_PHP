@@ -25,6 +25,12 @@ class RDBImpl implements DBImplInterface{
         return null;
     }
 
+    function getStudentEmails()
+    {
+        $cmd = new Command\GetStudentEmails();
+        return $cmd->execute();
+    }
+
     function setCutOffTime($id, $time)
     {
         $cmd = new Command\SetCutOffTime($time, $id);

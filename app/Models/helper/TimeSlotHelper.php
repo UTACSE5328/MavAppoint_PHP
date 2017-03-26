@@ -159,7 +159,6 @@ class TimeSlotHelper {
      * @return mixed: same format as input
      */
     public static function createCompositeTimeSlot($TimeSlotComponentArray){
-//        require_once dirname(dirname(__FILE__))."/PrimitiveTimeSlot.php";
         if(sizeof($TimeSlotComponentArray) ==1 ){
             return $TimeSlotComponentArray;
         }
@@ -199,6 +198,5 @@ class TimeSlotHelper {
             }
         }
         return $fin;
-
     }
 }

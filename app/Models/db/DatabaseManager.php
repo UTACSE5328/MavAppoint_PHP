@@ -14,6 +14,10 @@ class DatabaseManager{
         $this->impl = new RDBImpl();
     }
 
+    function getStudentEmails(){
+        return $this->impl->getStudentEmails();
+    }
+
     function getCSEUser($pName){
         return $this->impl->getCSEUser($pName);
     }

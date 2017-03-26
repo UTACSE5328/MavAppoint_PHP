@@ -59,4 +59,6 @@ interface DBImplInterface
 
     function getCSEUser($pName);
     function getCSEStudent($studentId);
+
+    function getStudentEmails();
 }

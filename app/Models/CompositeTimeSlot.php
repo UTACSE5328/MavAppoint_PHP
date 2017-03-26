@@ -11,7 +11,23 @@ namespace Models;
 
 class CompositeTimeSlot extends TimeSlotComponent
 {
-    private $children;// an Array stored TimeSlotComponent
+    private $children;
+
+    /**
+     * @return array
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param array $children
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }// an Array stored TimeSlotComponent
 
     function __construct()
     {

@@ -9,7 +9,16 @@
 use Models\Db as db;
 use Models\Login as login;
 use Models\Bean as bean;
+
+use Models\CompositeTimeSlot;
+
+
 $manager = new db\DatabaseManager();
+
+echo "getStudentEmails</br>";
+$res = $manager->getStudentEmails();
+print_r($res);echo '</br>';
+echo "==============================</br>";
 
 echo "getAdvisorsOfDepartment</br>";
 $res = $manager->getAdvisorsOfDepartment("CSE");

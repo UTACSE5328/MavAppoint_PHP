@@ -21,25 +21,25 @@
     <script src=âhttp://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.jsâ></script>
     <![endif]â>
     <link rel="stylesheet"
-          href="components/bootstrap3/css/bootstrap.css">
-    <link rel="stylesheet" href="components/bootstrap3/css/bootstrap-datetimepicker.min.css">
-    <link href="components/mavappoint.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="../css/fullcalendar.css">
-    <link rel="icon" href="../img/mavlogo.gif" type="image/x-icon">
+          href="app/Views/components/bootstrap3/css/bootstrap.css">
+    <link rel="stylesheet" href="app/Views/components/bootstrap3/css/bootstrap-datetimepicker.min.css">
+    <link href="app/Views/components/mavappoint.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="app/Views/css/fullcalendar.css">
+    <link rel="icon" href="app/Views/img/mavlogo.gif" type="image/x-icon">
 
-    <script type="text/javascript" src="../js/lib/md5.js"></script>
-    <script type="text/javascript" src="components/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="app/Views/js/lib/md5.js"></script>
+    <script type="text/javascript" src="app/Views/components/jquery/jquery.min.js"></script>
     <script type="text/javascript"
-            src="components/underscore/underscore-min.js"></script>
+            src="app/Views/components/underscore/underscore-min.js"></script>
     <script type="text/javascript"
-            src="components/bootstrap3/js/bootstrap.min.js"></script>
+            src="app/Views/components/bootstrap3/js/bootstrap.min.js"></script>
     <script type="text/javascript"
-            src="components/jstimezonedetect/jstz.min.js"></script>
-    <script type="text/javascript" src="../js/lib/moment.min.js"></script>
-    <script type="text/javascript" src="../js/fullcalendar.js"></script>
-    <script type="text/javascript" src="../js/mav_app.js"></script>
+            src="app/Views/components/jstimezonedetect/jstz.min.js"></script>
+    <script type="text/javascript" src="app/Views/js/lib/moment.min.js"></script>
+    <script type="text/javascript" src="app/Views/js/fullcalendar.js"></script>
+    <script type="text/javascript" src="app/Views/js/mav_app.js"></script>
     <script type="text/javascript"
-            src="components/bootstrap3/js/bootstrap-datetimepicker.min.js"></script>
+            src="app/Views/components/bootstrap3/js/bootstrap-datetimepicker.min.js"></script>
 </head>
 <!--<%String load = new String();-->
 <!--if (request.getRequestURI().contains("assignstudents")){-->
@@ -55,6 +55,4 @@
             <a class="navbar-brand" href="/MavAppoint_PHP"> <b> <font
                         style="color: #e67e22" size="6"> MavAppoint </font></b></a>
         </div>
-    </div>
-</nav>
 

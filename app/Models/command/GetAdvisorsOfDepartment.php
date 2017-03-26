@@ -30,8 +30,8 @@ class GetAdvisorsOfDepartment extends SQLCmd{
             $user->setUserId($rs['userId']);
             $user->setPName($rs['pName']);
             $user->setNotification($rs['notification']);
-            $user->setNameLow($rs['nameLow']);
-            $user->setNameHigh($rs['nameHigh']);
+            $user->setNameLow($rs['name_low']);
+            $user->setNameHigh($rs['name_high']);
             $user->setDegType($rs['degree_types']);
             $user->setCutOffPreference($rs['cutOffTime']);
             $user->setEmail($rs['email']);

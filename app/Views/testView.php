@@ -11,6 +11,11 @@ use Models\Login as login;
 use Models\Bean as bean;
 $manager = new db\DatabaseManager();
 
+echo "getAdvisorsOfDepartment</br>";
+$res = $manager->getAdvisorsOfDepartment("CSE");
+var_dump($res);echo '</br>';
+echo "==============================</br>";
+
 echo "getCSEStudent</br>";
 $res = $manager->getCSEStudent("1001455617");
 var_dump($res);echo '</br>';
@@ -214,7 +219,7 @@ var_dump($res);echo '</br>';
 echo "==============================</br>";
 
 echo "getDepartment</br>";
-$res = $manager->getDepartment(null);
+$res = $manager->getDepartment("102");
 var_dump($res);echo '</br>';
 echo "==============================</br>";
 

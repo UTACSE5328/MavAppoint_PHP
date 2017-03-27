@@ -3,9 +3,6 @@ namespace Models\Db;
 
 use Models\Bean as bean;
 use Models\Login as login;
-//use Models\Bean\GetSet;
-
-//include_once dirname(__FILE__)."/RDBImpl.php";
 
 class DatabaseManager{
     private $impl;

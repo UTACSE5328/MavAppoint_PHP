@@ -7,17 +7,14 @@
  */
 
 namespace Test;
-
-
 use Models\Db\DatabaseManager;
-
 
 class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function test1(){
         $dbManager = new DatabaseManager();
         /** @var AdvisorUser[] $res */
-        $res = $dbManager->getAdvisorsOfDepartment("CSE");
+        $res = $dbManager->getAdmin("cathysui307@gmail.com");
         var_dump($res);
     }
 }

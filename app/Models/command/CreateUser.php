@@ -28,20 +28,12 @@ class CreateUser extends SQLCmd {
 			$id           = ($cmd->execute());
 
 			$majors = $this->user->getMajors();
-			$num    = count($majors);
-			for ($i = 0; $i < $num; ++$i) {
-				$major = $majors[$i];
-				$query = "INSERT INTO major_user (name, userId) VALUE ('$major','$id')";
-				$this->conn->query($query);
-			}
+            $query = "INSERT INTO major_user (name, userId) VALUE ('$majors','$id')";
+            $this->conn->query($query);
 
 			$departments = $this->user->getDepartments();
-			$num         = count($departments);
-			for ($i = 0; $i < $num; ++$i) {
-				$dep   = $departments[$i];
-				$query = "INSERT INTO department_user (name, userId) VALUES ('$dep','$id')";
-				$this->conn->query($query);
-			}
+            $query = "INSERT INTO department_user (name, userId) VALUES ('$departments','$id')";
+            $this->conn->query($query);
 
             $this->result = $id;
 		}

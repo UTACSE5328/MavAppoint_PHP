@@ -3,6 +3,11 @@ namespace Models\Db;
 
 use Models\Bean as bean;
 use Models\Login as login;
+use Models\TimeSlotComponent;
+
+//use Models\Bean\GetSet;
+
+//include_once dirname(__FILE__)."/RDBImpl.php";
 
 class DatabaseManager{
     private $impl;
@@ -75,6 +80,10 @@ class DatabaseManager{
         return $this->impl->getUserIdByEmail($email);
     }
 
+    /**
+     * @param $email
+     * @return login\AdvisorUser
+     */
     function getAdvisor($email){
         return $this->impl->getAdvisor($email);
     }
@@ -83,10 +92,18 @@ class DatabaseManager{
         return $this->impl->getAdvisors();
     }
 
+    /**
+     * @param $dep
+     * @return login\AdvisorUser[]
+     */
     function getAdvisorsOfDepartment($dep){
         return $this->impl->getAdvisorsOfDepartment($dep);
     }
 
+    /**
+     * @param string $email
+     * @return login\StudentUser
+     */
     function getStudent($email){
         return $this->impl->getStudent($email);
     }
@@ -134,10 +151,18 @@ class DatabaseManager{
         return $this->impl->getAppointmentByStuId($id,$date);
     }
 
+    /**
+     * @param login\LoginUser $user
+     * @return bean\Appointment[]
+     */
     function getAppointments(login\LoginUser $user){
         return $this->impl->getAppointments($user);
     }
 
+    /**
+     * @param $pName
+     * @return bean\AppointmentType[]
+     */
     function getAppointmentTypes($pName){
         return $this->impl->getAppointmentTypes($pName);
     }

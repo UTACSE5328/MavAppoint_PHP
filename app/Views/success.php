@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gaolin
- * Date: 3/20/17
- * Time: 1:12 AM
- */
 
 include("template/no_header.php");
 ?>

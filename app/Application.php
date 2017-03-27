@@ -33,7 +33,7 @@ class Application
             $controller = new $controller();
             $action = $a . "Action";
             $content = json_encode($controller->$action());
-
+//print_r($content);die();
             $action = self::$container["route"][$c][$a];
             if($action == $a) {
                 echo $content;

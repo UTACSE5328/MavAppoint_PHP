@@ -2,15 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: Jarvis
- * Date: 2017/3/26
- * Time: 13:10
+ * Date: 2017/3/27
+ * Time: 14:10
  */
 
 namespace Test;
 
 
 use Models\Db\DatabaseManager;
-use Models\Login\AdvisorUser;
 
 
 class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
@@ -19,11 +18,6 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $dbManager = new DatabaseManager();
         /** @var AdvisorUser[] $res */
         $res = $dbManager->getAdvisorsOfDepartment("CSE");
-
-//        foreach ($res as $advisorUser){
-            $this->assertEquals($res[0]->getPName(), "abcd");
-//        }
-
+        var_dump($res);
     }
-//    $res = $manager->getAdvisorsOfDepartment("CSE");
 }

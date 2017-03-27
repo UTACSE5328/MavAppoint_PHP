@@ -43,6 +43,7 @@ abstract class SQLCmd {
 	abstract function processResult();
 
 	function disconnect() {
-		$this->conn->close();
+	    if($this->conn)
+		    $this->conn->close();
 	}
 }

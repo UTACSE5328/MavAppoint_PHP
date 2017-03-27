@@ -46,6 +46,7 @@ class BasicController
         $mail->Body =$msg;
 //        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
         foreach ($emailArr as $email){
+            $mail->clearAddresses();
             $mail->addAddress($email);     // Add a recipient
             if(!$mail->send()) {
                 echo 'Message could not be sent.';

@@ -23,11 +23,17 @@ class CreateUser extends SQLCmd {
 		$query = "INSERT INTO user (email,password,role) values('$email','$password','$role')";
 		$res   = $this->conn->query($query);
 
+
+
+
 		if ($res == true) {
 			$cmd          = new GetUserIdByEmail($email);
 			$id           = ($cmd->execute());
 
+
 			$majors = $this->user->getMajors();
+
+
             $query = "INSERT INTO major_user (name, userId) VALUE ('$majors','$id')";
             $this->conn->query($query);
 
@@ -36,6 +42,7 @@ class CreateUser extends SQLCmd {
             $this->conn->query($query);
 
             $this->result = $id;
+
 		}
 	}
 

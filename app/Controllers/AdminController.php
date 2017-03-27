@@ -144,7 +144,14 @@ class adminController extends BasicController
         $repeat = isset($_POST['delete_repeat']) ? intval($_POST['delete_repeat']) : null;
         $reason = isset($_POST['delete_reason']) ? $_POST['delete_reason'] : null;
 
-        $msg = DeleteTimeSlotController::deleteTimeSlot($date,$startTime,$endTime,$pName,$repeat,$reason);
+        DeleteTimeSlotController::deleteTimeSlot($date,$startTime,$endTime,$pName,$repeat,$reason);
+        $dbm = new db\DatabaseManager();
+        $emailSubject = 'MavAppoint: Advisor\'s advising time has been cancelled!';
+        $studentEmails = $dbm->getStudentEmails();
+
+        $msg = "Advising time of advisor " .$pName. ": " . $date. "  ". $startTime . "~" .$endTime." has been cancelled."
+            ."\n" ."Reason: ". $reason  ;
+        $this->notifyAllStudent($emailSubject,$msg,$studentEmails);
 
 
 

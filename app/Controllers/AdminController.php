@@ -58,11 +58,14 @@ class adminController extends BasicController
 
         $loginUser = new login\LoginUser();
         $loginUser->setEmail($email);
-        $loginUser->setPassword("12345678");
+        $loginUser->setPassword("password");
         $loginUser->setRole("advisor");
         $loginUser->setDepartments(($department));
+        $loginUser->setMajors("Software Engineering");
+
 
         $id = $manager->createUser($loginUser);
+
 
         $Advisor = new login\AdvisorUser();
         $Advisor->setUserId($id);
@@ -73,12 +76,16 @@ class adminController extends BasicController
         $Advisor->setDegType("7");
 
         $res=$manager->createAdvisor($Advisor);
+
+
         if($res)
         {
             return [
                 "error" => 0,
                 "data" => [
-                    "message" => "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password"
+                    "message" => "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password",
+
+
                 ]
             ];
 //            return "Advisor created successfully. An email has been sent to the advisor's account with his/her temporary password";

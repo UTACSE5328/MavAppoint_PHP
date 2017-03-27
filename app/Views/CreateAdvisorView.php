@@ -40,7 +40,7 @@ $createNewAdvisorAction = mav_encrypt("createNewAdvisor");
                     <select id="drp_department" name="drp_department" class="btn btn-default btn-lg dropdown-toggle">
                         <?php
                         foreach ($departments as $department){?>
-                            <option value=<?=1?> >
+                            <option value=<?=$department['name']?> >
                                 <?=$department['name']?>
                             </option>
                         <?php } ?>

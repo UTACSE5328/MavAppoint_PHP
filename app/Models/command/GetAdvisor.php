@@ -24,6 +24,7 @@ class GetAdvisor extends SQLCmd {
                       WHERE USER.userId='$id' and User_Advisor.userId='$id' and Department_User.userId='$id' and Major_User.userId='$id'";
 
 		$this->result = $this->conn->query($query)->fetch_assoc();
+
 	}
 
 	function processResult() {
@@ -37,6 +38,8 @@ class GetAdvisor extends SQLCmd {
         $set->setDepartments($this->result["name"]);
         //$set->setMajors($this->result["name1"]);
         $set->setCutOffPreference($this->result["cutOffTime"]);
+
+
 		return ($set);
 	}
 }

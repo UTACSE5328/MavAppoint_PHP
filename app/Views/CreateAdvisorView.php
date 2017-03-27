@@ -1,6 +1,9 @@
 <?php
 include ("template/header.php");
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
+
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : "visitor";
 include ("template/" . $role . "_navigation.php");
 $content = json_decode($content, true);

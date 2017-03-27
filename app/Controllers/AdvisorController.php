@@ -26,12 +26,14 @@ class advisorController extends BasicController
     }
 
     function showScheduleAction(){;
+        $schedules = array();
         if($this->role =="advisor" && $this->email!=null){
             $dbm = new DatabaseManager();
             $advisor = $dbm->getAdvisor($this->email);
             $scheduleObjectArr = $dbm->getAdvisorSchedule($advisor->getPName());
             if (sizeof($scheduleObjectArr) != 0) {
-                $schedules = array();
+
+
                 for ($i = 0; $i < sizeof($scheduleObjectArr); $i++) {
 
                     $scheduleObject = $scheduleObjectArr[$i];

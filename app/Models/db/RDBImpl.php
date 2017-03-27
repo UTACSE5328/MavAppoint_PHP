@@ -9,22 +9,7 @@ use Models\PrimitiveTimeSlot as PrimitiveTimeSlot;
 use Models\Helper as Helper;
 
 class RDBImpl implements DBImplInterface{
-
-    function connectDB() {
-        try {
-            $conn = new \mysqli(
-                env("DB_HOST"),
-                env("DB_USERNAME"),
-                env("DB_PASSWORD"),
-                env("DB_DATABASE"));
-
-            return $conn;
-        } catch (\Exception $e) {
-            echo "Can not connect DB.";
-        }
-        return null;
-    }
-
+    
     function getStudentEmails()
     {
         $cmd = new Command\GetStudentEmails();

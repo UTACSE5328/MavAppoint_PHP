@@ -32,10 +32,8 @@ abstract class SQLCmd {
 
 	function connectDB() {
 		$this->conn = new \mysqli(
-			env("DB_HOST"),
-			env("DB_USERNAME"),
-			env("DB_PASSWORD"),
-			env("DB_DATABASE"));
+		    "localhost","root","1234","mavappointdb2s");
+            //env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE"));
 	}
 
 	abstract function queryDB();

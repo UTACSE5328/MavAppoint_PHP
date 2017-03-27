@@ -19,11 +19,12 @@ class CreateAppointment extends SQLCmd {
 	function queryDB() {
 		$query = "SELECT userid from user where email='$this->email'";
 		$res   = $this->conn->query($query)->fetch_assoc();
-		$id    = $res['userid'];
+		$userId    = $res['userid'];
 
-		$query  = "SELECT notification from user_student where userId='$id'";
+		$query  = "SELECT student_Id,notification from user_student where userId='$userId'";
 		$res    = $this->conn->query($query)->fetch_assoc();
 		$notify = $res['notification'];
+        $studentId = $res['student_Id'];
 
 		$pName     = $this->apt->getPname();
 		$query     = "SELECT userid FROM User_Advisor WHERE User_Advisor.pname='$pName'";
@@ -47,22 +48,23 @@ class CreateAppointment extends SQLCmd {
 		$phone       = $this->apt->getStudentPhoneNumber();
 
 		$query = "SELECT COUNT(*) FROM Advising_Schedule
-                    WHERE userid='$aptId' AND date='$date' AND start='$start' AND end='$end' AND studentId is not null";
-		if ($this->conn->query($query)->fetch_assoc() > 0) {
+                    WHERE userid='$advisorId' AND date='$date' 
+                    AND start>='$start' AND end<='$end' AND studentId is not null";
+		if ($this->conn->query($query)->fetch_assoc()['COUNT(*)'] == 0) {
+            $flag = true;
+
 			$query = "INSERT INTO Appointments
                       (id,advisor_userid,student_userid,date,start,end,type,studentId,description,student_email,student_cell)
-                      VALUES('$aptId','$advisorId','$id','$date','$start','$end','$type','$id','$description','$this->email','$phone')";
-			$this->conn->query($query);
+                      VALUES('$aptId','$advisorId','$userId','$date','$start','$end','$type','$studentId','$description','$this->email','$phone')";
+            $flag = $flag && $this->conn->query($query);
 
-			$query = "UPDATE Advising_Schedule SET
-                      studentId='$id' where userid='$advisorId' AND date='$date' and start >= '$start' and end <= '$end'";
+            if($flag) {
+                $query = "UPDATE Advising_Schedule SET
+                      studentId='$studentId' where userid='$advisorId' AND date='$date' and start >= '$start' and end <= '$end'";
+                $flag = $flag && $this->conn->query($query);
+            }
 
-			if ($this->conn->query($query) == true) {
-				$success = true;
-			} else {
-				$success = false;
-			}
-
+            $success = $flag;
 		} else {
 			$success = false;
 		}

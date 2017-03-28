@@ -22,5 +22,11 @@ return [
         "addTimeSlot" =>  "AdvisorScheduleView",
         "deleteTimeSlot" => "AdvisorScheduleView"
 
+    ],
+    "advising" => [
+        "getAdvisingInfo" => "AdvisingView",
+        "schedule" => "ScheduleView",
+        "makeAppointment" => "makeAppointment",
+        "success" => "SuccessView"
     ]
 ];

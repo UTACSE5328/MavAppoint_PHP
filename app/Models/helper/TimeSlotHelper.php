@@ -2,6 +2,7 @@
 namespace Models\Helper;
 
 use Models\CompositeTimeSlot;
+use Models\PrimitiveTimeSlot;
 
 
 class TimeSlotHelper {
@@ -174,14 +175,12 @@ class TimeSlotHelper {
                 $fin_ip1 = unserialize($fin[$i+1]);
                 $fin_k = unserialize($fin[$k]);
 
-                if( $fin_i->getEndTime() === $fin_k->getStartTime() &&
-                    $fin_i->getName() === $fin_ip1->getName() ){
+                if( $fin_i->getEndTime() === $fin_k->getStartTime() && $fin_i->getName() === $fin_ip1->getName() ){
                     $result = false;
                     $cts = new CompositeTimeSlot();
                     $cts->add($fin_i);
                     $h = $k;
-                    while($cts->getEndTime() === $fin_k->getStartTime() &&
-                        $fin_i->getName() === $fin_ip1->getName() ) {
+                    while($cts->getEndTime() === $fin_k->getStartTime() && $fin_i->getName() === $fin_ip1->getName() ) {
                         if ($fin_i->getName() === $fin_k->getName() ) { //don't group different user slots together
                             $cts->add($fin_k);
                             $h++;
@@ -190,13 +189,54 @@ class TimeSlotHelper {
                             break;
                     }
                     for ($j=$i+1;$j<$h;$j++){
-                        unset($fin[$i+1]);
+                        array_splice($fin, $i+1, 1);
+//                        unset($fin[$i+1]);
                     }
-                    array_splice($fin, $i, 1, serialize($cts) );  //fin.set(i, cts);
+                    $fin[$i] = serialize($cts);
+//                    array_splice($fin, $i, 1, serialize($cts) );  //fin.set(i, cts);
 
                 }
             }
         }
         return $fin;
+    }
+
+    public static function createCompositeTimeSlots($timeSlotComponentArray) {
+        if (count($timeSlotComponentArray) == 1) {
+            return $timeSlotComponentArray;
+        }
+
+        $arr = array();
+        foreach ($timeSlotComponentArray as $slot) {
+
+        }
+    }
+
+    public static function createCompositeTimeSlot2($TimeSlotComponentArray){
+        $arr = array();
+        $newComponent = new CompositeTimeSlot();
+
+        for($i = 0; $i < count($TimeSlotComponentArray); $i ++){
+            /** @var PrimitiveTimeSlot $children */
+            $children = unserialize($TimeSlotComponentArray[$i]);
+
+//            if ($children->getDate() . " " . $children->getStartTime() == "2017-04-05 15:00:00") echo "hehe" . "<br>";
+            if(count($newComponent->getChildren()) == 0){
+//                echo ">>>>>>>>" . $children->getDate() . " " . $children->getStartTime() . "<br>";
+                $newComponent->add($children);
+            }elseif($newComponent->getEndTime() == $children->getStartTime()
+                && $newComponent->getDate() == $children->getDate()){
+                $newComponent->add($children);
+            }else{
+                array_push($arr, serialize($newComponent));
+                $newComponent = new CompositeTimeSlot();
+                $i--;
+            }
+
+        }
+
+        array_push($arr, serialize($newComponent));
+
+        return $arr;
     }
 }

@@ -165,3 +165,48 @@ function my_simple_crypt( $string, $action = 'e' ) {
 
     return $output;
 }
+
+function mav_mail($subject, $content, $toArray) {
+    $mail = new PHPMailer();
+
+    //$mail->SMTPDebug = 3;                               // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 465;                                    // TCP port to connect to
+    $mail->Username = config("emailUsername");                 // SMTP username
+    $mail->Password = config("emailPassword");            // SMTP password
+    $mail->CharSet = 'UTF-8';
+    $mail->FromName= "CSESpring2017";
+    $mail->Subject = $subject;
+    $mail->Body =$content;
+
+    foreach ($toArray as $email){
+        $mail->clearAllRecipients();
+        $mail->addAddress($email);     // Add a recipient
+        if(!$mail->send()) {
+            return 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+        }
+    }
+
+    return "";
+}
+
+function convertMonth($month) {
+    switch ($month) {
+        case "Jan" : return "01";
+        case "Feb" : return "02";
+        case "Mar" : return "03";
+        case "Apr" : return "04";
+        case "May" : return "05";
+        case "Jun" : return "06";
+        case "Jul" : return "07";
+        case "Aug" : return "08";
+        case "Sep" : return "09";
+        case "Oct" : return "10";
+        case "Nov" : return "11";
+        case "Dec" : return "12";
+    }
+    return null;
+}

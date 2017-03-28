@@ -156,12 +156,11 @@ class adminController extends BasicController
 
         DeleteTimeSlotController::deleteTimeSlot($date,$startTime,$endTime,$pName,$repeat,$reason);
         $dbm = new db\DatabaseManager();
-        $emailSubject = 'MavAppoint: Advisor\'s advising time has been cancelled!';
         $studentEmails = $dbm->getStudentEmails();
-
-        $msg = "Advising time of advisor " .$pName. ": " . $date. "  ". $startTime . "~" .$endTime." has been cancelled."
+        $emailSubject = 'MavAppoint: Advisor\'s advising time has been cancelled!';
+        $msg = "Advising time slot of advisor " .$pName. " on " . $date. " at ". $startTime . "-" .$endTime." has been cancelled."
             ."\n" ."Reason: ". $reason  ;
-        $this->notifyAllStudent($emailSubject,$msg,$studentEmails);
+        mav_mail($emailSubject,$msg,$studentEmails);
 
 
 

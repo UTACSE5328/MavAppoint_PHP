@@ -4,7 +4,7 @@ include ("template/header.php");
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : "visitor";
 include ("template/" . $role . "_navigation.php");
 $advisingController = mav_encrypt("advising");
-$getSchedulesAction = mav_encrypt("getSchedules");
+$getAdvisingInfoAction = mav_encrypt("getSchedules");
 ?>
 
 
@@ -14,9 +14,9 @@ $getSchedulesAction = mav_encrypt("getSchedules");
         <h1><font style="color: #e67e22;font-size:72px;"> Mav-Appointment </font></h1>
         <p>This advising system is used by University of Texas at Arlington only.</p>
         <?php if($role == ""){ ?>
-        <a href="?c=<?=$advisingController?>&a=<?=$getSchedulesAction?>" class="btn btn-primary btn-lg">Make an appointment Now!</a>
+        <a href="?c=<?=$advisingController?>&a=<?=$getAdvisingInfoAction?>" class="btn btn-primary btn-lg">Make an appointment Now!</a>
         <?php	}else if($role != "advisor" && $role != "admin"){ ?>
-        <a href="?c=<?=$advisingController?>&a=<?=$getSchedulesAction?>" class="btn btn-primary btn-lg">Make an appointment Now!</a>
+        <a href="?c=<?=$advisingController?>&a=<?=$getAdvisingInfoAction?>" class="btn btn-primary btn-lg">Make an appointment Now!</a>
         <?php } ?>
 
     </div>

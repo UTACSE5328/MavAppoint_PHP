@@ -52,26 +52,21 @@ $testAction = mav_encrypt("test");
                                     <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                         <div class="form-group">
                                             <div class="input-group">
-											<span class="input-group-addon"> <i
-                                                    class="glyphicon glyphicon-user"></i>
-											</span> <input type="text" class="form-control" id="email" name=email
-                                                           placeholder="yourname@mavs.uta.edu">
+											<span class="input-group-addon"> <i class="glyphicon glyphicon-user"></i></span>
+                                                <input type="text" class="form-control" id="email" name=email placeholder="yourname@mavs.uta.edu">
                                             </div>
                                         </div>
+
                                         <div class="form-group">
                                             <div class="input-group">
-											<span class="input-group-addon"> <i
-                                                    class="glyphicon glyphicon-lock"></i>
-											</span> <input type="password" class="form-control" id="password" name=password>
+											<span class="input-group-addon"> <i class="glyphicon glyphicon-lock"></i></span>
+                                                <input type="password" class="form-control" id="password" name=password>
                                             </div>
                                         </div>
-                                        <div class="form-group">
 
-                                            <input id="signIn" type="submit" name="signIn" class="btn btn-lg btn-primary btn-block"
-                                                   value="Sign in">
-                                            <input type="submit" name="forgotPassword"
-                                                   class="btn btn-lg btn-primary btn-block"
-                                                   value="Forgot Password">
+                                        <div class="form-group">
+                                            <input id="signIn" type="submit" name="signIn" class="btn btn-lg btn-primary btn-block" value="Sign in">
+                                            <input type="submit" name="forgotPassword" class="btn btn-lg btn-primary btn-block" value="Forgot Password">
                                         </div>
                                     </div>
                                 </div>

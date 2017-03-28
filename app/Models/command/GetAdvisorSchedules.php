@@ -6,7 +6,9 @@ namespace Models\Command;
  * Date: 2017/2/14
  * Time: 8:04
  */
-use Models\bean\AdvisingSchedule;
+
+use Models\Helper\TimeSlotHelper;
+use Models\PrimitiveTimeSlot;
 
 class GetAdvisorSchedules extends SQLCmd{
     private $advisors,$available;
@@ -23,9 +25,13 @@ class GetAdvisorSchedules extends SQLCmd{
             $advisor = $this->advisors[$i];
 
             if($this->available)
-                $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor 
-                            WHERE User_Advisor.userid=Advising_Schedule.userid 
-                            AND User_Advisor.pname='$advisor' ";
+//                $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor
+//                            WHERE User_Advisor.userid=Advising_Schedule.userid
+//                            AND User_Advisor.pname='$advisor' ";
+                $query = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor
+                          WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid
+                          AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname= '$advisor' AND studentId is null";
+
             else
                 $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor 
                             WHERE User_Advisor.userid=Advising_Schedule.userid 
@@ -43,19 +49,21 @@ class GetAdvisorSchedules extends SQLCmd{
 
     function processResult(){
         $num = count($this->result);
-        $arr = array();
+        $PrimitiveTimeSlotArr = array();
         for($i=0;$i<$num;++$i){
             $rs = $this->result[$i];
 
-            $set = new AdvisingSchedule();
-            $set->setUniqueid($rs["id"]);
-            $set->setName($rs["pName"]);
+            $set = new PrimitiveTimeSlot();
+            $set->setName($rs["pname"]);
+            $set->setDate($rs["date"]);
             $set->setStartTime($rs["start"]);
             $set->setEndTime($rs["end"]);
-            $set->setStudentId($rs["studentId"]);
-            array_push($arr, serialize($set));
+            $set->setUniqueid($rs["id"]);
+            array_push($PrimitiveTimeSlotArr, serialize($set));
         }
 
-        return $arr;
+        $compositeTimeSlotArr = TimeSlotHelper::createCompositeTimeSlot2($PrimitiveTimeSlotArr);
+
+        return $compositeTimeSlotArr;
     }
 }

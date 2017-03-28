@@ -125,9 +125,10 @@ class advisorController extends BasicController
         $dbm = new DatabaseManager();
         $studentEmails = $dbm->getStudentEmails();
         $emailSubject = 'MavAppoint: Advisor\'s advising time has been cancelled!';
-        $msg = "Advising time of advisor " .$pName. ": " . $date. "  ". $startTime . "~" .$endTime." has been cancelled."
+        $msg = "Advising time slot of advisor " .$pName. " on " . $date. " at ". $startTime . "-" .$endTime." has been cancelled."
             ."\n" ."Reason: ". $reason  ;
-            $this->notifyAllStudent($emailSubject,$msg,$studentEmails);
+        mav_mail($emailSubject,$msg,$studentEmails);
+
 
 
 
@@ -138,6 +139,14 @@ class advisorController extends BasicController
             "dispatch" => "success",
 
 
+        ];
+    }
+
+    public function successAction(){
+        return [
+            "error" => 0,
+            //TODO: change url
+            "data" => "http://localhost/MavAppoint_PHP/?c=" . mav_encrypt("advidor") . "&a=" . mav_encrypt("showSchedule")
         ];
     }
 

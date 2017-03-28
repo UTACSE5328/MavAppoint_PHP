@@ -140,7 +140,7 @@ class RDBImpl implements DBImplInterface{
         $PrimitiveTimeSlotArr = array();
         $scheduleForDisplay = array();
         try {
-            $conn = $this->connectDB();
+            $conn = new \mysqli( env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE"));
             if ($name === "all") {
                 $command = "SELECT pname,date,start,end,id FROM user,Advising_Schedule,User_Advisor "
                     . "WHERE user.userid=User_Advisor.userid AND user.userid=Advising_Schedule.userid AND studentId is null";

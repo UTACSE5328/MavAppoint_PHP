@@ -18,7 +18,7 @@ class RDBImpl implements DBImplInterface{
 
     function setCutOffTime($id, $time)
     {
-        $cmd = new Command\SetCutOffTime($time, $id);
+        $cmd = new Command\SetCutOffTime($id, $time);
         return $cmd->execute();
     }
 
@@ -58,9 +58,9 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
-    function addAppointmentType(Login\AdvisorUser $user, Bean\AppointmentType $type)
+    function addAppointmentType($userId, Bean\AppointmentType $type)
     {
-        $cmd = new Command\AddAppointmentType($type, $user->getUserId());
+        $cmd = new Command\AddAppointmentType($userId,$type);
         return $cmd->execute();
     }
 
@@ -70,9 +70,9 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
-    function deleteAppointmentType(Login\AdvisorUser $user, Bean\AppointmentType $type)
+    function deleteAppointmentType($userId, Bean\AppointmentType $type)
     {
-        $cmd = new Command\DeleteAppointmentType($type, $user->getUserId());
+        $cmd = new Command\DeleteAppointmentType($userId,$type);
         return $cmd->execute();
     }
 

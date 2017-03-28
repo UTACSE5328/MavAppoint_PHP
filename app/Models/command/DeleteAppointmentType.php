@@ -11,7 +11,7 @@ use Models\Bean\AppointmentType;
 class DeleteAppointmentType extends SQLCmd{
     private $at,$id;
 
-    function __construct(AppointmentType $at, $id) {
+    function __construct($id,AppointmentType $at) {
         $this->at = $at;
         $this->id = $id;
     }
@@ -25,6 +25,9 @@ class DeleteAppointmentType extends SQLCmd{
     }
 
     function processResult(){
-        return $this->result;
+        if ($this->conn->affected_rows > 0)
+            return true;
+        else
+            return false;
     }
 }

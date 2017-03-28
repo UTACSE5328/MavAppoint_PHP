@@ -16,22 +16,27 @@ class GetCSEUser extends SQLCmd
     private $Fname;
     private $user;
 
-    function __construct($Fname) {
+    function __construct($Fname)
+    {
         $this->Fname = $Fname;
         $this->user = new AdvisorUser();
     }
 
-    function queryDB(){
+    function queryDB()
+    {
         $query = "SELECT * FROM cse_users where Fname='$this->Fname'";
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
 
-    function processResult(){
-        $this->user->setPName($this->result["Fname"]);
-        $this->user->setRole($this->result["UsrRole"]);
-        $this->user->setEmail($this->result["Email"]);
-        $this->user->setPassword($this->result["Pwd"]);
-
-        return ($this->user);
+    function processResult()
+    {
+        if ($this->result != null) {
+            $this->user->setPName($this->result["Fname"]);
+            $this->user->setRole($this->result["UsrRole"]);
+            $this->user->setEmail($this->result["Email"]);
+            $this->user->setPassword($this->result["Pwd"]);
+            return ($this->user);
+        } else
+            return ($this->result);
     }
 }

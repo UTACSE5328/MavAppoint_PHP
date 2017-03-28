@@ -7,21 +7,30 @@
  */
 namespace Models\Command;
 
-class SetCutOffTime extends SQLCmd{
+class SetCutOffTime extends SQLCmd
+{
 
-    private $time,$id;
+    private $time, $id;
 
-    function __construct($time, $id) {
+    function __construct($id, $time)
+    {
         $this->id = $id;
         $this->time = $time;
     }
 
-    function queryDB(){
-        $query = "UPDATE  user_advisor set cutofftime = '$this->time' where userId = '$this->id'";
-        $this->result = $this->conn->query($query);
+    function queryDB()
+    {
+        if ($this->time >= 0) {
+            $query = "UPDATE  user_advisor set cutofftime = '$this->time' where userId = '$this->id'";
+            $this->result = $this->conn->query($query);
+        }
     }
 
-    function processResult(){
-        return $this->result;
+    function processResult()
+    {
+        if ($this->conn->affected_rows > 0)
+            return true;
+        else
+            return false;
     }
 }

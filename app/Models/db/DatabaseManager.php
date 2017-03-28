@@ -27,8 +27,8 @@ class DatabaseManager{
         return $this->impl->setCutOffTime($id,$time);
     }
 
-    function addAppointmentType(login\AdvisorUser $user, bean\AppointmentType $at){
-       return $this->impl->addAppointmentType($user,$at);
+    function addAppointmentType($userId, bean\AppointmentType $at){
+       return $this->impl->addAppointmentType($userId,$at);
     }
 
     function createAppointment(bean\Appointment $apt, $email){
@@ -63,8 +63,8 @@ class DatabaseManager{
         return $this->impl->checkUser($set);
     }
 
-    function deleteAppointmentType(login\AdvisorUser $user, bean\AppointmentType $at){
-        return $this->impl->deleteAppointmentType($user,$at);
+    function deleteAppointmentType($userId, bean\AppointmentType $at){
+        return $this->impl->deleteAppointmentType($userId,$at);
     }
 
     function deleteAdvisor($id){

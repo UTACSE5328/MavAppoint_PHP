@@ -18,9 +18,9 @@ interface DBImplInterface
     function getAppointment($d,$e);
     function getAppointments($user);
 
-    function addAppointmentType(login\AdvisorUser $user, bean\AppointmentType $type);
+    function addAppointmentType($userId, bean\AppointmentType $type);
     function getAppointmentTypes($pName);
-    function deleteAppointmentType(login\AdvisorUser $user, bean\AppointmentType $type);
+    function deleteAppointmentType($userId, bean\AppointmentType $type);
 
     function createUser(login\LoginUser $user);
     function updateUser(login\LoginUser $user);

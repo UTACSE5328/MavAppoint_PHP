@@ -23,9 +23,6 @@ class CreateUser extends SQLCmd {
 		$query = "INSERT INTO user (email,password,role) values('$email','$password','$role')";
 		$res   = $this->conn->query($query);
 
-
-
-
 		if ($res == true) {
 			$cmd          = new GetUserIdByEmail($email);
 			$id           = ($cmd->execute());

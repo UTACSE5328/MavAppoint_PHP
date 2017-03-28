@@ -23,10 +23,13 @@ class UpdateNotification extends SQLCmd{
         }else{
             $query = "UPDATE user_student SET notification = '$this->notification' WHERE userId = '$id'";
         }
-        $this->result = $this->conn->query($query);
+        $this->conn->query($query);
     }
 
     function processResult(){
-        return $this->result;
+        if(mysqli_affected_rows($this->conn) > 0)
+            return true;
+        else
+            return false;
     }
 }

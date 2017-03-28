@@ -29,6 +29,9 @@ class UpdateAdvisor extends SQLCmd{
     }
 
     function processResult(){
-        return $this->result;
+        if(mysqli_affected_rows($this->conn) > 0)
+            return true;
+        else
+            return false;
     }
 }

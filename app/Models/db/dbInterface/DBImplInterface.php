@@ -61,4 +61,6 @@ interface DBImplInterface
     function getCSEStudent($studentId);
 
     function getStudentEmails();
+    function getWaitListScheduleCount($aptId);
+    function setWaitListSchedule(bean\Appointment $apt);
 }

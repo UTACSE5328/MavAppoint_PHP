@@ -17,7 +17,7 @@ class UpdateUser extends SQLCmd{
     function queryDB(){
         $id = $this->user->getUserId();
         $email = $this->user->getEmail();
-        $password = $this->user->getPassword();
+        $password = md5($this->user->getPassword());
         $role = $this->user->getRole();
         $validate = $this->user->getRole();
 
@@ -27,6 +27,9 @@ class UpdateUser extends SQLCmd{
     }
 
     function processResult(){
-        return $this->result;
+        if(mysqli_affected_rows($this->conn) == 0)
+            return false;
+        else
+            return true;
     }
 }

@@ -11,7 +11,7 @@ class UpdatePassword extends SQLCmd {
 
 	function __construct($email, $password) {
 		$this->email    = $email;
-		$this->password = $password;
+		$this->password = md5($password);
 	}
 
 	function queryDB() {

@@ -9,7 +9,19 @@ use Models\PrimitiveTimeSlot as PrimitiveTimeSlot;
 use Models\Helper as Helper;
 
 class RDBImpl implements DBImplInterface{
-    
+
+    function setWaitListSchedule(Bean\Appointment $apt)
+    {
+        $cmd = new Command\SetWaitListSchedule($apt);
+        return $cmd->execute();
+    }
+
+    function getWaitListScheduleCount($aptId)
+    {
+        $cmd = new Command\GetWaitListScheduleCount($aptId);
+        return $cmd->execute();
+    }
+
     function getStudentEmails()
     {
         $cmd = new Command\GetStudentEmails();
@@ -36,8 +48,16 @@ class RDBImpl implements DBImplInterface{
 
     function cancelAppointment($id)
     {
-        $cmd = new Command\CancelAppointment($id);
-        return $cmd->execute();
+        $checkWaitListCmd = new Command\GetWaitListSchedule($id);
+        $apt = $checkWaitListCmd->execute();
+
+        if($apt == null){
+            $cmd = new Command\CancelAppointment($id);
+            return $cmd->execute();
+        }else{
+            $cmd = new Command\UpdateAppointment($apt);
+            return $cmd->execute();
+        }
     }
 
     function getAppointment($d, $e)

@@ -25,7 +25,12 @@ class AddAppointmentType extends SQLCmd{
             $duration = $this->at->getDuration();
 
             $query = "INSERT INTO Appointment_Types (userid, type, duration) values('$this->id','$type','$duration')";
-            $this->result = $this->conn->query($query);
+            $this->conn->query($query);
+
+            if(mysqli_affected_rows($this->conn) > 0)
+                $this->result = true;
+            else
+                $this->result = false;
         }else
             $this->result = false;
     }

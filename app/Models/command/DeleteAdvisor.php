@@ -33,11 +33,11 @@ class DeleteAdvisor extends SQLCmd{
         $query = "DELETE FROM user_advisor WHERE userId = '$this->id'";
         $this->conn->query($query);
 
-        /*
-        $query = "DELETE FROM user WHERE userId = '$this->id'";
-        $this->conn->query($query);*/
 
-        $this->result = true;
+        if(mysqli_affected_rows($this->conn) == 0)
+            $this->result = false;
+        else
+            $this->result = true;
     }
 
     function processResult(){

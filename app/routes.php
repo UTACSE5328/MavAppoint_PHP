@@ -25,8 +25,12 @@ return [
     ],
     "advising" => [
         "getAdvisingInfo" => "AdvisingView",
-        "schedule" => "ScheduleView",
+        "schedule" => "ScheduleView"
+    ],
+    "appointment" => [
         "makeAppointment" => "makeAppointment",
-        "success" => "SuccessView"
+        "success" => "SuccessView",
+        "showAppointment" => "AppointmentView",
+        "cancelAppointment" => "cancelAppointment"
     ]
 ];

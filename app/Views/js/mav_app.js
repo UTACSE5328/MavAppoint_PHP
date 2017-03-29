@@ -67,7 +67,7 @@ $(function(){
             url: "/MavAppoint_PHP/",
             type: "post",
             data: {
-                c : $("#advisingController").val(),
+                c : $("#appointmentController").val(),
                 a : $("#makeAppointmentAction").val(),
                 appointmentId : $("#appointmentId").val(),
                 appointmentType : $("#appointmentType").val(),
@@ -83,13 +83,42 @@ $(function(){
             success: function(data){
                 var data = JSON.parse(data);
                 if (data.error == 0) {
-                    window.location.href = "/MavAppoint_PHP?c=" + $("#advisingController").val() + "&a=" + $("#successAction").val();
+                    window.location.href = "/MavAppoint_PHP?c=" + $("#appointmentController").val() + "&a=" + $("#successAction").val()
+                        + "&nc=advising&na=getAdvisingInfo";
                 }else{
                     //TODO redirect to failure page
-                    alert("advising error");
+                    alert("Make appointment error");
                 }
             }
         });
+    });
+
+    $(".cancelButton").click(function(){
+        var confirmMessage = 'Are you sure you want to delete this appointment?';
+        if (confirm(confirmMessage)) {
+            var appointmentId = $(this).attr("value");
+
+            $.ajax({
+                url: "/MavAppoint_PHP/",
+                type: "post",
+                data: {
+                    c : $("#appointmentController").val(),
+                    a : $("#cancelAppointmentAction").val(),
+                    appointmentId : appointmentId
+                },
+                success: function(data){
+                    var data = JSON.parse(data);
+                    if (data.error == 0) {
+                        window.location.href = "/MavAppoint_PHP?c=" + $("#appointmentController").val() + "&a=" + $("#successAction").val()
+                        + "&nc=appointment&na=showAppointment";
+                    }else{
+                        //TODO redirect to failure page
+                        alert("Cancel appointment error");
+                    }
+                }
+            });
+        }
+
     });
 
 });

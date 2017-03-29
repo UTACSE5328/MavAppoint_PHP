@@ -3,7 +3,9 @@ include("template/header.php");
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : "visitor";
 include("template/" . $role . "_navigation.php");
 $advisingController = mav_encrypt("advising");
+$appointmentController = mav_encrypt("appointment");
 $scheduleAction = mav_encrypt("schedule");
+$showAppointmentAction = mav_encrypt("showAppointment");
 
 $content = json_decode($content, true);
 $departments = $content['data']['departments'];
@@ -231,14 +233,17 @@ if(count($advisors) == 0) {
 
 
             <form name=addAppt method="get">
-                <input type="hidden" name=c value="<?=$advisingController?>">
-                <input type="hidden" name=a value="<?=$scheduleAction?>">
-                <input type="hidden" name=id1 id="id1">
-                <input type="hidden" name=pname id="pname">
-                <input type="hidden" name=advisor_email id="advisor_email">
+                <input type="hidden" name="c" value="<?=$advisingController?>">
+                <input type="hidden" name="a" value="<?=$scheduleAction?>">
+                <input type="hidden" name="id1" id="id1">
+                <input type="hidden" name="pname" id="pname">
+                <input type="hidden" name="advisor_email" id="advisor_email">
             </form>
 
-            <form name=updateAppt action="appointments" method="get"></form>
+            <form name=updateAppt method="get">
+                <input type="hidden" name=c value="<?=$appointmentController?>">
+                <input type="hidden" name=a value="<?=$showAppointmentAction?>">
+            </form>
 
             <br /> <br />
             <hr>

@@ -161,6 +161,14 @@ class DatabaseManager{
     }
 
     /**
+     * @param $id
+     * @return bean\Appointment
+     */
+    function getAppointmentById($id) {
+        return $this->impl->getAppointmentById($id);
+    }
+
+    /**
      * @param login\LoginUser $user
      * @return bean\Appointment[]
      */

@@ -72,6 +72,11 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
+    function getAppointmentById($id){
+        $cmd = new Command\GetAppointmentById($id);
+        return $cmd->execute();
+    }
+
     function getAppointments($user)
     {
         $cmd = new Command\GetAppointments($user);

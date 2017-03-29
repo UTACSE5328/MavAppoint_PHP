@@ -4,7 +4,7 @@ include ("template/header.php");
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : "visitor";
 include ("template/" . $role . "_navigation.php");
 $advisingController = mav_encrypt("advising");
-$getAdvisingInfoAction = mav_encrypt("getSchedules");
+$getAdvisingInfoAction = mav_encrypt("getAdvisingInfo");
 ?>
 
 

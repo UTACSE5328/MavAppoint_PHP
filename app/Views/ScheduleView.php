@@ -2,7 +2,9 @@
 include("template/header.php");
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : "visitor";
 include("template/" . $role . "_navigation.php");
+
 $advisingController = mav_encrypt("advising");
+$appointmentController = mav_encrypt("appointment");
 $scheduleAction = mav_encrypt("schedule");
 $makeAppointmentAction = mav_encrypt("makeAppointment");
 $getAdvisingInfoAction = mav_encrypt("getAdvisingInfo");
@@ -73,7 +75,7 @@ if (count($schedules) != 0) {
                         document.getElementById("duration").value = '<?=$duration?>';
                         document.getElementById("pName").value = '<?=$pName?>';
                         document.getElementById("advisor_email").value = '<?=$advisorEmail?>';
-                        document.getElementById("advisingController").value = '<?=$advisingController?>';
+                        document.getElementById("appointmentController").value = '<?=$appointmentController?>';
                         document.getElementById("makeAppointmentAction").value = '<?=$makeAppointmentAction?>';
                         document.getElementById("getAdvisingInfoAction").value = '<?=$getAdvisingInfoAction?>';
                         document.getElementById("successAction").value = '<?=$successAction?>';
@@ -119,7 +121,7 @@ if (count($schedules) != 0) {
                     <input type="hidden" name=pName id="pName">
                     <input type="hidden" name=duration id="duration">
                     <input type="hidden" name=advisor_email id="advisor_email">
-                    <input type="hidden" id="advisingController">
+                    <input type="hidden" id="appointmentController">
                     <input type="hidden" id="makeAppointmentAction">
                     <input type="hidden" id="getAdvisingInfoAction">
                     <input type="hidden" id="successAction">

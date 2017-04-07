@@ -121,4 +121,63 @@ $(function(){
 
     });
 
+    $("#drp_department").change(function(){
+        var department = $("#drp_department option:selected").text();
+        //alert(department);
+        $.ajax({
+            url: "/MavAppoint_PHP/",
+            type: "post",
+            data: {
+                c : $("#registerController").val(),
+                a : $("#getMajorsAction").val(),
+                department : department
+            },
+            success: function(data){
+                var data = JSON.parse(data);
+                if (data.error == 0) {
+                    $('#drp_major').empty();
+                    $.each(data.data.majors, function(key, value) {
+                        $('#drp_major')
+                            .append($("<option></option>")
+                                //.attr("value",key)
+                                .text(value));
+                    });
+                }else{
+                    alert("Error when getting majors from department");
+                }
+            }
+        });
+    });
+
+    $("#registerSubmit").click(function(e){
+        e.preventDefault();
+
+        var email = $("#email").val();
+        var studentId = $("#studentId").val();
+        var phoneNumber = $("#phoneNumber").val();
+
+        $.ajax({
+            url: "/MavAppoint_PHP/",
+            type: "post",
+            data: {
+                c : $("#registerController").val(),
+                a : $("#registerStudentAction").val(),
+                email : email,
+                studentId : studentId,
+                phoneNumber : phoneNumber,
+                department : $('#drp_department').find(":selected").text(),
+                major : $('#drp_major').find(":selected").text(),
+                degree : $('#drp_degreeType').find(":selected").text(),
+                initial : $('#drp_last_name_initial').find(":selected").text()
+            },
+            success: function(data){
+                var data = JSON.parse(data);
+                if (data.error == 0) {
+                    window.location.href = $("#loginUrl").val();
+                }else{
+                    $("#registerErrorMessage").text(data.description).css({'color' : '#e67e22', 'font-size' : '16px'});
+                }
+            }
+        });
+    });
 });

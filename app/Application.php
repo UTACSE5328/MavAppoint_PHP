@@ -41,7 +41,7 @@ class Application
                 $this->view($action, $content);
             }
         } else {
-            die($a);
+            die($c . " " . $a . "Action not found");
         }
     }
 

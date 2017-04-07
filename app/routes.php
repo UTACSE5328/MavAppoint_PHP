@@ -1,6 +1,11 @@
 <?php
 //if the value is "view", return view, else return json format
 return [
+    "register" => [
+        "default" => "RegisterView",
+        "getMajors" => "getMajors",
+        "registerStudent" => "registerStudent"
+    ],
     "login" => [
         "default" => "LoginView",
         "test" => "testView",

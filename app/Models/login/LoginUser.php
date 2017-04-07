@@ -166,5 +166,22 @@ class LoginUser
 
     }
 
+    public function setDegreeTypeFromString($degreeTypeString) {
+		if($degreeTypeString == "Bachelor")
+            $degreeType = 1;
+        else if($degreeTypeString == "Master")
+            $degreeType = 2;
+        else if($degreeTypeString == "Bachelor,Master")
+            $degreeType = 3;
+        else if($degreeTypeString == "Doctorate")
+            $degreeType = 4;
+        else if($degreeTypeString == "Bachelor,Doctorate")
+            $degreeType = 5;
+        else if($degreeTypeString == "Master,Doctorate")
+            $degreeType = 6;
+        else
+            $degreeType = 7;
 
+		$this->degType = $degreeType;
+    }
 }

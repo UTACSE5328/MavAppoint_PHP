@@ -181,6 +181,7 @@ function mav_mail($subject, $content, $toArray) {
     $mail->FromName= "CSESpring2017";
     $mail->Subject = $subject;
     $mail->Body =$content;
+    $mail->isHTML(true);
 
     foreach ($toArray as $email){
         $mail->clearAllRecipients();
@@ -209,4 +210,31 @@ function convertMonth($month) {
         case "Dec" : return "12";
     }
     return null;
+}
+
+function generateRandomPassword() {
+    $symbols = "0123456789abcdefghijklmnopqrstuvwxyz@#!_-";
+    $length = 10;
+    $password = "";
+    for ($i = 0; $i < $length; $i++) {
+        $password .= $symbols[mt_rand(0, 40)];
+    }
+    return $password;
+}
+
+function validateEmail($email) {
+    return preg_match("#[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]#", $email);
+}
+
+function validatePhoneNumber($phoneNumber) {
+    return preg_match("#\\d{3}-\\d{3}-\\d{4}#", $phoneNumber);
+}
+
+function validateStudentId($studentId) {
+    return preg_match("#100\\d{7}#", $studentId) || preg_match("#6000\\d{6}#", $studentId);
+}
+
+function getUrlWithoutParameters() {
+    $uri_parts = explode("?", $_SERVER['REQUEST_URI'], 2);
+    return "http://" . $_SERVER['HTTP_HOST'] . $uri_parts[0];
 }

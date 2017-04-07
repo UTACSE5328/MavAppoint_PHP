@@ -144,7 +144,7 @@ class DatabaseManager{
         return $this->impl->getMajor($id);
     }
 
-    function getDepartment($id){
+    function getDepartment($id = null){
         return $this->impl->getDepartment($id);
     }
 

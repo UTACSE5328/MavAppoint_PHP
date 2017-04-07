@@ -24,7 +24,8 @@ class GetAppointments extends SQLCmd{
         }else if($this->user instanceof login\StudentUser){
             $query = "SELECT User_Advisor.pName,User.email,date,start,end,type,id,description,studentId, student_email, student_cell
                       FROM USER,Appointments,User_Advisor 
-                      WHERE USER.email='$email' AND user.userid=Appointments.student_userid AND User_Advisor.userid=Appointments.advisor_userid";
+                      WHERE USER.email='$email' AND user.userid=Appointments.student_userid AND User_Advisor.userid=Appointments.advisor_userid
+                      order by date desc, start asc";
         }else{
             $query =  "select department_user.userId,user_advisor.pName, appointments.date, appointments.start, 
                        appointments.end,appointments.type,user.email,appointments.description,appointments.studentId, 

@@ -27,7 +27,7 @@ class GetAppointments extends SQLCmd{
                       WHERE USER.email='$email' AND user.userid=Appointments.student_userid AND User_Advisor.userid=Appointments.advisor_userid
                       order by date desc, start asc";
         }else{
-            $query = "select name from department_user";
+            $query = "select name from department_user where userId = '$id'";
 
             $dep = $this->conn->query($query)['name'];
 

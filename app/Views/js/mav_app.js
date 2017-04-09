@@ -93,6 +93,53 @@ $(function(){
         });
     });
 
+
+    $("#assignStudentSubmit").on("click", function (e) {
+        e.preventDefault();
+
+        var length = $("#length").val();
+        var advisors = [];
+
+        for(var i = 0; i < length; i++){
+            var advisor = {};
+
+            var degType = 0;
+            $("#degree"+i+" :selected").each(function(i, selected){
+                if($(selected).text() == 'Bachelors')
+                    degType += 1;
+                if($(selected).text() == 'Masters')
+                    degType += 2;
+                if($(selected).text() == 'Doctorate')
+                    degType += 4;
+            });
+
+            advisor.pName = $("#pName"+i).text();
+            advisor.nameLow = $("#lowRange"+i+" option:selected").val();
+            advisor.nameHigh = $("#highRange"+i+" option:selected").val();
+            advisor.degreeType = degType;
+            advisor.majors = $("#majors"+i+" option:selected").val();
+
+            advisors.push(advisor);
+        }
+
+        $.ajax({
+            url: "/MavAppoint_PHP/",
+            type: "post",
+            data: {
+                c : $("#adminController").val(),
+                a : $("#assignStudentToAdvisorAction").val(),
+                advisors : JSON.stringify(advisors)
+            },
+            success: function(data){
+                var data = JSON.parse(data);
+                if (data.error == 0) {
+                    window.location.href = "/MavAppoint_PHP?c=" + $("#adminController").val() + "&a=" + $("#successAction").val();
+                }else{
+                    alert("advising error");
+                }
+            }
+        });
+    });
     $(".cancelButton").click(function(){
         var confirmMessage = 'Are you sure you want to delete this appointment?';
         if (confirm(confirmMessage)) {

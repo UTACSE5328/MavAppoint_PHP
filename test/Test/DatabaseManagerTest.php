@@ -376,7 +376,7 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $adUser->setRole('advisor');
         $adUser->setDepartments('CSE');
         $adUser->setMajors('Computer Science');
-        $adUser->setPName('tengyaoli');
+        $adUser->setPName('tengyaoli'.rand(0,9).rand(0,9).rand(0,9));
         $adUser->setNotification('Yes');
         $adUser->setDept('a');
         $adUser->setNameHigh('z');

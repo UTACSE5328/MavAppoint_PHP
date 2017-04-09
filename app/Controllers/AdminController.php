@@ -17,6 +17,8 @@ class adminController extends BasicController
     private $email;
     private $uid;
     private $role;
+    private $dep;
+
     function __construct()
     {
         if(!isset($_SESSION)){
@@ -29,8 +31,6 @@ class adminController extends BasicController
     }
 
     public function addAdvisorAction(){
-//        $manager = new db\DatabaseManager();
-//        $manager->getDepartments()
         return [
             "department" => [
                 0 => [
@@ -162,20 +162,67 @@ class adminController extends BasicController
             ."\n" ."Reason: ". $reason  ;
         mav_mail($emailSubject,$msg,$studentEmails);
 
-
-
-
-
         return [
             "error" => 0,
             "msg" => $msg,
-            "dispatch" => "success",
-
-
+            "dispatch" => "success"
         ];
-
     }
 
+    function showAdvisorAssignmentAction(){
+        $dbm = new db\DatabaseManager();
+
+        $this->dep = $dbm->getDepartment($this->uid)[0];
+
+        $advisors = $dbm->getAdvisorsOfDepartment($this->dep);
+        $majors = $dbm->getMajorsOfDepartment($this->dep);
+
+        $res = array();
+        foreach ($advisors as $rs){
+            array_push($res,
+                [
+                    "pName"=>$rs->getPName(),
+                    "nameLow"=>$rs->getNameLow(),
+                    "nameHigh"=>$rs->getNameHigh(),
+                    "degreeType"=>$rs->getDegType()
+                ]
+                );
+        }
+
+        return [
+            "error" => 0,
+            "data" => [
+                "advisors" => $res,
+                "majors" => $majors
+            ],
+        ];
+    }
+
+    function assignStudentToAdvisorAction(){
+        $dbm = new db\DatabaseManager();
+        $advisorsNew = isset($_POST['advisors']) ? $_POST['advisors'] : null;
+        $advisorsNew = json_decode($advisorsNew, true);
+
+        foreach ($advisorsNew as $res){
+            $user = new login\AdvisorUser();
+            $user->setPName($res['pName']);
+            $user->setNameLow($res['nameLow']);
+            $user->setNameHigh($res['nameHigh']);
+            $user->setDegType($res['degreeType']);
+
+            $dbm->updateAdvisor($user);
+        }
 
 
+        return [
+            "error" => 0
+        ];
+    }
+
+    public function successAction(){
+        return [
+            "error" => 0,
+            "data" => "http://localhost/MavAppoint_PHP/?c=" . mav_encrypt("admin") . "&a=" . mav_encrypt("showAdvisorAssignment")
+        ];
+    }
 }

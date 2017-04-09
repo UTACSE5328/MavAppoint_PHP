@@ -275,8 +275,9 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAdvisor(){
         $dbManager = new DatabaseManager();
-        $res = $dbManager->getAdvisor("Lin Gao");
+        $res = $dbManager->getAdvisor("ad1@uta.edu");
         self::assertInstanceOf(AdvisorUser::class, $res);
+        //var_dump($res);
     }
 
     public function testGetUserIdByEmail(){

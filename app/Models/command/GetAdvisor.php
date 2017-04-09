@@ -30,6 +30,7 @@ class GetAdvisor extends SQLCmd {
 	function processResult() {
         $set = new AdvisorUser();
         $set->setUserId($this->id);
+        $set->setEmail($this->email);
         $set->setPassword($this->result["password"]);
         $set->setValidated($this->result["validated"]);
         $set->setPName($this->result["pName"]);

@@ -19,7 +19,7 @@ $(function(){
                 if (data.error == 0) {
                     window.location.href = "/MavAppoint_PHP?c=" + $("#indexController").val();
                 }else{
-                    alert("hehe");
+                    // alert("Error!");
                     $("#message").css("visibility", "visible");
                 }
             }

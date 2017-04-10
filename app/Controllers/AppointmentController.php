@@ -103,7 +103,7 @@ class AppointmentController
         return [
             "error" => 0,
             //TODO: change url
-            "data" => "http://localhost/MavAppoint_PHP/?c=$controller&a=$action"
+            "data" => "http://http://mavappont_php_master.sites.dev/MavAppoint_PHP/?c=$controller&a=$action"
         ];
     }
 

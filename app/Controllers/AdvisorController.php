@@ -9,8 +9,9 @@ namespace App\Controllers;
 use Models\Db\DatabaseManager;
 use Models\Bean\AllocateTime;
 use Models\Helper\TimeSlotHelper;
+use Models\Bean\Appointment;
 
-class advisorController extends BasicController
+class advisorController
 {
     private $email;
     private $uid;
@@ -26,31 +27,43 @@ class advisorController extends BasicController
     }
 
     function showScheduleAction(){;
-        $schedules = array();
+        if (!isset($_SESSION['role'])) {
+            //TODO: change url
+            header('Location:http://' . 'mavappont_php_master.sites.dev/MavAppoint_PHP/?c=' . mav_encrypt("login"));
+        }
+
         if($this->role =="advisor" && $this->email!=null){
             $dbm = new DatabaseManager();
             $advisor = $dbm->getAdvisor($this->email);
             $scheduleObjectArr = $dbm->getAdvisorSchedule($advisor->getPName());
             if (sizeof($scheduleObjectArr) != 0) {
+                foreach ($scheduleObjectArr as $schedule){
+                    $tempSchedules[] = [
+                        "name" => $schedule->getName(),
+                        "date" => $schedule->getDate(),
+                        "startTime" => $schedule->getStartTime(),
+                        "endTime" => $schedule->getEndTime(),
 
-
-                for ($i = 0; $i < sizeof($scheduleObjectArr); $i++) {
-
-                    $scheduleObject = $scheduleObjectArr[$i];
-                    array_push($schedules,
-                        [
-                            "title" => $scheduleObject->getName(),
-                            "start" => $scheduleObject->getDate() . "T" . $scheduleObject->getStartTime(),
-                            "end" => $scheduleObject->getDate() . "T" . $scheduleObject->getEndTime(),
-                            "id" => $i,
-                            "backgroundColor" => 'blue'
-                        ]
-                    );
+                    ];
 
                 }
 
 
+
             }
+
+
+            $appointments = $dbm->getAppointments($advisor);
+            $tempAppointments = array_map(function(Appointment $appointment){
+                return [
+                    "advisingDate" => $appointment->getAdvisingDate(),
+                    "advisingStartTime" => $appointment->getAdvisingStartTime(),
+                    "advisingEndTime" => $appointment->getAdvisingEndTime(),
+                    "appointmentType" => $appointment->getAppointmentType(),
+                ];
+            }, $appointments);
+
+
         }
 
         return [
@@ -59,7 +72,8 @@ class advisorController extends BasicController
                 "email" =>$this->email,
                 "advisorName" => $advisor->getPName(),
                 "role" => $this->role,
-                "schedule" =>$schedules
+                "schedules" =>$tempSchedules,
+                "appointments" => $tempAppointments
             ]
         ];
 
@@ -127,7 +141,7 @@ class advisorController extends BasicController
         $emailSubject = 'MavAppoint: Advisor\'s advising time has been cancelled!';
         $msg = "Advising time slot of advisor " .$pName. " on " . $date. " at ". $startTime . "-" .$endTime." has been cancelled."
             ."\n" ."Reason: ". $reason  ;
-        mav_mail($emailSubject,$msg,$studentEmails);
+//        mav_mail($emailSubject,$msg,$studentEmails);
 
 
 
@@ -135,20 +149,20 @@ class advisorController extends BasicController
 
         return [
             "error" => 0,
-            "msg" => $msg,
             "dispatch" => "success",
 
 
         ];
     }
 
-    public function successAction(){
-        return [
-            "error" => 0,
-            //TODO: change url
-            "data" => "http://localhost/MavAppoint_PHP/?c=" . mav_encrypt("advidor") . "&a=" . mav_encrypt("showSchedule")
-        ];
-    }
+//    public function successAction(){
+//        return [
+//            "error" => 0,
+//            //TODO: change url
+//            "data" => "http://localhost/MavAppoint_PHP/?c=" . mav_encrypt("advidor") . "&a=" . mav_encrypt("showSchedule")
+//        ];
+//    }
+
 
 
 

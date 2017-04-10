@@ -19,7 +19,7 @@ class GetAppointmentByStuId extends SQLCmd
     }
 
     function queryDB(){
-        $query = "SELECT date,start,end,type FROM appointments a 
+        $query = "SELECT id,date,start,end,type,student_email FROM appointments a 
                   WHERE a.studentId='$this->studentId' AND date ='$this->date' ";
         $this->result = $this->conn->query($query);
     }
@@ -28,10 +28,12 @@ class GetAppointmentByStuId extends SQLCmd
         $arr = array();
         while($rs = mysqli_fetch_array($this->result)){
             $set = new Appointment();
+            $set->setAppointmentId($rs["id"]);
             $set->setAdvisingDate($rs["date"]);
             $set->setAdvisingStartTime($rs["start"]);
             $set->setAdvisingEndTime($rs["end"]);
             $set->setAppointmentType($rs["type"]);
+            $set->setStudentEmail($rs["student_email"]);
             array_push($arr, $set);
         }
 

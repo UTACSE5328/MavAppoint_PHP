@@ -13,23 +13,24 @@ if (!isset($_SESSION)) {
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : "visitor";
 include ("template/" . $role . "_navigation.php");
 $content = json_decode($content, true);
-$schedule = isset($content['data']['schedule']) ? $content['data']['schedule'] : null;
+$schedules = isset($content['data']['schedules']) ? $content['data']['schedules'] : null;
+$appointments = isset($content['data']['appointments']) ? $content['data']['appointments'] : null;
 $dispatch = isset($content['dispatch']) ? $content['dispatch'] : null;
 //$msg = isset($content['msg']) ? $content['msg'] : null;
 if($dispatch == "success")
-    {?>
-        <script type='text/javascript'>
-            window.location.href="app/Views/success.php";
-        </script>
-        <?php  unset($content['dispatch']);
-    }
-    if($dispatch == "failure")
-    {?>
-        <script type='text/javascript'>
-            window.location.href="app/Views/failure.php";
-        </script>
-        <?php  unset($content['dispatch']);
-    } ?>
+{?>
+    <script type='text/javascript'>
+        window.location.href="app/Views/success.php";
+    </script>
+    <?php  unset($content['dispatch']);
+}
+if($dispatch == "failure")
+{?>
+    <script type='text/javascript'>
+        window.location.href="app/Views/failure.php";
+    </script>
+    <?php  unset($content['dispatch']);
+} ?>
 
 
 <div id='calendar'></div>
@@ -66,7 +67,7 @@ if($dispatch == "success")
 
                 ,
                 eventClick: function(event,element){
-                    if (event.id >= 0){
+                    if (event.id != null){
                         document.getElementById("StartTime2").value = event.start.format('HH:mm');
                         document.getElementById("EndTime2").value = event.end.format('HH:mm');
                         document.getElementById("pname").value = event.title;
@@ -77,7 +78,48 @@ if($dispatch == "success")
                         updateAppt.submit();
                     }
                 },
-                events:  <?=json_encode($schedule) ?>
+                events: [
+                    <?php
+                    if(count($schedules) != 0)
+                    {
+                    $i = 0;
+                    foreach ($schedules as $schedule)
+                    {?>
+                    {
+                        title: '<?=$schedule['name']?>',
+                        start: '<?php echo $schedule['date'] . "T" . $schedule['startTime']?>',
+                        end: '<?php echo $schedule['date'] . "T" . $schedule['endTime']?>',
+                        id:<?=$i?>,
+                        backgroundColor: 'blue'
+                    }
+                    <?php
+                    if ($i != count($schedules) - 1 || count($appointments) != 0) {
+                        echo ",";
+                    }
+                    $i++;
+                    }
+                    }
+
+                    if (count($appointments) != 0) {
+                    $i = 1;
+                    foreach ($appointments as $appointment) {
+                    ?>
+                    {
+                        title:'<?=$appointment['appointmentType']?>',
+                        start:'<?php echo $appointment['advisingDate'] . "T" . $appointment['advisingStartTime']?>',
+                        end:'<?php echo $appointment['advisingDate'] . "T" . $appointment['advisingEndTime']?>',
+                        id:<?=-$i?>,
+                        backgroundColor: 'orange'
+                    }
+                    <?php
+                    if ($i != count($appointments)) {echo ",";}
+                    }
+                    }
+
+                    ?>
+                ]
+
+
 
 
 

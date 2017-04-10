@@ -39,6 +39,7 @@ class AdvisingController
 
     public function scheduleAction(){
         if (!isset($_SESSION['role'])) {
+
             header("Location:" . getUrlWithoutParameters() . "?c=" .mav_encrypt("login"));
         }
         $duration = isset($_REQUEST['duration']) ? $_REQUEST['duration'] : 0;
@@ -63,7 +64,7 @@ class AdvisingController
             if ($hours < $cutOffTime) {
                 //TODO: change url
                 die("Time remained is less than cutOff hours");
-                header('Location:http://localhost/MavAppoint_PHP/?c=' . mav_encrypt("advising"));
+                header('Location:http://mavappont_php_master.sites.dev/MavAppoint_PHP/?c=' . mav_encrypt("advising"));
             }
         }
 
@@ -152,7 +153,7 @@ class AdvisingController
         foreach ($schedules as $schedule) {
             /** @var CompositeTimeSlot $schedule */
             $schedule = unserialize($schedule);
-
+            date_default_timezone_set('America/Chicago');
             $scheduleDate = strtotime($schedule->getDate());
             $todayDate = strtotime(date("Y-m-d", time()));
             if ($scheduleDate > $todayDate) {

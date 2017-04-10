@@ -11,7 +11,6 @@ return [
         "test" => "testView",
         "check" => "check",
         "logout" => "IndexView",
-
     ],
     "index" => [
         "default" => "IndexView"
@@ -21,6 +20,9 @@ return [
         "createNewAdvisor" => "createNewAdvisor",
         "showDepartmentSchedule" => "DepartmentScheduleView",
         "deleteTimeSlot" => "DepartmentScheduleView",
+        "showAdvisorAssignment" => "AssignStudentView",
+        "assignStudentToAdvisor" => "assignStudentToAdvisor",
+        "success" => "SuccessView"
     ],
     "advisor" => [
         "showSchedule" => "AdvisorScheduleView",

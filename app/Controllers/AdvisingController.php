@@ -84,11 +84,6 @@ class AdvisingController
     }
 
 
-
-
-
-
-
     private function getDegrees(StudentUser $user) {
         $degrees = [];
         $degreeType = $user->getDegType();

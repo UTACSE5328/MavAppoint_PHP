@@ -9,7 +9,7 @@ namespace Models\Command;
 use Models\Login\AdvisorUser;
 
 class GetAdvisor extends SQLCmd {
-	private $email;
+	private $email,$id;
 
 	function __construct($email) {
 		$this->email = $email;
@@ -17,11 +17,11 @@ class GetAdvisor extends SQLCmd {
 
 	function queryDB() {
 		$cmd = new GetUserIdByEmail($this->email);
-		$id  = $cmd->execute();
+		$this->id  = $cmd->execute();
 
 		$query = "SELECT password,validated,pName,name_low,name_high,degree_types,Department_User.name,Major_User.name,cutOffTime
                       FROM User,User_Advisor,Department_User,Major_User
-                      WHERE USER.userId='$id' and User_Advisor.userId='$id' and Department_User.userId='$id' and Major_User.userId='$id'";
+                      WHERE USER.userId='$this->id' and User_Advisor.userId='$this->id' and Department_User.userId='$this->id' and Major_User.userId='$this->id'";
 
 		$this->result = $this->conn->query($query)->fetch_assoc();
 
@@ -29,6 +29,8 @@ class GetAdvisor extends SQLCmd {
 
 	function processResult() {
         $set = new AdvisorUser();
+        $set->setUserId($this->id);
+        $set->setEmail($this->email);
         $set->setPassword($this->result["password"]);
         $set->setValidated($this->result["validated"]);
         $set->setPName($this->result["pName"]);
@@ -38,7 +40,6 @@ class GetAdvisor extends SQLCmd {
         $set->setDepartments($this->result["name"]);
         //$set->setMajors($this->result["name1"]);
         $set->setCutOffPreference($this->result["cutOffTime"]);
-
 
 		return ($set);
 	}

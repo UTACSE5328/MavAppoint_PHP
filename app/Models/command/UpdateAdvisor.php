@@ -22,8 +22,13 @@ class UpdateAdvisor extends SQLCmd{
         $nameHigh = $this->user->getNameHigh();
         $degreeType = $this->user->getDegType();
 
-        $query = "UPDATE User_Advisor SET pName='$pName', notification='$notification', 
+        if($id != null) {
+            $query = "UPDATE User_Advisor SET pName='$pName', notification='$notification', 
                     name_low='$nameLow', name_high='$nameHigh', degree_types='$degreeType' WHERE userId='$id'";
+        }else{
+            $query = "UPDATE User_Advisor SET 
+                    name_low='$nameLow', name_high='$nameHigh', degree_types='$degreeType' WHERE pName='$pName'";
+        }
 
         $this->result = $this->conn->query($query);
     }

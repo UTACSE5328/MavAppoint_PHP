@@ -17,7 +17,7 @@ $(function(){
             success: function(data){
                 var data = JSON.parse(data);
                 if (data.error == 0) {
-                    window.location.href = "/MavAppoint_PHP?c=" + $("#indexController").val() + "&role=" + data.data.role;
+                    window.location.href = "/MavAppoint_PHP?c=" + $("#indexController").val();
                 }else{
                     // alert("Error!");
                     $("#message").css("visibility", "visible");

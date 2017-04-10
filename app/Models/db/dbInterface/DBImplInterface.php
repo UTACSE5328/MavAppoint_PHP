@@ -59,6 +59,7 @@ interface DBImplInterface
 
     function getCSEUser($pName);
     function getCSEStudent($studentId);
+    function getCSEStudentByNetId($netId);
 
     function getStudentEmails();
     function getWaitListScheduleCount($aptId);

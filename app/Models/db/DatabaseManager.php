@@ -36,6 +36,14 @@ class DatabaseManager{
         return $this->impl->getCSEStudent($studentId);
     }
 
+    /**
+     * @param string $netId
+     * @return login\CSEStudent
+     */
+    public function getCSEStudentByNetId($netId) {
+        return $this->impl->getCSEStudentByNetId($netId);
+    }
+
     function setCutOffTime($id, $time){
         return $this->impl->setCutOffTime($id,$time);
     }

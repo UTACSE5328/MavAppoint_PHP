@@ -11,6 +11,10 @@ use Models\Login\StudentUser;
 class AdvisingController
 {
     public function getAdvisingInfoAction(){
+        if(!isset($_SESSION['email'])){
+            header("Location:" . getUrlWithoutParameters() . "?c=" .mav_encrypt("login"));
+        }
+
         $dbManager = new DatabaseManager();
 
         $user = $dbManager->getStudent($_SESSION['email']);
@@ -35,8 +39,7 @@ class AdvisingController
 
     public function scheduleAction(){
         if (!isset($_SESSION['role'])) {
-            //TODO: change url
-            header('Location:http://' . 'localhost/MavAppoint_PHP/?c=' . mav_encrypt("login"));
+            header("Location:" . getUrlWithoutParameters() . "?c=" .mav_encrypt("login"));
         }
         $duration = isset($_REQUEST['duration']) ? $_REQUEST['duration'] : 0;
         $dbManager = new DatabaseManager();

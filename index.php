@@ -8,6 +8,8 @@ try {
     //
 }
 
+date_default_timezone_set(env("TIME_ZONE", "America/Chicago"));
+
 $config = require(__DIR__ . '/config/web.php');
 
 (new \App\Application($config))->run();

@@ -328,4 +328,10 @@ class RDBImpl implements DBImplInterface{
         $cmd = new Command\GetCSEStudent($studentId);
         return $cmd->execute();
     }
+
+    public function getCSEStudentByNetId($netId)
+    {
+        $cmd = new Command\GetCSEStudentByNetId($netId);
+        return $cmd->execute();
+    }
 }

@@ -8,27 +8,61 @@
 namespace Models\Bean;
 
 class WaitList{
-    private $waitListId;
+    private $id;
+    private $appointmentId;
+    private $studentUserId;
     private $studentId;
     private $studentEmail;
     private $studentPhone;
-    private $advisorName;
-    private $date;
+    private $type;
+    private $description;
 
     /**
      * @return mixed
      */
-    public function getWaitListId()
+    public function getId()
     {
-        return $this->waitListId;
+        return $this->id;
     }
 
     /**
-     * @param mixed $waitListId
+     * @param mixed $id
      */
-    public function setWaitListId($waitListId)
+    public function setId($id)
     {
-        $this->waitListId = $waitListId;
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppointmentId()
+    {
+        return $this->appointmentId;
+    }
+
+    /**
+     * @param mixed $appointmentId
+     */
+    public function setAppointmentId($appointmentId)
+    {
+        $this->appointmentId = $appointmentId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudentUserId()
+    {
+        return $this->studentUserId;
+    }
+
+    /**
+     * @param mixed $studentUserId
+     */
+    public function setStudentUserId($studentUserId)
+    {
+        $this->studentUserId = $studentUserId;
     }
 
     /**
@@ -82,33 +116,33 @@ class WaitList{
     /**
      * @return mixed
      */
-    public function getAdvisorName()
+    public function getType()
     {
-        return $this->advisorName;
+        return $this->type;
     }
 
     /**
-     * @param mixed $advisorName
+     * @param mixed $type
      */
-    public function setAdvisorName($advisorName)
+    public function setType($type)
     {
-        $this->advisorName = $advisorName;
+        $this->type = $type;
     }
 
     /**
      * @return mixed
      */
-    public function getDate()
+    public function getDescription()
     {
-        return $this->date;
+        return $this->description;
     }
 
     /**
-     * @param mixed $date
+     * @param mixed $description
      */
-    public function setDate($date)
+    public function setDescription($description)
     {
-        $this->date = $date;
+        $this->description = $description;
     }
 
 

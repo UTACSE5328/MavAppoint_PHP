@@ -17,6 +17,7 @@ interface DBImplInterface
     function cancelAppointment($id);
     function getAppointment($d,$e);
     function getAppointments($user);
+    function getAppointmentsByDate($start, $end);
 
     function addAppointmentType($userId, bean\AppointmentType $type);
     function getAppointmentTypes($pName);
@@ -62,6 +63,8 @@ interface DBImplInterface
     function getCSEStudentByNetId($netId);
 
     function getStudentEmails();
+
     function getWaitListScheduleCount($aptId);
-    function setWaitListSchedule(bean\Appointment $apt);
+    function getFirstWaitList($aptId);
+    function setWaitListSchedule(bean\WaitList $waitList);
 }

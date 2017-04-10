@@ -5,10 +5,6 @@ use Models\Bean as bean;
 use Models\Login as login;
 use Models\TimeSlotComponent;
 
-//use Models\Bean\GetSet;
-
-//include_once dirname(__FILE__)."/RDBImpl.php";
-
 class DatabaseManager{
     private $impl;
 
@@ -16,12 +12,16 @@ class DatabaseManager{
         $this->impl = new RDBImpl();
     }
 
+    function getFirstWaitList($aptId){
+        return $this->impl->getFirstWaitList($aptId);
+    }
+
     function getWaitListScheduleCount($aptId){
         return $this->impl->getWaitListScheduleCount($aptId);
     }
 
-    function setWaitListSchedule(bean\Appointment $apt){
-        return $this->impl->setWaitListSchedule($apt);
+    function setWaitListSchedule(bean\WaitList $waitList){
+        return $this->impl->setWaitListSchedule($waitList);
     }
 
     function getStudentEmails(){

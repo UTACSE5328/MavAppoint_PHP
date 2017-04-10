@@ -7,9 +7,9 @@
  */
 
 namespace Models\Command;
-use Models\Bean\Appointment;
+use Models\Bean\WaitList;
 
-class GetWaitListSchedule extends SQLCmd
+class GetFirstWaitList extends SQLCmd
 {
     private $appointment_id;
 
@@ -27,13 +27,15 @@ class GetWaitListSchedule extends SQLCmd
         if($this->result == null)
              return $this->result;
         else{
-            $apt = new Appointment();
+            $apt = new WaitList();
+            $apt->setId($this->result['id']);
             $apt->setAppointmentId($this->result['appointment_id']);
             $apt->setStudentId($this->result['student_id']);
-            $apt->setAppointmentType($this->result['type']);
+            $apt->setStudentUserId($this->result['student_user_id']);
+            $apt->setType($this->result['type']);
             $apt->setDescription($this->result['description']);
             $apt->setStudentEmail($this->result['student_email']);
-            $apt->setStudentPhoneNumber($this->result['student_cell']);
+            $apt->setStudentPhone($this->result['student_cell']);
             return $apt;
         }
     }

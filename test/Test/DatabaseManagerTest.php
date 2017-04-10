@@ -9,6 +9,7 @@
 namespace Test;
 
 use Models\Bean\AppointmentType;
+use Models\Bean\WaitList;
 use Models\Db\DatabaseManager;
 use Models\bean\Appointment;
 use Models\Login\AdvisorUser;
@@ -111,8 +112,6 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
 
         $res = $dbManager->getAppointments($user);
         self::assertContainsOnly(Appointment::class, $res);
-
-        var_dump($res);
     }
 
     function testGetAppointmentByStuId(){
@@ -122,14 +121,14 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testSetWaitListSchedule(){
-        $apt = new Appointment();
+        $apt = new WaitList();
         $dbManager = new DatabaseManager();
 
         $apt->setAppointmentId("444");
         $apt->setStudentId('1001'.(rand(0,9)).(rand(0,9)).(rand(0,9)).(rand(0,9)).(rand(0,9)).(rand(0,9)));
-        $apt->setAppointmentType("Swap Course");
+        $apt->setType("Swap Course");
         $apt->setDescription("Description");
-        $apt->setStudentPhoneNumber("1111111111");
+        $apt->setStudentPhone("1111111111");
         $apt->setStudentEmail("test.ccc@uts.edu");
 
         $res = $dbManager->setWaitListSchedule($apt);
@@ -137,9 +136,9 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
 
         $apt->setAppointmentId("355");
         $apt->setStudentId('1001054911');
-        $apt->setAppointmentType("Swap Course");
+        $apt->setType("Swap Course");
         $apt->setDescription("Description");
-        $apt->setStudentPhoneNumber("1111111111");
+        $apt->setStudentPhone("1111111111");
         $apt->setStudentEmail("test.ccc@uts.edu");
 
         $res = $dbManager->setWaitListSchedule($apt);
@@ -153,6 +152,12 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
 
         $res = $dbManager->getWaitListScheduleCount("355");
         self::assertEquals(1, $res);
+    }
+
+    public function testGetWaitListSchedule(){
+        $dbManager = new DatabaseManager();
+        $res = $dbManager->getWaitListSchedule("444");
+        var_dump($res);
     }
 
     public function testUpdateUserNotification(){
@@ -277,7 +282,6 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $dbManager = new DatabaseManager();
         $res = $dbManager->getAdvisor("ad1@uta.edu");
         self::assertInstanceOf(AdvisorUser::class, $res);
-        //var_dump($res);
     }
 
     public function testGetUserIdByEmail(){
@@ -348,7 +352,7 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $user->setDepartments('CSE');
         $user->setMajors('Computer Science');
         $res = $dbManager->createUser($user);
-        self::assertInternalType('string',$res);
+        self::assertInternalType('integer',$res);
     }
 
     public function testCreateStudent(){

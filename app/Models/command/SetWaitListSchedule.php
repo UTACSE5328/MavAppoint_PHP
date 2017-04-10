@@ -9,13 +9,13 @@
 namespace Models\Command;
 
 
-use Models\Bean\Appointment;
+use Models\Bean\WaitList;
 
 class SetWaitListSchedule extends SQLCmd
 {
     private $apt;
 
-    function __construct(Appointment $apt)
+    function __construct(WaitList $apt)
     {
         $this->apt = $apt;
     }
@@ -24,10 +24,11 @@ class SetWaitListSchedule extends SQLCmd
     {
         $appointment_id = $this->apt->getAppointmentId();
         $student_id = $this->apt->getStudentId();
-        $type = $this->apt->getAppointmentType();
+        $student_user_id = $this->apt->getStudentUserId();
+        $type = $this->apt->getType();
         $description = $this->apt->getDescription();
         $student_email = $this->apt->getStudentEmail();
-        $student_cell = $this->apt->getStudentPhoneNumber();
+        $student_cell = $this->apt->getStudentPhone();
 
         $query = "SELECT COUNT(*) from wait_list_schedule 
                   where appointment_id ='$appointment_id' and student_id ='$student_id'";
@@ -35,8 +36,8 @@ class SetWaitListSchedule extends SQLCmd
 
         if ($count == 0) {
             $query = "Insert into wait_list_schedule 
-                      (appointment_id, student_id, type, description, student_email, student_cell)
-                        values ('$appointment_id','$student_id','$type','$description',
+                      (appointment_id,student_user_id, student_id, type, description, student_email, student_cell)
+                        values ('$appointment_id','$student_user_id','$student_id','$type','$description',
                         '$student_email','$student_cell')";
             $this->conn->query($query);
 

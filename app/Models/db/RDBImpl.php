@@ -10,9 +10,15 @@ use Models\Helper as Helper;
 
 class RDBImpl implements DBImplInterface{
 
-    function setWaitListSchedule(Bean\Appointment $apt)
+    function setWaitListSchedule(Bean\WaitList $waitList)
     {
-        $cmd = new Command\SetWaitListSchedule($apt);
+        $cmd = new Command\SetWaitListSchedule($waitList);
+        return $cmd->execute();
+    }
+
+    function getFirstWaitList($aptId)
+    {
+        $cmd = new Command\GetFirstWaitList($aptId);
         return $cmd->execute();
     }
 
@@ -46,23 +52,21 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
-    function cancelAppointment($id)
-    {
-        $checkWaitListCmd = new Command\GetWaitListSchedule($id);
-        $apt = $checkWaitListCmd->execute();
-
-        if($apt == null){
-            $cmd = new Command\CancelAppointment($id);
-            return $cmd->execute();
-        }else{
-            $cmd = new Command\UpdateAppointment($apt);
-            return $cmd->execute();
-        }
-    }
-
     function getAppointment($d, $e)
     {
         $cmd = new Command\GetAppointment($d, $e);
+        return $cmd->execute();
+    }
+
+    function getAppointmentsByDate($start, $end)
+    {
+        $cmd = new Command\GetAppointmentsByDate($start, $end);
+        return $cmd->execute();
+    }
+
+    function cancelAppointment($id)
+    {
+        $cmd = new Command\CancelAppointment($id);
         return $cmd->execute();
     }
 

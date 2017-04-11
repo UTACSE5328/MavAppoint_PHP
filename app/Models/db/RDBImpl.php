@@ -171,19 +171,37 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
-    function getAdvisorSchedule($name)
+    /**
+     * @param $name : one specific adviser's name or "all"
+     * @param bool $includeReserved : true means include reserved time slots, false means just include available time slots.
+     * @param null $date
+     * @return array : adviser(s)'s schedule
+     */
+    function getAdvisorSchedule($name,$includeReserved = false, $date=null)
     {
         $PrimitiveTimeSlotArr = array();
-        $scheduleForDisplay = array();
+        $adviserSchedule = array();
         try {
             $conn = new \mysqli( env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE"));
-            if ($name === "all") {
-                $command = "SELECT pname,date,start,end,id FROM user,Advising_Schedule,User_Advisor "
-                    . "WHERE user.userid=User_Advisor.userid AND user.userid=Advising_Schedule.userid AND studentId is null";
-            } else {
+            if($includeReserved == true && $date!=null){
+                // get one specific adviser's all time slots(include reserved).
                 $command = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor "
-                    . "WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$name' AND studentId is null";
+                    . "WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$name'";
+
+            }else{
+                if ($name === "all" && $includeReserved==false) {
+                    //get all advisers' available time slots.
+                    $command = "SELECT pname,date,start,end,id FROM user,Advising_Schedule,User_Advisor "
+                        . "WHERE user.userid=User_Advisor.userid AND user.userid=Advising_Schedule.userid AND studentId is null";
+                } else {
+                    //get one specific adviser's available time slots
+                    $command = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor "
+                        . "WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$name' AND studentId is null";
+                }
+
             }
+
+
 
             $res = $conn->query($command);
 
@@ -200,28 +218,33 @@ class RDBImpl implements DBImplInterface{
             $compositeTimeSlotArr = Helper\TimeSlotHelper::createCompositeTimeSlot($PrimitiveTimeSlotArr);
 
 
-            for ($i = 0; $i < sizeof($compositeTimeSlotArr); $i++) {
-                $scheduleObject = unserialize($compositeTimeSlotArr[$i]);
-                $startDate = $scheduleObject->getDate();
-                date_default_timezone_set('America/Chicago');
-                $todayDate = date("Y-m-d");
-                if($startDate>$todayDate)
-                {
-                    array_push($scheduleForDisplay,$scheduleObject);
-//                    array_push($scheduleForDisplay,
-//                        [
-//                            "title" => $scheduleObject->getName(),
-//                            "start" => $scheduleObject->getDate() . "T" . $scheduleObject->getStartTime(),
-//                            "end" => $scheduleObject->getDate() . "T" . $scheduleObject->getEndTime(),
-//                            "id" => $id++,
-//                            "backgroundColor" => 'blue'
-//                        ]
-//                    );
+            if($date!=null){
+                for ($i = 0; $i < sizeof($compositeTimeSlotArr); $i++) {
+                    $scheduleObject = unserialize($compositeTimeSlotArr[$i]);
+                    $startDate = $scheduleObject->getDate();
+                    if($startDate==$date)
+                    {
+                        array_push($adviserSchedule,$scheduleObject);
+
+                    }
                 }
 
+            }
+            else{
+                for ($i = 0; $i < sizeof($compositeTimeSlotArr); $i++) {
+                    $scheduleObject = unserialize($compositeTimeSlotArr[$i]);
+                    $startDate = $scheduleObject->getDate();
+                    date_default_timezone_set('America/Chicago');
+                    $todayDate = date("Y-m-d");
+                    if($startDate>$todayDate)
+                    {
+                        array_push($adviserSchedule,$scheduleObject);
 
+                    }
+                }
 
             }
+
             $conn->close();
 
         } catch (\Exception $e) {
@@ -229,7 +252,7 @@ class RDBImpl implements DBImplInterface{
         }
 //        echo json_encode($scheduleForDisplay);
 //        die();
-        return $scheduleForDisplay;
+        return $adviserSchedule;
     }
 
     function getAdvisorSchedules(array $advisorUsers)

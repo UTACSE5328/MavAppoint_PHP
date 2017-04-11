@@ -56,7 +56,7 @@ $typeAndDuration = $content['data']['typeAndDuration'];
                     <tr>
                         <td style="color: #000000; size: 10px"><?php echo $typeAndDuration[$i]['type'];?></td>
                         <td style="color: #000000; size: 10px"><?php echo $typeAndDuration[$i]['duration'];?></td>
-                        <td><button id="deleteTypeAndDurationSubmit" type="button" class="btn"> <span class="glyphicon glyphicon-remove"></span></button></td>
+                        <td><button class="btn deleteTypeAndDurationSubmit" type="button" > <span class="glyphicon glyphicon-remove"></span></button></td>
                     </tr>
 
                             <script> function deleteapptype<?=$i?>(){

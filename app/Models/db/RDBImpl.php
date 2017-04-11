@@ -16,6 +16,12 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
+    function getStudentWaitList($userId, $aptId)
+    {
+        $cmd = new Command\GetStudentWaitList($userId, $aptId);
+        return $cmd->execute();
+    }
+
     function getFirstWaitList($aptId)
     {
         $cmd = new Command\GetFirstWaitList($aptId);

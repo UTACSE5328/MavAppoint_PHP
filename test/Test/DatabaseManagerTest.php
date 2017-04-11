@@ -125,6 +125,7 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $dbManager = new DatabaseManager();
 
         $apt->setAppointmentId("444");
+        $apt->setStudentUserId("111");
         $apt->setStudentId('1001'.(rand(0,9)).(rand(0,9)).(rand(0,9)).(rand(0,9)).(rand(0,9)).(rand(0,9)));
         $apt->setType("Swap Course");
         $apt->setDescription("Description");
@@ -133,16 +134,6 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
 
         $res = $dbManager->setWaitListSchedule($apt);
         self::assertEquals(true, $res);
-
-        $apt->setAppointmentId("355");
-        $apt->setStudentId('1001054911');
-        $apt->setType("Swap Course");
-        $apt->setDescription("Description");
-        $apt->setStudentPhone("1111111111");
-        $apt->setStudentEmail("test.ccc@uts.edu");
-
-        $res = $dbManager->setWaitListSchedule($apt);
-        self::assertEquals(false, $res);
     }
 
     public function testGetWaitListScheduleCount(){
@@ -154,10 +145,16 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(1, $res);
     }
 
+    public function testGetStudentWaitList(){
+        $dbManager = new DatabaseManager();
+        $res = $dbManager->getStudentWaitList("111","444");
+        //var_dump($res);
+    }
+
     public function testGetWaitListSchedule(){
         $dbManager = new DatabaseManager();
-        $res = $dbManager->getWaitListSchedule("444");
-        var_dump($res);
+        $res = $dbManager->getFirstWaitList("444");
+        //var_dump($res);
     }
 
     public function testUpdateUserNotification(){

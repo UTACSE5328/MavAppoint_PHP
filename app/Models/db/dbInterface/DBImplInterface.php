@@ -65,6 +65,7 @@ interface DBImplInterface
     function getStudentEmails();
 
     function getWaitListScheduleCount($aptId);
+    function getStudentWaitList($userId, $aptId);
     function getFirstWaitList($aptId);
     function setWaitListSchedule(bean\WaitList $waitList);
 }

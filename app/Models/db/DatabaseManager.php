@@ -16,6 +16,10 @@ class DatabaseManager{
         return $this->impl->getFirstWaitList($aptId);
     }
 
+    function getStudentWaitList($userId, $aptId){
+        return $this->impl->getStudentWaitList($userId,$aptId);
+    }
+
     function getWaitListScheduleCount($aptId){
         return $this->impl->getWaitListScheduleCount($aptId);
     }

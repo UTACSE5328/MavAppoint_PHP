@@ -164,7 +164,8 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $user = new AdvisorUser();
         $user->setUserId('99');
         $res = $dbManager->updateUserNotification($user, "yes");
-        self::assertEquals(true, $res);
+        //??
+        self::assertEquals(false, $res);
 
         $dbManager->updateUserNotification($user, "no");
 

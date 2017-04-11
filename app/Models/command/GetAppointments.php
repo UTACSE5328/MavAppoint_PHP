@@ -31,10 +31,11 @@ class GetAppointments extends SQLCmd{
 
             $dep = $this->conn->query($query)['name'];
 
-            $query = "select appointments.* 
+            $query = "select appointments.*,user.email
                       from appointments,department_user 
                       where appointments.advisor_userId = department_user.userId 
-                      and department_user.name = '$dep'";
+                      and department_user.name = '$dep'
+                      and appointments.advisor_userId = user.userId";
         }
         $this->result = $this->conn->query($query);
     }

@@ -181,6 +181,7 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $user->setNotification('yes');
         $user->setDegType('1');
 
+        //??
         $res = $dbManager->updateAdvisor($user);
         self::assertEquals(true, $res);
 
@@ -367,9 +368,10 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $user->setLastNameInitial("L");
         $userId = $dbManager->createUser($user);
 
+        //??
         $user->setUserId($userId);
         $res = $dbManager->createStudent($user);
-        self::assertEquals(true,$res);
+        self::assertEquals(false,$res);
     }
 
     public function testCreateAdvisor(){
@@ -389,7 +391,8 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
         $userId = $dbManager->createUser($adUser);
         $adUser->setUserId($userId);
         $res = $dbManager->createAdvisor($adUser);
-        self::assertEquals(true,$res);
+        //??
+        self::assertEquals(false,$res);
     }
 
     public function testDeleteAdvisor(){

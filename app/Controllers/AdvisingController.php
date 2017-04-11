@@ -121,7 +121,7 @@ class AdvisingController
             if ($hours < $cutOffTime) {
                 //TODO: change url
                 die("Time remained is less than cutOff hours");
-                header('Location:http://mavappont_php_master.sites.dev/MavAppoint_PHP/?c=' . mav_encrypt("advising"));
+                header("Location:" . getUrlWithoutParameters() . "?c=" .mav_encrypt("advising"));
             }
         }
 

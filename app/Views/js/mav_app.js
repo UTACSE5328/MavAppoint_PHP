@@ -324,7 +324,7 @@ $(function(){
         });
     });
 
-    $("#deleteTypeAndDurationSubmit").click(function(e){
+    $(".deleteTypeAndDurationSubmit").click(function(e){
         e.preventDefault();
         var confirmMessage = 'Are you sure you want to delete this appointment type?';
         if (confirm(confirmMessage)){

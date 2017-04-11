@@ -10,8 +10,9 @@ $addTypeAndDurationAction = mav_encrypt("addTypeAndDuration");
 $deleteTypeAndDurationAction = mav_encrypt("deleteTypeAndDuration");
 $content = json_decode($content, true);
 $typeAndDuration = $content['data']['typeAndDuration'];
-
-
+$advisorNotificationState = $content['data']['advisorNotificationState'];
+$notificationYes = $advisorNotificationState == "yes" ? "checked" : "";
+$notificationNo = $advisorNotificationState == "no" ? "checked" : "";
 ?>
 
 <style>
@@ -56,7 +57,7 @@ $typeAndDuration = $content['data']['typeAndDuration'];
                     <tr>
                         <td style="color: #000000; size: 10px"><?php echo $typeAndDuration[$i]['type'];?></td>
                         <td style="color: #000000; size: 10px"><?php echo $typeAndDuration[$i]['duration'];?></td>
-                        <td><button id="deleteTypeAndDurationSubmit" type="button" class="btn"> <span class="glyphicon glyphicon-remove"></span></button></td>
+                        <td><button class="btn deleteTypeAndDurationSubmit" type="button" > <span class="glyphicon glyphicon-remove"></span></button></td>
                     </tr>
 
                             <script> function deleteapptype<?=$i?>(){
@@ -149,16 +150,20 @@ $typeAndDuration = $content['data']['typeAndDuration'];
                 <label style="text-align: center" for="message"><font color="#0" size="4">Username or Password Invalid</font></label> <br>
 
                 <div class="form-group">
-                    <input type="radio" name="notify" id="radioyes" value="yes" checked><label for="radioyes">Yes</label>
+                    <input type="radio" name="notify" id="radioyes" value="yes" <?=$notificationYes?>><label for="radioyes">Yes</label>
                 </div>
                 <div class="form-group">
-                    <input type="radio" name="notify" id="radiono" value="no"><label for="radiono">No</label>
+
+                    <input type="radio" name="notify" id="radiono" value="no" <?=$notificationNo?>><label for="radiono">No</label>
+
                 </div>
                 <div class="panel-footer text-center">
                     <input id="setEmailNotificationsSubmit" type="submit" class="btn-lg" value="submit"/>
                 </div>
+
             </form>
         </div>
+
     </div>
 </div>
 

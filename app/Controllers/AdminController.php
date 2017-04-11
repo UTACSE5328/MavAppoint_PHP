@@ -111,28 +111,50 @@ class adminController extends BasicController
 
     function showDepartmentScheduleAction()
     {
+        if (!isset($_SESSION['role'])) {
+            header("Location:" . getUrlWithoutParameters() . "?c=" .mav_encrypt("login"));
+        }
+
         if ($this->role == "admin" && $this->email != null) {
             $dbm = new db\DatabaseManager();
+            $adminUser = $dbm->getAdmin($this->email);
+            $appointments = $dbm->getAppointments($adminUser);
+            if(sizeof($appointments) != 0 ){
+                foreach ($appointments as $appointment){
+
+
+
+                    $advisor = $dbm->getAdvisor($appointment->getAdvisorEmail());
+                    $tempSchedules[] = [
+                            "advisingDate" => $appointment->getAdvisingDate(),
+                            "advisingStartTime" => $appointment->getAdvisingStartTime(),
+                            "advisingEndTime" => $appointment->getAdvisingEndTime(),
+//                            "appointmentType" => $appointment->getAppointmentType()
+                            "appointmentType" => $appointment->getAppointmentType()." - ".$advisor->getPName()
+                        ];
+
+
+                }
+
+            }
+
             $scheduleObjectArr = $dbm->getAdvisorSchedule("all");
             if (sizeof($scheduleObjectArr) != 0) {
-                $schedules = array();
-                for ($i = 0; $i < sizeof($scheduleObjectArr); $i++) {
+                foreach ($scheduleObjectArr as $schedule){
+                    $tempSchedules[] = [
+                        "name" => $schedule->getName(),
+                        "date" => $schedule->getDate(),
+                        "startTime" => $schedule->getStartTime(),
+                        "endTime" => $schedule->getEndTime(),
 
-                    $scheduleObject = $scheduleObjectArr[$i];
-                    array_push($schedules,
-                        [
-                            "title" => $scheduleObject->getName(),
-                            "start" => $scheduleObject->getDate() . "T" . $scheduleObject->getStartTime(),
-                            "end" => $scheduleObject->getDate() . "T" . $scheduleObject->getEndTime(),
-                            "id" => $i,
-                            "backgroundColor" => 'blue'
-                        ]
-                        );
+                    ];
 
                 }
 
 
+
             }
+
 
         }
         return [
@@ -140,7 +162,8 @@ class adminController extends BasicController
             "data" => [
                 "email" =>$this->email,
                 "role" => $this->role,
-                "schedule" =>$schedules
+                "schedules" =>$tempSchedules,
+                "appointments" => $tempSchedules
             ]
         ];
     }
@@ -160,7 +183,7 @@ class adminController extends BasicController
         $emailSubject = 'MavAppoint: Advisor\'s advising time has been cancelled!';
         $msg = "Advising time slot of advisor " .$pName. " on " . $date. " at ". $startTime . "-" .$endTime." has been cancelled."
             ."\n" ."Reason: ". $reason  ;
-        mav_mail($emailSubject,$msg,$studentEmails);
+//        mav_mail($emailSubject,$msg,$studentEmails);
 
         return [
             "error" => 0,

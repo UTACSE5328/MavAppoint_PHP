@@ -49,12 +49,14 @@ class CustomizeSettingController extends BasicController
                     );
                 }
             }
+            $getAdvisorNotificationState = $advisor->getNotification();
         }
 
         return [
             "error" => 0,
             "data" => [
-                "typeAndDuration" =>$typeAndDuration
+                "typeAndDuration" =>$typeAndDuration,
+                "advisorNotificationState" =>$getAdvisorNotificationState
             ]
         ];
     }
@@ -96,11 +98,15 @@ class CustomizeSettingController extends BasicController
         $at = new AppointmentType();
         $type = isset($_REQUEST['apptypes']) ? $_REQUEST['apptypes'] : "";
         $duration = isset($_REQUEST['minutes']) ? $_REQUEST['minutes'] : "";
+        if (!$duration){
+            $duration = "5";
+        }
+
         $at->setType($type);
         $at->setDuration($duration);
         $dbm = new DatabaseManager();
         $uid = $dbm->getUserIdByEmail($_SESSION['email']);
-        $dbm->addAppointmentType($uid,$at);//
+        $dbm->addAppointmentType($uid,$at);
 
         return [
             "error" => 0,

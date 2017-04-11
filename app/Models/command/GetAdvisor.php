@@ -19,7 +19,7 @@ class GetAdvisor extends SQLCmd {
 		$cmd = new GetUserIdByEmail($this->email);
 		$this->id  = $cmd->execute();
 
-		$query = "SELECT password,validated,pName,name_low,name_high,degree_types,Department_User.name,Major_User.name,cutOffTime
+		$query = "SELECT notification,password,validated,pName,name_low,name_high,degree_types,Department_User.name,Major_User.name,cutOffTime
                       FROM User,User_Advisor,Department_User,Major_User
                       WHERE USER.userId='$this->id' and User_Advisor.userId='$this->id' and Department_User.userId='$this->id' and Major_User.userId='$this->id'";
 
@@ -31,6 +31,7 @@ class GetAdvisor extends SQLCmd {
         $set = new AdvisorUser();
         $set->setUserId($this->id);
         $set->setEmail($this->email);
+        $set->setNotification($this->result["notification"]);
         $set->setPassword($this->result["password"]);
         $set->setValidated($this->result["validated"]);
         $set->setPName($this->result["pName"]);

@@ -32,7 +32,10 @@ return [
     ],
     "advising" => [
         "getAdvisingInfo" => "AdvisingView",
-        "schedule" => "ScheduleView"
+        "schedule" => "ScheduleView",
+        "getWaitListInfo" => "getWaitListInfo",
+        "addToWaitList" => "addToWaitList",
+        "success" => "SuccessView"
     ],
     "appointment" => [
         "makeAppointment" => "makeAppointment",

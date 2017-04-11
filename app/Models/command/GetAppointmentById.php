@@ -15,7 +15,7 @@ class GetAppointmentById extends SQLCmd
 
     function queryDB()
     {
-        $query = "SELECT user_advisor.pName,user.email,date,start,end,type,description,studentId,student_email, student_cell,advisor_userId,student_userId
+        $query = "SELECT user_advisor.pName,user.email,Id,date,start,end,type,description,studentId,student_email, student_cell,advisor_userId,student_userId
         FROM appointments,user_advisor,user
         WHERE Id=$this->id and user_advisor.userId = advisor_userId and user.userId = advisor_userId";
 
@@ -27,6 +27,7 @@ class GetAppointmentById extends SQLCmd
         $rs = $this->result;
         if ($rs != null) {
             $set = new Appointment();
+            $set->setAppointmentId($rs['Id']);
             $set->setPname($rs["pName"]);
             $set->setAdvisingDate($rs["date"]);
             $set->setAdvisingStartTime($rs["start"]);

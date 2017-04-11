@@ -4,15 +4,17 @@ namespace App\Controllers;
 
 use Models\Bean\Appointment;
 use Models\Bean\AppointmentType;
+use Models\Bean\WaitList;
 use Models\CompositeTimeSlot;
 use Models\Db\DatabaseManager;
 use Models\Login\StudentUser;
 
 class AdvisingController
 {
-    public function getAdvisingInfoAction(){
-        if(!isset($_SESSION['email'])){
-            header("Location:" . getUrlWithoutParameters() . "?c=" .mav_encrypt("login"));
+    public function getAdvisingInfoAction()
+    {
+        if (!isset($_SESSION['email'])) {
+            header("Location:" . getUrlWithoutParameters() . "?c=" . mav_encrypt("login"));
         }
 
         $dbManager = new DatabaseManager();
@@ -33,14 +35,69 @@ class AdvisingController
                 "advisors" => $advisors,
                 "schedules" => $schedules,
                 "appointments" => $this->getAppointments($user, $dbManager),
+                "waitLists" => $this->getWaitListAction($user, $dbManager),
+                "studentEmail" => $user->getEmail(),
+                "studentId" => $user->getStudentId(),
+                "studentPhone" => $user->getPhoneNumber()
             ]
         ];
     }
 
-    public function scheduleAction(){
-        if (!isset($_SESSION['role'])) {
+    public function getWaitListInfoAction() {
+        $appointmentId = isset($_REQUEST['appointmentId']) ? $_REQUEST['appointmentId'] : 0;
 
-            header("Location:" . getUrlWithoutParameters() . "?c=" .mav_encrypt("login"));
+        $isAdded = false;
+
+        $dbManager = new DatabaseManager();
+        $count = $dbManager->getWaitListScheduleCount($appointmentId);
+        $appointment = $dbManager->getAppointmentById($appointmentId);
+        $uid = $dbManager->getUserIdByEmail($_SESSION['email']);
+        $waitList = $dbManager->getStudentWaitList($uid, $appointmentId);
+
+        if ($waitList != null) {
+            $isAdded = true;
+        }
+
+        return [
+            "error" => 0,
+            "data" => [
+                "isAdded" => $isAdded,
+                "waitListCount" => $count,
+                "appointmentType" => $appointment->getAppointmentType(),
+                "advisor" => $appointment->getPname()
+            ]
+        ];
+    }
+
+    public function addToWaitListAction() {
+        $dbManager = new DatabaseManager();
+        $uid = $dbManager->getUserIdByEmail($_SESSION['email']);
+
+        $waitList = new WaitList();
+        $waitList->setStudentId($_REQUEST['studentId']);
+        $waitList->setStudentUserId($uid);
+        $waitList->setAppointmentId($_REQUEST['appointmentId']);
+        $waitList->setStudentEmail($_REQUEST['email']);
+        $waitList->setStudentPhone($_REQUEST['phoneNumber']);
+        $waitList->setType($_REQUEST['appointmentType']);
+        $waitList->setDescription($_REQUEST['description']);
+
+
+        if (!$dbManager->setWaitListSchedule($waitList)) {
+            return [
+                "error" => 1,
+                "description" => "Errors while adding to wait list."
+            ];
+        }
+
+        return [
+            "error" => 0
+        ];
+    }
+
+    public function scheduleAction() {
+        if (!isset($_SESSION['role'])) {
+            header("Location:" . getUrlWithoutParameters() . "?c=" . mav_encrypt("login"));
         }
         $duration = isset($_REQUEST['duration']) ? $_REQUEST['duration'] : 0;
         $dbManager = new DatabaseManager();
@@ -84,8 +141,23 @@ class AdvisingController
         ];
     }
 
+    public function successAction() {
+        $controller = mav_encrypt($_REQUEST['nc']);
+        $action = mav_encrypt($_REQUEST['na']);
 
-    private function getDegrees(StudentUser $user) {
+        return [
+            "error" => 0,
+            "data" => getUrlWithoutParameters() . "?c=$controller&a=$action"
+        ];
+    }
+
+
+
+
+
+
+    private function getDegrees(StudentUser $user)
+    {
         $degrees = [];
         $degreeType = $user->getDegType();
         if ($degreeType >= 4) {
@@ -98,23 +170,26 @@ class AdvisingController
             $degreeType -= 2;
         }
 
-        if($degreeType >= 1) {
+        if ($degreeType >= 1) {
             $degrees[] = "Bachelors";
         }
 
         return $degrees;
     }
 
-    private function getLetters(StudentUser $user) {
+    private function getLetters(StudentUser $user)
+    {
         return $user->getLastNameInitial();
     }
 
-    private function getDepartments(StudentUser $user, DatabaseManager $dbManager) {
+    private function getDepartments(StudentUser $user, DatabaseManager $dbManager)
+    {
         $tempDeps = $dbManager->getDepartment($user->getUserId());
         return $tempDeps;
     }
 
-    private function getMajors(StudentUser $user, $department, DatabaseManager $dbManager) {
+    private function getMajors(StudentUser $user, $department, DatabaseManager $dbManager)
+    {
         $tempMajors = [];
         $majors = $dbManager->getMajor($user->getUserId());
 
@@ -126,13 +201,14 @@ class AdvisingController
         return $tempMajors;
     }
 
-    private function getAdvisors(StudentUser $user, $department, DatabaseManager $dbManager) {
+    private function getAdvisors(StudentUser $user, $department, DatabaseManager $dbManager)
+    {
         $tempAdvs = [];
         $advisors = $dbManager->getAdvisorsOfDepartment($department);
         $lastInitial = $user->getLastNameInitial();
         foreach ($advisors as $advisor) {
             $reg = "#[" . strtolower($advisor->getNameLow()) . "-" . strtolower($advisor->getNameHigh())
-                . strtoupper($advisor->getNameLow()) . "-" . strtoupper($advisor->getNameHigh()) .  "]#";
+                . strtoupper($advisor->getNameLow()) . "-" . strtoupper($advisor->getNameHigh()) . "]#";
             if (preg_match($reg, $lastInitial)) {
                 $tempAdvs[] = [
                     "pName" => $advisor->getPName()
@@ -142,10 +218,11 @@ class AdvisingController
         return $tempAdvs;
     }
 
-    private function getSchedules($advisors, DatabaseManager $dbManager, $times) {
+    private function getSchedules($advisors, DatabaseManager $dbManager, $times)
+    {
         $tempSchedules = [];
 
-        $advisors = array_map(function($advisor){
+        $advisors = array_map(function ($advisor) {
             return $advisor['pName'];
         }, $advisors);
 
@@ -153,7 +230,6 @@ class AdvisingController
         foreach ($schedules as $schedule) {
             /** @var CompositeTimeSlot $schedule */
             $schedule = unserialize($schedule);
-            date_default_timezone_set('America/Chicago');
             $scheduleDate = strtotime($schedule->getDate());
             $todayDate = strtotime(date("Y-m-d", time()));
             if ($scheduleDate > $todayDate) {
@@ -171,13 +247,13 @@ class AdvisingController
             }
         }
 
-
         return $tempSchedules;
     }
 
-    private function getAppointments(StudentUser $user, DatabaseManager $dbManager) {
+    private function getAppointments(StudentUser $user, DatabaseManager $dbManager)
+    {
         $appointments = $dbManager->getAppointments($user);
-        $tempAppointments = array_map(function(Appointment $appointment){
+        $tempAppointments = array_map(function (Appointment $appointment) {
             return [
                 "advisingDate" => $appointment->getAdvisingDate(),
                 "advisingStartTime" => $appointment->getAdvisingStartTime(),
@@ -186,12 +262,40 @@ class AdvisingController
             ];
         }, $appointments);
 
+
         return $tempAppointments;
     }
 
-    private function getAppointmentTypes($pname, DatabaseManager $dbManager) {
+    private function getWaitListAction(StudentUser $user, DatabaseManager $dbManager)
+    {
+        $startDate = date("Y-m-d", time() - 24 * 60 * 60);
+        $endDate = date("Y-m-d", time() + 30 * 24 * 60 * 60);
+
+        $waitList = array();
+        $allAppointments = $dbManager->getAppointmentsByDate($startDate, $endDate);
+
+        /** @var Appointment $appointment */
+        foreach ($allAppointments as $appointment) {
+            $tmp = [
+                "appointmentId" => $appointment->getAppointmentId(),
+                "advisingDate" => $appointment->getAdvisingDate(),
+                "advisingStartTime" => $appointment->getAdvisingStartTime(),
+                "advisingEndTime" => $appointment->getAdvisingEndTime(),
+                "appointmentType" => $appointment->getAppointmentType()
+            ];
+
+            if ($user->getUserId() != $appointment->getStudentUserId()) {
+                array_push($waitList, $tmp);
+            }
+        }
+
+        return $waitList;
+    }
+
+    private function getAppointmentTypes($pname, DatabaseManager $dbManager)
+    {
         $types = $dbManager->getAppointmentTypes($pname);
-        return array_map(function(AppointmentType $type){
+        return array_map(function (AppointmentType $type) {
             return [
                 'type' => $type->getType(),
                 'email' => $type->getEmail(),

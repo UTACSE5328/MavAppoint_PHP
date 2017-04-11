@@ -30,7 +30,7 @@ class GetAppointmentsByDate extends SQLCmd
         $arr = array();
         while($rs = mysqli_fetch_array($this->result)){
             $set = new Appointment();
-            $set->setAppointmentId($rs['id']);
+            $set->setAppointmentId($rs['Id']);
             $set->setAdvisorUserId($rs['advisor_userId']);
             $set->setStudentUserId($rs['student_userId']);
 

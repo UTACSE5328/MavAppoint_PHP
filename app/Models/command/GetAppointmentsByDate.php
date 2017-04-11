@@ -30,17 +30,21 @@ class GetAppointmentsByDate extends SQLCmd
         $arr = array();
         while($rs = mysqli_fetch_array($this->result)){
             $set = new Appointment();
-            $set->setPname($rs['pName']);
-            $set->setAdvisorEmail($rs['email']);
+            $set->setAppointmentId($rs['id']);
+            $set->setAdvisorUserId($rs['advisor_userId']);
+            $set->setStudentUserId($rs['student_userId']);
+
             $set->setAdvisingDate($rs["date"]);
             $set->setAdvisingStartTime($rs["start"]);
             $set->setAdvisingEndTime($rs["end"]);
+
             $set->setAppointmentType($rs["type"]);
-            $set->setAppointmentId($rs['id']);
             $set->setDescription($rs['description']);
+
             $set->setStudentId($rs['studentId']);
             $set->setStudentEmail($rs['student_email']);
             $set->setStudentPhoneNumber($rs['student_cell']);
+
             array_push($arr, $set);
         }
 

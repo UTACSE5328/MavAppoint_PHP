@@ -42,5 +42,13 @@ return [
         "success" => "SuccessView",
         "showAppointment" => "AppointmentView",
         "cancelAppointment" => "cancelAppointment"
-    ]
+    ],
+    "customizeSetting" => [
+        "showAppointmentType" => "CustomizeSettingView",
+        "cutOffTime" => "cutOffTime",
+        "setEmailNotifications" => "setEmailNotifications",
+        "success" => "SuccessView",
+        "addTypeAndDuration" => "addTypeAndDuration",
+        "deleteTypeAndDuration" => "deleteTypeAndDuration",
+    ],
 ];

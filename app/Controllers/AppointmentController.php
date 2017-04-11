@@ -40,7 +40,7 @@ class AppointmentController
         if ($result['student_notify'] == 'yes') {
             mav_mail("MavAppoint: Advising appointment with " . $appointment->getPname(),
                 "\nAn appointment has been set for " . $appointment->getAppointmentType() . " on " . $appointment->getAdvisingDate() . " at " .
-                $appointment->getAdvisingStartTime() . " - " . $appointment->getAdvisingEndTime() . "\nPlease arrive on time! Thanks!",
+                $appointment->getAdvisingStartTime() . " - " . $appointment->getAdvisingEndTime() . "\nThanks!",
                 [$_REQUEST['email']]);
         }
 
@@ -68,44 +68,71 @@ class AppointmentController
     }
 
     public function cancelAppointmentAction() {
+        $result = 0;
         $appointmentId = $_REQUEST['appointmentId'];
         $dbManager = new DatabaseManager();
         $appointment = $dbManager->getAppointmentById($appointmentId);
-        $result = $dbManager->cancelAppointment($appointmentId);
-        if (!$result || $appointment == null) {
-            return [
-                "error" => 1
-            ];
+        $waitList = $dbManager->getFirstWaitList($appointmentId);
+        if ($waitList != null) {
+
+            $appointment->setStudentUserId($waitList->getStudentUserId());
+            $appointment->setStudentId($waitList->getStudentId());
+            $appointment->setStudentEmail($waitList->getStudentEmail());
+            $appointment->setStudentPhoneNumber($waitList->getStudentPhone());
+            $appointment->setAppointmentType($waitList->getType());
+            $appointment->setDescription($waitList->getDescription());
+
+            if ($dbManager->updateAppointment($appointment) && $dbManager->deleteWaitListSchedule($waitList->getId())) {
+
+                mav_mail("MavAppoint: Advising appointment with " . $appointment->getPname(),
+                    "\nAn appointment has been set for " . $appointment->getAppointmentType() . " on " . $appointment->getAdvisingDate() . " at " .
+                    $appointment->getAdvisingStartTime() . " - " . $appointment->getAdvisingEndTime() . "\nThanks!",
+                    [$appointment->getStudentEmail()]);
+
+                mav_mail("MavAppoint: Advising appointment with " . $appointment->getStudentId(),
+                    "\nAn appointment has been updated for " . $appointment->getAppointmentType() . " on " . $appointment->getAdvisingDate() . " at " .
+                    $appointment->getAdvisingStartTime() . " - " . $appointment->getAdvisingEndTime() .
+                    "\nSome student cancelled the appointment and the first one in the wait list is scheduled\nThanks!",
+                    [$appointment->getAdvisorEmail()]);
+
+            } else {
+                $result = 1;
+            }
+
+        } else {
+
+            if ($dbManager->cancelAppointment($appointmentId)) {
+
+                mav_mail("Advising Appointment with " . $appointment->getPname() . " cancelled",
+                    "Your appointment on " . $appointment->getAdvisingDate() . " from " . $appointment->getAdvisingStartTime() .
+                    " to " . $appointment->getAdvisingEndTime() . " has been cancelled",
+                    [$appointment->getStudentEmail()]);
+
+                mav_mail("Advising Appointment with Student Id: " . $appointment->getStudentId() . " cancelled",
+                    "Your appointment on " . $appointment->getAdvisingDate() . " from " . $appointment->getAdvisingStartTime() .
+                    " to " . $appointment->getAdvisingEndTime() . " has been cancelled",
+                    [$appointment->getAdvisorEmail()]);
+
+            } else {
+                $result = 1;
+            }
         }
 
-        mav_mail("Advising Appointment with " . $appointment->getPname() . " cancelled",
-            "Your appointment on " . $appointment->getAdvisingDate() . " from " . $appointment->getAdvisingStartTime() .
-            " to " . $appointment->getAdvisingEndTime() . " has been cancelled",
-            [$appointment->getStudentEmail()]);
-
-        mav_mail("Advising Appointment with Student Id: " . $appointment->getStudentId() . " cancelled",
-            "Your appointment on " . $appointment->getAdvisingDate() . " from " . $appointment->getAdvisingStartTime() .
-            " to " . $appointment->getAdvisingEndTime() . " has been cancelled",
-            [$appointment->getAdvisorEmail()]);
-//        $test = 1;
-//        if ($appointment == null) {
-//            $test = 2;
-//        }
         return [
-            "error" => 0,
+            "error" => $result
         ];
     }
-
 
     public function successAction(){
         $controller = mav_encrypt($_REQUEST['nc']);
         $action = mav_encrypt($_REQUEST['na']);
         return [
             "error" => 0,
-            //TODO: change url
-            "data" => "http://http://mavappont_php_master.sites.dev/MavAppoint_PHP/?c=$controller&a=$action"
+            "data" => getUrlWithoutParameters() . "?c=$controller&a=$action"
         ];
     }
+
+
 
 
 

@@ -21,13 +21,12 @@ class GetStudentWaitList extends SQLCmd
 
     function queryDB(){
         $query = "SELECT * FROM wait_list_schedule 
-                    where appointment_id = '$this->appointment_id' and student_user_id = '$this->user_id'";
+                    where appointment_id = '$this->appointment_id' and student_user_id = '$this->user_id' limit 1";
         $this->result = $this->conn->query($query);
     }
 
     function processResult(){
-        $arr = array();
-        while($rs = mysqli_fetch_array($this->result)){
+        if ($rs = mysqli_fetch_array($this->result)){
             $apt = new WaitList();
             $apt->setId($rs['id']);
             $apt->setAppointmentId($rs['appointment_id']);
@@ -37,9 +36,9 @@ class GetStudentWaitList extends SQLCmd
             $apt->setDescription($rs['description']);
             $apt->setStudentEmail($rs['student_email']);
             $apt->setStudentPhone($rs['student_cell']);
-            array_push($arr, $apt);
+            return $apt;
         }
 
-        return $arr;
+        return null;
     }
 }

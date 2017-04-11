@@ -22,28 +22,24 @@ class UpdateAppointment extends SQLCmd
     function queryDB(){
         $appointment_id = $this->apt->getAppointmentId();
         $student_id = $this->apt->getStudentId();
+        $student_userId = $this->apt->getStudentUserId();
         $type = $this->apt->getAppointmentType();
         $description = $this->apt->getDescription();
         $student_email = $this->apt->getStudentEmail();
         $student_cell = $this->apt->getStudentPhoneNumber();
 
-        $query = "SELECT * from Appointments where id = '$appointment_id'";
-        $res = $this->conn->query($query)->fetch_assoc();
-        $date = $res['date'];
-        $start = $res['start'];
-        $end = $res['end'];
+        $date = $this->apt->getAdvisingDate();
+        $start = $this->apt->getAdvisingStartTime();
+        $end = $this->apt->getAdvisingEndTime();
 
-        $query = "SELECT userId from user_student where student_id = '$student_id'";
-        $res = $this->conn->query($query)->fetch_assoc();
-        $student_userId = $res['userId'];
-
-        $query = "UPDATE Appointments SET student_userId='$student_userId',studentId='$student_id',
+        $query = "UPDATE appointments SET student_userId='$student_userId',studentId='$student_id',
             type = '$type', description = '$description', student_email = '$student_email',
             student_cell = '$student_cell' where Id = '$appointment_id'";
+
         $this->conn->query($query);
         $this->result = mysqli_affected_rows($this->conn);
 
-        $query = "UPDATE Advising_Schedule SET studentId='$student_id' where date='$date' AND start >='$start' AND end <='$end'";
+        $query = "UPDATE advising_schedule SET studentId='$student_id' where date='$date' AND start >='$start' AND end <='$end'";
         $this->conn->query($query);
     }
 

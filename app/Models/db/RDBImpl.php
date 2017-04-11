@@ -1,6 +1,7 @@
 <?php
 namespace Models\Db;
 
+use Models\CompositeTimeSlot;
 use Models\Db\DbInterface\DBImplInterface;
 use Models\Bean as Bean;
 use Models\Login as Login;
@@ -342,6 +343,11 @@ class RDBImpl implements DBImplInterface{
     public function getCSEStudentByNetId($netId)
     {
         $cmd = new Command\GetCSEStudentByNetId($netId);
+        return $cmd->execute();
+    }
+
+    public function deleteWaitListSchedule($id) {
+        $cmd = new Command\DeleteWaitListSchedule($id);
         return $cmd->execute();
     }
 }

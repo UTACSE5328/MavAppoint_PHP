@@ -130,8 +130,7 @@ $successAction = mav_encrypt("success");
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id=addApptTypeLabel">Update
-                            Appointment</h4>
+                        <h4 class="modal-title" id=addApptTypeLabel">Update Appointment</h4>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name=id2 id="id2" readonly>

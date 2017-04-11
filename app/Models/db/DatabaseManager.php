@@ -12,6 +12,10 @@ class DatabaseManager{
         $this->impl = new RDBImpl();
     }
 
+    /**
+     * @param int $aptId
+     * @return bean\WaitList
+     */
     function getFirstWaitList($aptId){
         return $this->impl->getFirstWaitList($aptId);
     }
@@ -188,6 +192,10 @@ class DatabaseManager{
         return $this->impl->getAppointments($user);
     }
 
+    function getAppointmentsByDate($start, $end) {
+        return $this->impl->getappointmentsByDate($start, $end);
+    }
+
     /**
      * @param $pName
      * @return bean\AppointmentType[]
@@ -214,5 +222,9 @@ class DatabaseManager{
 
     function updateUserNotification(login\LoginUser $user,$notification){
         return $this->impl->updateNotification($user,$notification);
+    }
+
+    public function deleteWaitListSchedule($id) {
+        return $this->impl->deleteWaitListSchedule($id);
     }
 }

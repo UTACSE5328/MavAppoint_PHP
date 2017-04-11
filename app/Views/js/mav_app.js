@@ -227,4 +227,32 @@ $(function(){
             }
         });
     });
+
+    $("#addToWaitListSubmit").click(function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: "/MavAppoint_PHP/",
+            type: "post",
+            data: {
+                c : $("#advisingController").val(),
+                a : $("#addToWaitListAction").val(),
+                email : $("#email").val(),
+                studentId : $("#studentId").val(),
+                appointmentId : $("#appointmentId").val(),
+                appointmentType : $("#appType").val(),
+                phoneNumber : $("#phoneNumber").val(),
+                description : $("#description").val()
+            },
+            success: function(data){
+                var data = JSON.parse(data);
+                if (data.error == 0) {
+                    window.location.href = "/MavAppoint_PHP?c=" + $("#advisingController").val() + "&a=" + $("#successAction").val()
+                        + "&nc=advising&na=getAdvisingInfo";
+                }else{
+                    alert(data.description);
+                }
+            }
+        });
+    });
 });

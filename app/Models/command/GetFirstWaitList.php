@@ -19,24 +19,24 @@ class GetFirstWaitList extends SQLCmd
 
     function queryDB(){
         $query = "SELECT * FROM wait_list_schedule 
-                    where appointment_id = '$this->appointment_id' limit 1";
+                    where appointment_id = '$this->appointment_id' order by id asc limit 1";
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
 
     function processResult(){
-        if($this->result == null)
-             return $this->result;
-        else{
-            $apt = new WaitList();
-            $apt->setId($this->result['id']);
-            $apt->setAppointmentId($this->result['appointment_id']);
-            $apt->setStudentId($this->result['student_id']);
-            $apt->setStudentUserId($this->result['student_user_id']);
-            $apt->setType($this->result['type']);
-            $apt->setDescription($this->result['description']);
-            $apt->setStudentEmail($this->result['student_email']);
-            $apt->setStudentPhone($this->result['student_cell']);
-            return $apt;
+        if ($this->result){
+            $wl = new WaitList();
+            $wl->setId($this->result['id']);
+            $wl->setAppointmentId($this->result['appointment_id']);
+            $wl->setStudentId($this->result['student_id']);
+            $wl->setStudentUserId($this->result['student_user_id']);
+            $wl->setType($this->result['type']);
+            $wl->setDescription($this->result['description']);
+            $wl->setStudentEmail($this->result['student_email']);
+            $wl->setStudentPhone($this->result['student_cell']);
+            return $wl;
         }
+
+        return null;
     }
 }

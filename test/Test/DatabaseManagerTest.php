@@ -106,11 +106,13 @@ class DatabaseManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetAppointments(){
         $dbManager = new DatabaseManager();
 
-        $user = new AdvisorUser();
-        $user->setUserId('103');
-        $user->setEmail("ad1@uta.edu");
+        $user = new LoginUser();
+        $user->setUserId('65');
+        $user->setEmail("admin@uta.edu");
+
 
         $res = $dbManager->getAppointments($user);
+
         self::assertContainsOnly(Appointment::class, $res);
     }
 

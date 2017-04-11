@@ -144,8 +144,8 @@ class DatabaseManager{
         return $this->impl->getFaculty($email);
     }
 
-    function getAdvisorSchedule($name){
-        return$this->impl->getAdvisorSchedule($name);
+    function getAdvisorSchedule($name ,$includeReserved = false, $date=null ){
+        return$this->impl->getAdvisorSchedule($name,$includeReserved,$date);
     }
 
     function getAdvisorSchedules(array $advisorUsers){

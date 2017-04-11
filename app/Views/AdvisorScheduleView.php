@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gaolin
- * Date: 3/13/17
- * Time: 2:14 AM
- */
-
 include ("template/header.php");
 if (!isset($_SESSION)) {
     session_start();
@@ -139,7 +132,8 @@ if($dispatch == "failure")
                         <h4 class="modal-title" id="addTimeSlotLabel">Add Time Slots</h4>
                     </div>
                     <div class="modal-body">
-                        <label for="starttime">Start Time:</label> <input type="time"
+                        <label for="starttime">Start Time:</label>
+                        <input type="time"
                                                                           class="form-control" name=starttime id="starttime" step="300">
                         <label for="tndtime">End Time:</label> <input type="time"
                                                                       class="form-control" name=endtime id="endtime" step="300">
@@ -169,19 +163,18 @@ if($dispatch == "failure")
                             Slot</h4>
                     </div>
                     <div class="modal-body">
-                        <label for="StartTime">Start Time:</label> <input type="time"
-                                                                          class="form-control" name=StartTime2 id="StartTime2" step="300">
-                        <label for="EndTime">End Time:</label> <input type="time"
-                                                                      class="form-control" name=EndTime2 id="EndTime2" step="300">
-                        <label for="Date">Date:</label> <input type="date"
-                                                               class="form-control" name=Date id="Date"> <input
-                                type="hidden" name=pname id="pname"> <label id="result2"><font
-                                    style="color: #e67e22" size="4"></font></label>
+                        <label for="StartTime">Start Time:</label>
+                            <input type="time" class="form-control" name=StartTime2 id="StartTime2" step="300">
+                        <label for="EndTime">End Time:</label>
+                            <input type="time" class="form-control" name=EndTime2 id="EndTime2" step="300">
+                        <label for="Date">Date:</label>
+                            <input type="date" class="form-control" name=Date id="Date">
+                            <input type="hidden" name=pname id="pname">
+                        <label id="result2"><font style="color: #e67e22" size="4"></font></label>
                         <label for="delete_repeat">Weekly repeat duration:</label>
-                        <input type="text" class="form-control" name=delete_repeat id="delete_repeat" value="0">
-
+                            <input type="text" class="form-control" name=delete_repeat id="delete_repeat" value="0">
                         <label for="delete_reason">Reason:</label>
-                        <input type="text" class="form-control" name=delete_reason id="delete_reason" placeholder="Reason for cancelling slot/s.">
+                            <input type="text" class="form-control" name=delete_reason id="delete_reason" placeholder="Reason for cancelling slot/s.">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">

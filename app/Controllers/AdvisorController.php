@@ -143,12 +143,6 @@ class advisorController
         $dbm = new DatabaseManager();
         $advisor = $dbm->getAdvisor($this->email);
         $date = $requestDate;
-//        echo $date."<br>";
-//        $date = TimeSlotHelper::addDate($date,1);
-//        echo $date."<br>";
-//        $date = TimeSlotHelper::addDate($date,1);
-//        echo $date."<br>";
-//        die();
 
         $originalTimeSlots = $dbm->getAdvisorSchedule($advisor->getPName(),true,$date);
         foreach ($originalTimeSlots as $timeSlot){

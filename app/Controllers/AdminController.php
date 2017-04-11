@@ -10,6 +10,9 @@ namespace App\Controllers;
 //include_once dirname(dirname(__FILE__))."/Models/login/AdvisorUser.php";
 use Models\Db as db;
 use Models\Login as login;
+use Models\Db\DatabaseManager;
+use Models\Login\AdvisorUser;
+use Models\Helper\TimeSlotHelper;
 
 
 class adminController extends BasicController
@@ -170,27 +173,78 @@ class adminController extends BasicController
 
 
     function deleteTimeSlotAction(){
-        $startTime = isset($_POST['StartTime2']) ? $_POST['StartTime2'] : null;
-        $endTime = isset($_POST['EndTime2']) ? $_POST['EndTime2'] : null;
-        $date = isset($_POST['Date']) ? $_POST['Date'] : null;
-        $pName = isset($_POST['pname']) ? $_POST['pname'] : null;
+        $requestStartTime = isset($_POST['StartTime2']) ? $_POST['StartTime2'].":00" : null;
+        $requestEndTime = isset($_POST['EndTime2']) ? $_POST['EndTime2'].":00" : null;
+        $requestDate = isset($_POST['Date']) ? date('Y-m-d',strtotime($_POST['Date'])) : null;
         $repeat = isset($_POST['delete_repeat']) ? intval($_POST['delete_repeat']) : null;
         $reason = isset($_POST['delete_reason']) ? $_POST['delete_reason'] : null;
-
-        DeleteTimeSlotController::deleteTimeSlot($date,$startTime,$endTime,$pName,$repeat,$reason);
-        $dbm = new db\DatabaseManager();
-        $studentEmails = $dbm->getStudentEmails();
-        $emailSubject = 'MavAppoint: Advisor\'s advising time has been cancelled!';
-        $msg = "Advising time slot of advisor " .$pName. " on " . $date. " at ". $startTime . "-" .$endTime." has been cancelled."
-            ."\n" ."Reason: ". $reason  ;
-//        mav_mail($emailSubject,$msg,$studentEmails);
-
+        $tittle = isset($_POST['pname']) ? $_POST['pname'] : null;
+        $pieces = explode(" ", $tittle);
+        $advisorName = $pieces[sizeof($pieces)-1];
+        $dbm = new DatabaseManager();
+        $department = $dbm->getDepartment($this->uid);
+        $advisors = $dbm->getAdvisorsOfDepartment($department[0]);
+        $advisor = null;
+        foreach ($advisors as $adv){
+            if($adv->getPName() == $advisorName){
+                $advisor = $adv;
+                break;
+            }
+        }
+        $date = $requestDate;
+        $originalTimeSlots = $dbm->getAdvisorSchedule($advisor->getPName(),true,$date);
+        foreach ($originalTimeSlots as $timeSlot){
+            if($requestStartTime>=$timeSlot->getStartTime() && $requestEndTime<=$timeSlot->getEndTime())
+            {
+                $originalStartTime = $timeSlot->getStartTime();
+                $originalEndTime = $timeSlot->getEndTime();
+                break;
+            }
+        }
+        $this->cancelAppointments($dbm,$advisor,$date,$originalStartTime,$originalEndTime,$reason);
+        if($repeat !=0 && $repeat!=null){
+            for($i = 0 ; $i<$repeat; $i++){
+                $date = date('Y-m-d',strtotime(TimeSlotHelper::addDate($date,1)));
+                $this->cancelAppointments($dbm,$advisor,$date,$originalStartTime,$originalEndTime,$reason);
+            }
+        }
+        DeleteTimeSlotController::deleteTimeSlot($requestDate,$originalStartTime,$originalEndTime,$advisor->getPName(),$repeat,$reason);
         return [
             "error" => 0,
-            "msg" => $msg,
-            "dispatch" => "success"
+            "dispatch" => "success",
         ];
     }
+
+    function cancelAppointments(DatabaseManager $dbm, AdvisorUser $advisor, $date , $originalStartTime, $originalEndTime, $reason){
+        $appointments = $dbm->getAppointments($advisor);
+        $studentEmailAndMsgArr = array();
+        foreach ($appointments as $appointment){
+            if(($appointment->getAdvisingDate() === $date) && ($appointment->getAdvisingStartTime() >= $originalStartTime)
+                && ($appointment->getAdvisingEndTime() <= $originalEndTime)){
+                array_push($studentEmailAndMsgArr,
+                    [
+                        "studentEmail" => $appointment->getStudentEmail(),
+                        "msg"=> "Advising time slot of adviser " .$advisor->getPName(). " on " . $date. " at ". $appointment->getAdvisingStartTime()
+                            . "-" .$appointment->getAdvisingEndTime()." has been cancelled."
+                            ."\n" ."Reason: ". $reason,
+                    ]
+                );
+                $dbm->cancelAppointment($appointment->getAppointmentId());
+
+            }
+
+
+        }
+        if(sizeof($studentEmailAndMsgArr)!=0){
+            $emailSubject = 'MavAppoint: Advisor\'s advising time has been cancelled!';
+            foreach ($studentEmailAndMsgArr as $keyValue){
+                mav_mail($emailSubject,$keyValue['msg'],[$keyValue['studentEmail']]);
+            }
+        }
+
+    }
+
+
 
     function showAdvisorAssignmentAction(){
         $dbm = new db\DatabaseManager();

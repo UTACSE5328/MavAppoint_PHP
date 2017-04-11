@@ -255,4 +255,100 @@ $(function(){
             }
         });
     });
+
+    $("#cutOffTimeSubmit").click(function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: "/MavAppoint_PHP/",
+            type: "post",
+            data: {
+                c : $("#customizeSettingController").val(),
+                a : $("#cutOffTimeAction").val(),
+                cutOffTime : $("#cutOffTimeText").val()
+            },
+            success: function(data){
+                var data = JSON.parse(data);
+                if (data.error == 0) {
+                    window.location.href = "/MavAppoint_PHP?c=" + $("#customizeSettingController").val() + "&a=" + $("#successAction").val();
+                }else{
+                    alert("Error while updating cutOff time")
+                }
+            }
+        });
+    });
+
+
+    $("#setEmailNotificationsSubmit").click(function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: "/MavAppoint_PHP/",
+            type: "post",
+            data: {
+                c : $("#customizeSettingController").val(),
+                a : $("#setEmailNotificationsAction").val(),
+                notify : $("input[name=notify]:checked").val()
+            },
+            success: function(data){
+                var data = JSON.parse(data);
+                if (data.error == 0) {
+                    window.location.href = "/MavAppoint_PHP?c=" + $("#customizeSettingController").val() + "&a=" + $("#successAction").val();
+                }else{
+                    alert("Error while updating notification")
+                }
+            }
+        });
+    });
+
+    $("#addTypeAndDurationSubmit").click(function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: "/MavAppoint_PHP/",
+            type: "post",
+            data: {
+                c : $("#customizeSettingController").val(),
+                a : $("#addTypeAndDurationAction").val(),
+                apptypes : $("#apptypes").val(),
+                minutes : $("#minutes").val(),
+            },
+            success: function(data){
+                var data = JSON.parse(data);
+                if (data.error == 0) {
+                    window.location.href = "/MavAppoint_PHP?c=" + $("#customizeSettingController").val() + "&a=" + $("#successAction").val();
+                }else{
+                    alert("Error while updating notification")
+                }
+            }
+        });
+    });
+
+    $("#deleteTypeAndDurationSubmit").click(function(e){
+        e.preventDefault();
+        var confirmMessage = 'Are you sure you want to delete this appointment type?';
+        if (confirm(confirmMessage)){
+            var apptypes = $(this).parent().parent().children(":first").text();
+            var minutes = $(this).parent().parent().children(":nth-child(2)").text();
+
+            $.ajax({
+                url: "/MavAppoint_PHP/",
+                type: "post",
+                data: {
+                    c : $("#customizeSettingController").val(),
+                    a : $("#deleteTypeAndDurationAction").val(),
+                    apptypes : apptypes,
+                    minutes : minutes
+                },
+                success: function(data){
+                    var data = JSON.parse(data);
+                    if (data.error == 0) {
+                        window.location.href = "/MavAppoint_PHP?c=" + $("#customizeSettingController").val() + "&a=" + $("#successAction").val();
+                    }else{
+                        alert("Error while updating notification")
+                    }
+                }
+            });
+        }
+    });
 });

@@ -49,12 +49,14 @@ class CustomizeSettingController extends BasicController
                     );
                 }
             }
+            $getAdvisorNotificationState = $advisor->getNotification();
         }
 
         return [
             "error" => 0,
             "data" => [
-                "typeAndDuration" =>$typeAndDuration
+                "typeAndDuration" =>$typeAndDuration,
+                "advisorNotificationState" =>$getAdvisorNotificationState
             ]
         ];
     }

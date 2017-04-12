@@ -167,6 +167,10 @@ class DatabaseManager{
     function getMajorsOfDepartment($name){
         return $this->impl->getMajorsOfDepartment($name);
     }
+    
+    function getMajorsByUserId($userId){
+        return $this->impl->getMajorsByUserId($userId);
+    }
 
     function getAppointment($date,$email){
         return $this->impl->getAppointment($date,$email);

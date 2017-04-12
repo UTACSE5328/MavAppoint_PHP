@@ -44,8 +44,8 @@ $successAction = mav_encrypt("success");
         foreach ($advisors as $rs) {
             echo '<tr>';
 
-            echo "<td id='pName" . $position . "'>" . $rs['pName'] . "</td>";
-
+            echo "<td id='pName" . $position . "' value = '".$rs['userId']."'>" . $rs['pName'] . "</td>";
+            echo "<div id='userId" . $position . "' style=\"visibility:hidden\">".$rs['userId']."</div>";
             echo "<td><select name='lowRange" . $position . "' id='lowRange" . $position . "' 
                     title ='" . $rs['nameLow'] . "' 
                     class='btn btn-default dropdown-toggle  pull-left' 
@@ -106,7 +106,11 @@ $successAction = mav_encrypt("success");
                            data-toggle='dropdown'>";
 
             foreach ($majors as $major) {
-                echo "<option value ='" . $major . "'>" . $major . "</option>";
+                if(in_array("$major", $rs['majors'])){
+                    echo "<option value ='" . $major . "' selected='selected'>" . $major . "</option>";
+                }else{
+                    echo "<option value ='" . $major . "'>" . $major . "</option>";
+                }
             }
             echo '</select>';
             echo '</td>';

@@ -256,12 +256,16 @@ class adminController extends BasicController
 
         $res = array();
         foreach ($advisors as $rs){
+            $advisorMajors = $dbm->getMajorsByUserId($rs->getUserId());
+
             array_push($res,
                 [
+                    "userId"=>$rs->getUserId(),
                     "pName"=>$rs->getPName(),
                     "nameLow"=>$rs->getNameLow(),
                     "nameHigh"=>$rs->getNameHigh(),
-                    "degreeType"=>$rs->getDegType()
+                    "degreeType"=>$rs->getDegType(),
+                    "majors"=>$advisorMajors
                 ]
                 );
         }
@@ -282,14 +286,15 @@ class adminController extends BasicController
 
         foreach ($advisorsNew as $res){
             $user = new login\AdvisorUser();
+            $user->setUserId($res['userId']);
             $user->setPName($res['pName']);
             $user->setNameLow($res['nameLow']);
             $user->setNameHigh($res['nameHigh']);
             $user->setDegType($res['degreeType']);
+            $user->setMajors($res['majors']);
 
             $dbm->updateAdvisor($user);
         }
-
 
         return [
             "error" => 0

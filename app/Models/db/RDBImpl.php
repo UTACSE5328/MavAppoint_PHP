@@ -353,6 +353,11 @@ class RDBImpl implements DBImplInterface{
         return $cmd->execute();
     }
 
+    function getMajorsByUserId($userId){
+        $cmd = new Command\GetMajorsByUserId($userId);
+        return $cmd->execute();
+    }
+
     function getCSEUser($pName){
         $cmd = new Command\GetCSEUser($pName);
         return $cmd->execute();

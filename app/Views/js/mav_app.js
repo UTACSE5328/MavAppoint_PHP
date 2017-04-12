@@ -113,12 +113,17 @@ $(function(){
                     degType += 4;
             });
 
+            advisor.userId = $("#userId"+i).text();
             advisor.pName = $("#pName"+i).text();
             advisor.nameLow = $("#lowRange"+i+" option:selected").val();
             advisor.nameHigh = $("#highRange"+i+" option:selected").val();
             advisor.degreeType = degType;
-            advisor.majors = $("#majors"+i+" option:selected").val();
 
+            var majors = "";
+            $("#majors"+i+" :selected").each(function(i, selected){
+                majors = majors + "," +$(selected).text();
+            });
+            advisor.majors = majors;
             advisors.push(advisor);
         }
 
@@ -131,7 +136,7 @@ $(function(){
                 advisors : JSON.stringify(advisors)
             },
             success: function(data){
-                var data = JSON.parse(data);
+                data = JSON.parse(data);
                 if (data.error == 0) {
                     window.location.href = "/MavAppoint_PHP?c=" + $("#adminController").val() + "&a=" + $("#successAction").val();
                 }else{
@@ -140,6 +145,7 @@ $(function(){
             }
         });
     });
+
     $(".cancelButton").click(function(){
         var confirmMessage = 'Are you sure you want to delete this appointment?';
         if (confirm(confirmMessage)) {

@@ -18,8 +18,8 @@ class GetFirstWaitList extends SQLCmd
     }
 
     function queryDB(){
-        $query = "SELECT * FROM wait_list_schedule 
-                    where appointment_id = '$this->appointment_id' order by id asc limit 1";
+        $query = "SELECT * FROM ma_wait_list_schedule 
+                  WHERE aptId = '$this->appointment_id' order by id asc limit 1";
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
 
@@ -27,13 +27,13 @@ class GetFirstWaitList extends SQLCmd
         if ($this->result){
             $wl = new WaitList();
             $wl->setId($this->result['id']);
-            $wl->setAppointmentId($this->result['appointment_id']);
-            $wl->setStudentId($this->result['student_id']);
-            $wl->setStudentUserId($this->result['student_user_id']);
-            $wl->setType($this->result['type']);
+            $wl->setAppointmentId($this->result['aptId']);
+            $wl->setStudentId($this->result['studentId']);
+            $wl->setStudentUserId($this->result['studentUserId']);
+            $wl->setType($this->result['aptType']);
             $wl->setDescription($this->result['description']);
-            $wl->setStudentEmail($this->result['student_email']);
-            $wl->setStudentPhone($this->result['student_cell']);
+            $wl->setStudentEmail($this->result['studentEmail']);
+            $wl->setStudentPhone($this->result['studentCell']);
             return $wl;
         }
 

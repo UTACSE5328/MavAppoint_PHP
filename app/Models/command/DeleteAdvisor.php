@@ -15,22 +15,22 @@ class DeleteAdvisor extends SQLCmd{
 
     function queryDB(){
 
-        $query = "DELETE FROM appointments WHERE advisor_userId = '$this->id'";
+        $query = "DELETE FROM ma_appointments WHERE advisorUserId = '$this->id'";
         $this->conn->query($query);
 
-        $query = "DELETE FROM advising_schedule WHERE userId = '$this->id'";
+        $query = "DELETE FROM ma_advising_schedule WHERE userId = '$this->id'";
         $this->conn->query($query);
 
-        $query = "DELETE FROM department_user WHERE userId = '$this->id'";
+        $query = "DELETE FROM ma_department_user WHERE userId = '$this->id'";
         $this->conn->query($query);
 
-        $query = "DELETE FROM major_user WHERE userId = '$this->id'";
+        $query = "DELETE FROM ma_major_user WHERE userId = '$this->id'";
         $this->conn->query($query);
 
         $query = "DELETE FROM appointment_types WHERE userId = '$this->id'";
         $this->conn->query($query);
 
-        $query = "DELETE FROM user_advisor WHERE userId = '$this->id'";
+        $query = "DELETE FROM ma_user_advisor WHERE userId = '$this->id'";
         $this->conn->query($query);
 
 

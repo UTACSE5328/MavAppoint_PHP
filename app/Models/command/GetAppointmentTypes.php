@@ -15,10 +15,11 @@ class GetAppointmentTypes extends SQLCmd{
     }
 
     function queryDB(){
-        $query = "SELECT type,duration,user.email 
-                  FROM  Appointment_Types,User_Advisor,user 
-                  WHERE Appointment_Types.userid=User_Advisor.userid 
-                  AND User_Advisor.userid=user.userid AND User_Advisor.pname='$this->pName'";
+        $query = "SELECT type,duration,ma_user.email 
+                  FROM  ma_appointment_types,ma_user_advisor,ma_user 
+                  WHERE ma_appointment_types.userId=ma_user_advisor.userId 
+                  AND ma_user_advisor.userId=ma_user.userId 
+                  AND ma_user_advisor.pName='$this->pName'";
         $this->result = $this->conn->query($query);
     }
 

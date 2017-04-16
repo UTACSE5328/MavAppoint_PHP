@@ -17,25 +17,33 @@ class CreateAppointment extends SQLCmd {
 	}
 
 	function queryDB() {
-		$query = "SELECT userid from user where email='$this->email'";
+		$query = "SELECT userId FROM ma_user WHERE email='$this->email'";
 		$res   = $this->conn->query($query)->fetch_assoc();
-		$userId    = $res['userid'];
+		$userId    = $res['userId'];
 
-		$query  = "SELECT student_Id,notification from user_student where userId='$userId'";
+		$query  = "SELECT studentId,notification 
+                   FROM ma_user_student 
+                   WHERE userId='$userId'";
 		$res    = $this->conn->query($query)->fetch_assoc();
 		$notify = $res['notification'];
-        $studentId = $res['student_Id'];
+        $studentId = $res['studentId'];
 
 		$pName     = $this->apt->getPname();
-		$query     = "SELECT userid FROM User_Advisor WHERE User_Advisor.pname='$pName'";
+		$query     = "SELECT userId 
+                      FROM ma_user_advisor 
+                      WHERE ma_user_Advisor.pName='$pName'";
 		$res       = $this->conn->query($query)->fetch_assoc();
-		$advisorId = $res['userid'];
+		$advisorId = $res['userId'];
 
-		$query          = "SELECT notification from user_advisor where userId='$advisorId'";
+		$query          = "SELECT notification 
+                           FROM ma_user_advisor 
+                           WHERE userId='$advisorId'";
 		$res            = $this->conn->query($query)->fetch_assoc();
 		$notify_advisor = $res['notification'];
 
-		$query        = "SELECT email from user where userId='$advisorId'";
+		$query        = "SELECT email 
+                         FROM ma_user 
+                         WHERE userId='$advisorId'";
 		$res          = $this->conn->query($query)->fetch_assoc();
 		$advisorEmail = $res['email'];
 
@@ -47,20 +55,22 @@ class CreateAppointment extends SQLCmd {
 		$description = $this->apt->getDescription();
 		$phone       = $this->apt->getStudentPhoneNumber();
 
-		$query = "SELECT COUNT(*) FROM Advising_Schedule
-                    WHERE userid='$advisorId' AND date='$date' 
-                    AND start>='$start' AND end<='$end' AND studentId is not null";
+		$query = "SELECT COUNT(*) 
+                  FROM ma_advising_Schedule
+                  WHERE userId='$advisorId' AND date='$date' 
+                  AND start>='$start' AND end<='$end' AND studentId is not null";
 		if ($this->conn->query($query)->fetch_assoc()['COUNT(*)'] == 0) {
             $flag = true;
 
-			$query = "INSERT INTO Appointments
-                      (id,advisor_userid,student_userid,date,start,end,type,studentId,description,student_email,student_cell)
+			$query = "INSERT INTO ma_appointments
+                      (id,advisorUserId,studentUserId,date,start,end,
+                      type,studentId,description,studentEmail,studentCell)
                       VALUES('$aptId','$advisorId','$userId','$date','$start','$end','$type','$studentId','$description','$this->email','$phone')";
             $flag = $flag && $this->conn->query($query);
 
             if($flag) {
-                $query = "UPDATE Advising_Schedule SET
-                      studentId='$studentId' where userid='$advisorId' AND date='$date' and start >= '$start' and end <= '$end'";
+                $query = "UPDATE ma_advising_schedule 
+                          SET studentId='$studentId' WHERE userId='$advisorId' AND date='$date' AND start >= '$start' AND end <= '$end'";
                 $flag = $flag && $this->conn->query($query);
             }
 

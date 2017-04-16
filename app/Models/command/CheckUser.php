@@ -21,7 +21,9 @@ class CheckUser extends SQLCmd{
         $email = $this->set->getEmail();
         $password = $this->set->getPassword();
 
-        $query = "SELECT role FROM User where EMAIL='$email' AND PASSWORD='$password'";
+        $query = "SELECT role 
+                  FROM ma_user 
+                  WHERE email='$email' AND password='$password'";
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
 

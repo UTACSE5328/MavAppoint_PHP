@@ -21,7 +21,7 @@ class GetAppointmentsByDate extends SQLCmd
     }
 
     function queryDB(){
-        $query = "SELECT * FROM appointments WHERE date >='$this->start' 
+        $query = "SELECT * FROM ma_appointments WHERE date >='$this->start' 
                   and date <= '$this->end' ORDER BY date";
         $this->result          = $this->conn->query($query);
     }
@@ -30,9 +30,9 @@ class GetAppointmentsByDate extends SQLCmd
         $arr = array();
         while($rs = mysqli_fetch_array($this->result)){
             $set = new Appointment();
-            $set->setAppointmentId($rs['Id']);
-            $set->setAdvisorUserId($rs['advisor_userId']);
-            $set->setStudentUserId($rs['student_userId']);
+            $set->setAppointmentId($rs['id']);
+            $set->setAdvisorUserId($rs['advisorUserId']);
+            $set->setStudentUserId($rs['studentUserId']);
 
             $set->setAdvisingDate($rs["date"]);
             $set->setAdvisingStartTime($rs["start"]);

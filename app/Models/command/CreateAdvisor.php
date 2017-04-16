@@ -24,8 +24,9 @@ class CreateAdvisor extends SQLCmd{
         $name_high = $this->advisorUser->getNameHigh();
         $degree_type = $this->advisorUser->getDegType();
 
-        $query = "INSERT INTO User_Advisor (userid,pname,notification,name_low,name_high,degree_types, cutOffTime) 
-                    values('$userId','$pName','$notification','$name_low','$name_high','$degree_type','0')";
+        $query = "INSERT INTO ma_user_advisor 
+                  (userId,pName,notification,nameLow,nameHigh,degreeTypes, cutOffTime) 
+                  VALUES('$userId','$pName','$notification','$name_low','$name_high','$degree_type','0')";
 
         $this->result = $this->conn->query($query);
     }

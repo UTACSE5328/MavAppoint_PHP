@@ -15,7 +15,7 @@ class GetCSEStudentByNetId extends SQLCmd
 
     function queryDB()
     {
-        $query = "SELECT * FROM cse_students where NETID='$this->netId'";
+        $query = "SELECT * FROM students where NETID='$this->netId'";
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
 

@@ -18,7 +18,7 @@ class GetMajorsByUserId extends SQLCmd
     }
 
     function queryDB(){
-        $query = "SELECT name from major_user where userId='$this->userId'";
+        $query = "SELECT name from ma_major_user where userId='$this->userId'";
 
         $this->result          = $this->conn->query($query);
     }

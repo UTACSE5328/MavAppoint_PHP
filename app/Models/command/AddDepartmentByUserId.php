@@ -22,7 +22,9 @@ class AddDepartmentByUserId extends SQLCmd{
         $num = count($this->departments);
         for($i=0;$i<$num;++$i){
             $department = ($this->departments)[$i];
-            $query = "INSERT INTO department_user (name, userId) VALUES  ('$department','$this->userId')";
+            $query = "INSERT INTO ma_department_user 
+                      (name, userId) 
+                      VALUES  ('$department','$this->userId')";
             $res = $this->conn->query($query);
 
             if(!$res){

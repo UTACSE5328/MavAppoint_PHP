@@ -29,17 +29,20 @@ class UpdateAdvisor extends SQLCmd
         $majors = $this->user->getMajors();
 
         if ($id != null) {
-            $query = "UPDATE User_Advisor SET pName='$pName', notification='$notification', 
-                    name_low='$nameLow', name_high='$nameHigh', degree_types='$degreeType' WHERE userId='$id'";
+            $query = "UPDATE ma_user_advisor 
+                      SET pName='$pName', notification='$notification', 
+                      nameLow='$nameLow', nameHigh='$nameHigh', degreeTypes='$degreeType' 
+                      WHERE userId='$id'";
         } else {
-            $query = "UPDATE User_Advisor SET 
-                    name_low='$nameLow', name_high='$nameHigh', degree_types='$degreeType' WHERE pName='$pName'";
+            $query = "UPDATE ma_user_advisor 
+                      SET nameLow='$nameLow', nameHigh='$nameHigh', degreeTypes='$degreeType' 
+                      WHERE pName='$pName'";
         }
 
         $this->result = $this->conn->query($query);
 
         if ($majors != null && $id != null) {
-            $query = "DELETE FROM major_user where userId = '$id'";
+            $query = "DELETE FROM ma_major_user where userId = '$id'";
             $this->conn->query($query);
 
 
@@ -47,7 +50,7 @@ class UpdateAdvisor extends SQLCmd
 
             foreach ($majorArr as $item) {
                 if ($item != "") {
-                    $query = "insert into major_user (name, userId) 
+                    $query = "INSERT INTO ma_major_user (name, userId) 
                               values ('$item','$id')";
                     $this->conn->query($query);
                 }

@@ -9,7 +9,7 @@ namespace Models\Command;
 use Models\Login\AdvisorUser;
 
 class GetAdvisor extends SQLCmd {
-	private $email,$id;
+	private $email,$id,$majors;
 
 	function __construct($email) {
 		$this->email = $email;
@@ -19,9 +19,18 @@ class GetAdvisor extends SQLCmd {
 		$cmd = new GetUserIdByEmail($this->email);
 		$this->id  = $cmd->execute();
 
-		$query = "SELECT notification,password,validated,pName,name_low,name_high,degree_types,Department_User.name,Major_User.name,cutOffTime
-                      FROM User,User_Advisor,Department_User,Major_User
-                      WHERE USER.userId='$this->id' and User_Advisor.userId='$this->id' and Department_User.userId='$this->id' and Major_User.userId='$this->id'";
+		$query = "SELECT name FROM ma_major_user WHERE userId = '$this->id'";
+        $this->result = $this->conn->query($query);
+        $this->majors = array();
+        while($rs = mysqli_fetch_array($this->result)){
+            array_push($this->majors, $rs['name']);
+        }
+
+		$query = "SELECT ma_user.*,ma_user_advisor.*,ma_department_user.name dep
+                  FROM ma_user,ma_user_advisor,ma_department_user
+                  WHERE ma_user.userId='$this->id' 
+                  AND ma_user_advisor.userId='$this->id' 
+                  AND ma_department_user.userId='$this->id'";
 
 		$this->result = $this->conn->query($query)->fetch_assoc();
 
@@ -35,11 +44,11 @@ class GetAdvisor extends SQLCmd {
         $set->setPassword($this->result["password"]);
         $set->setValidated($this->result["validated"]);
         $set->setPName($this->result["pName"]);
-        $set->setNameLow($this->result["name_low"]);
-        $set->setNameHigh($this->result["name_high"]);
-        $set->setDegType($this->result["degree_types"]);
-        $set->setDepartments($this->result["name"]);
-        //$set->setMajors($this->result["name1"]);
+        $set->setNameLow($this->result["nameLow"]);
+        $set->setNameHigh($this->result["nameHigh"]);
+        $set->setDegType($this->result["degreeTypes"]);
+        $set->setDepartments($this->result["dep"]);
+        $set->setMajors($this->majors);
         $set->setCutOffPreference($this->result["cutOffTime"]);
 
 		return ($set);

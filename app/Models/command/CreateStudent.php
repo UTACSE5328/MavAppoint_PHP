@@ -23,8 +23,9 @@ class CreateStudent extends SQLCmd{
         $lastName = $this->user->getLastNameInitial();
         $notification = $this->user->getNotification();
 
-        $query = "INSERT INTO User_Student (userid,student_Id,degree_type,phone_num,last_name_initial,notification)
-				      values('$userId','$studentId','$degreeType','$phoneNum','$lastName','$notification')";
+        $query = "INSERT INTO ma_user_student 
+                  (userId,studentId,degreeType,phoneNum,lastNameInitial,notification)
+				  VALUES('$userId','$studentId','$degreeType','$phoneNum','$lastName','$notification')";
         $this->result = $this->conn->query($query);
     }
 

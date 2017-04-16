@@ -19,7 +19,8 @@ class GetAppointmentByStuId extends SQLCmd
     }
 
     function queryDB(){
-        $query = "SELECT id,date,start,end,type,student_email FROM appointments a 
+        $query = "SELECT id,date,start,end,type,studentEmail 
+                  FROM ma_appointments a 
                   WHERE a.studentId='$this->studentId' AND date ='$this->date' ";
         $this->result = $this->conn->query($query);
     }
@@ -33,7 +34,7 @@ class GetAppointmentByStuId extends SQLCmd
             $set->setAdvisingStartTime($rs["start"]);
             $set->setAdvisingEndTime($rs["end"]);
             $set->setAppointmentType($rs["type"]);
-            $set->setStudentEmail($rs["student_email"]);
+            $set->setStudentEmail($rs["studentEmail"]);
             array_push($arr, $set);
         }
 

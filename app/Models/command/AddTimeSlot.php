@@ -27,11 +27,11 @@ class AddTimeSlot extends SQLCmd {
         $start = $this->time->getStartTime();
         $end = $this->time->getEndTime();
 
-        $query = "SELECT COUNT(*) FROM  ADVISING_SCHEDULE 
+        $query = "SELECT COUNT(*) FROM  ma_advising_schedule 
                   WHERE date='$date' 
                   AND start >='$start' 
                   AND end <='$end' 
-                  AND userid='$this->id'";
+                  AND userId='$this->id'";
         $res = ($this->conn->query($query)->fetch_assoc());
 
         if($res['COUNT(*)'] == "0") {
@@ -41,8 +41,9 @@ class AddTimeSlot extends SQLCmd {
                 $start = $this->timeSlot[$i]['start'];
                 $end = $this->timeSlot[$i]['end'];
 
-                $query = "INSERT INTO ADVISING_SCHEDULE (date,start,end,studentid,userid) 
-                      VALUES('$date','$start','$end',null,'$this->id')";
+                $query = "INSERT INTO ma_advising_schedule 
+                          (date,start,end,studentId,userId) 
+                          VALUES('$date','$start','$end',null,'$this->id')";
                 $this->result = $this->conn->query($query);
             }
         }else

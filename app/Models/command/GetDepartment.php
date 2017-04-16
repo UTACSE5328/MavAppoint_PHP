@@ -16,9 +16,9 @@ class GetDepartment extends SQLCmd{
 
     function queryDB(){
         if($this->id == null)
-            $query = "SELECT name FROM department";
+            $query = "SELECT name FROM ma_department";
         else
-            $query = "select name from department_user where userId ='$this->id'";
+            $query = "select name from ma_department_user where userId ='$this->id'";
 
         $this->result = $this->conn->query($query);
     }

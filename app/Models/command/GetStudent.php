@@ -19,9 +19,9 @@ class GetStudent extends SQLCmd {
 		$cmd = new GetUserIdByEmail($this->email);
 		$id  = $cmd->execute();
 
-		$query = "SELECT User.*,User_Student.*
-                      FROM User,User_Student
-                      WHERE USER.userId='$id' and User_Student.userId='$id'";
+		$query = "SELECT ma_user.*,ma_user_student.*
+                      FROM ma_user,ma_user_student
+                      WHERE ma_user.userId='$id' and ma_user_student.userId='$id'";
 
 		$this->result = $this->conn->query($query)->fetch_assoc();
 	}
@@ -34,10 +34,10 @@ class GetStudent extends SQLCmd {
         $set->setRole($this->result["role"]);
 
 	    $set->setUserId($this->result["userId"]);
-	    $set->setStudentId($this->result["student_Id"]);
-        $set->setDegType($this->result["degree_type"]);
-        $set->setPhoneNumber($this->result["phone_num"]);
-        $set->setLastNameInitial($this->result["last_name_initial"]);
+	    $set->setStudentId($this->result["studentId"]);
+        $set->setDegType($this->result["degreeType"]);
+        $set->setPhoneNumber($this->result["phoneNum"]);
+        $set->setLastNameInitial($this->result["lastNameInitial"]);
         $set->setNotification($this->result["notification"]);
         $set->setPassword($this->result["password"]);
         $set->setValidated($this->result["validated"]);

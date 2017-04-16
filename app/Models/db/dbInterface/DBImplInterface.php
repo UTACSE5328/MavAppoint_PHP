@@ -28,7 +28,6 @@ interface DBImplInterface
     function checkUser(bean\GetSet $set);
     function getUserIdByEmail($email);
     function updatePassword($email,$password);
-    function getStudentByNetID($netid);
 
     function createAdvisor(login\AdvisorUser $user);
     function getAdvisor($email);

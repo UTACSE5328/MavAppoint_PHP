@@ -15,9 +15,11 @@ class GetAppointmentById extends SQLCmd
 
     function queryDB()
     {
-        $query = "SELECT user_advisor.pName,user.email,Id,date,start,end,type,description,studentId,student_email, student_cell,advisor_userId,student_userId
-        FROM appointments,user_advisor,user
-        WHERE Id=$this->id and user_advisor.userId = advisor_userId and user.userId = advisor_userId";
+        $query = "SELECT ma_appointments.*, ma_user_advisor.pName AS pName, ma_user.email AS email
+                  FROM ma_appointments,ma_user_advisor,ma_user
+                  WHERE id=$this->id 
+                  AND ma_user_advisor.userId = ma_appointments.advisorUserId 
+                  AND ma_user.userId = ma_appointments.advisorUserId";
 
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
@@ -27,19 +29,20 @@ class GetAppointmentById extends SQLCmd
         $rs = $this->result;
         if ($rs != null) {
             $set = new Appointment();
-            $set->setAppointmentId($rs['Id']);
-            $set->setPname($rs["pName"]);
+            $set->setAppointmentId($rs['id']);
+            $set->setAdvisorUserId($rs['advisorUserId']);
+            $set->setStudentUserId($rs['studentUserId']);
             $set->setAdvisingDate($rs["date"]);
             $set->setAdvisingStartTime($rs["start"]);
             $set->setAdvisingEndTime($rs["end"]);
             $set->setAppointmentType($rs["type"]);
             $set->setDescription($rs['description']);
             $set->setStudentId($rs['studentId']);
-            $set->setStudentEmail($rs['student_email']);
-            $set->setStudentPhoneNumber($rs['student_cell']);
-            $set->setAdvisorUserId($rs['advisor_userId']);
+            $set->setStudentEmail($rs['studentEmail']);
+            $set->setStudentPhoneNumber($rs['studentCell']);
+
+            $set->setPname($rs["pName"]);
             $set->setAdvisorEmail($rs['email']);
-            $set->setStudentUserId($rs['student_userId']);
 
             return $set;
         }

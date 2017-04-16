@@ -16,30 +16,28 @@ class GetAppointments extends SQLCmd{
         $id = $this->user->getUserId();
 
         if($this->user instanceof login\AdvisorUser){
-            $query = "SELECT User_Advisor.pName,User.email,date,start,end,type,Id,Appointments.description,
-                        studentId,Appointments.student_email,Appointments.student_cell 
-                        FROM USER,Appointments,User_Advisor 
-                        WHERE USER.email='$email' AND user.userid=Appointments.advisor_userid 
-                        AND User_Advisor.userid=Appointments.advisor_userid";
+            $query = "SELECT ma_appointments.*, ma_user_advisor.pName AS pName, ma_user.email AS email
+                      FROM ma_appointments,ma_user_advisor,ma_user
+                      WHERE ma_user.email= '$email' 
+                      AND ma_user_advisor.userId = ma_appointments.advisorUserId 
+                      AND ma_user.userId = ma_appointments.advisorUserId";
         }else if($this->user instanceof login\StudentUser){
-            $query = "SELECT User_Advisor.pName,User.email,date,start,end,type,Id,description,studentId, student_email, student_userId, student_cell
-                      FROM USER,Appointments,User_Advisor 
-                      WHERE USER.email='$email' AND user.userid=Appointments.student_userId AND User_Advisor.userid=Appointments.advisor_userid
-                      order by date desc, start asc";
+            $query = "SELECT ma_appointments.*, ma_user_advisor.pName AS pName, ma_user.email AS email
+                      FROM ma_appointments,ma_user_advisor,ma_user
+                      WHERE ma_appointments.studentEmail= '$email' 
+                      AND ma_user_advisor.userId = ma_appointments.advisorUserId 
+                      AND ma_user.userId = ma_appointments.advisorUserId";
         }else{
-            $query = "select name from department_user where userId = '$id'";
+            $query = "select name from ma_department_user where userId = '$id'";
 
             $dep = $this->conn->query($query)->fetch_assoc()['name'];
 
-            $query = "select appointments.date,appointments.start,appointments.end,
-                      appointments.type,appointments.Id,appointments.description,
-                      appointments.student_userId,appointments.studentId,
-                      appointments.student_email,appointments.student_cell,user.email,user_advisor.pName
-                      from appointments,department_user,user,user_advisor
-                      where appointments.advisor_userId = department_user.userId 
-                      and appointments.advisor_userId = user.userId
-                      and appointments.advisor_userId = user_advisor.userId
-                      and department_user.name = '$dep'";
+            $query = "SELECT ma_appointments.*,ma_user.email as email,ma_user_advisor.pName as pName
+                      FROM ma_appointments,ma_department_user,ma_user,ma_user_advisor
+                      WHERE ma_appointments.advisorUserId = ma_department_user.userId 
+                      AND ma_appointments.advisorUserId = ma_user.userId
+                      AND ma_appointments.advisorUserId = ma_user_advisor.userId
+                      AND ma_department_user.name = '$dep'";
         }
         $this->result = $this->conn->query($query);
     }
@@ -49,18 +47,21 @@ class GetAppointments extends SQLCmd{
 
         while($rs = mysqli_fetch_array($this->result)){
             $set = new Appointment();
-            $set->setPname($rs['pName']);
-            $set->setAdvisorEmail($rs['email']);
+
+            $set->setAppointmentId($rs['id']);
+            $set->setAdvisorUserId($rs['advisorUserId']);
+            $set->setStudentUserId($rs['studentUserId']);
             $set->setAdvisingDate($rs["date"]);
             $set->setAdvisingStartTime($rs["start"]);
             $set->setAdvisingEndTime($rs["end"]);
             $set->setAppointmentType($rs["type"]);
-            $set->setAppointmentId($rs['Id']);
             $set->setDescription($rs['description']);
-            $set->setStudentUserId($rs['student_userId']);
             $set->setStudentId($rs['studentId']);
-            $set->setStudentEmail($rs['student_email']);
-            $set->setStudentPhoneNumber($rs['student_cell']);
+            $set->setStudentEmail($rs['studentEmail']);
+            $set->setStudentPhoneNumber($rs['studentCell']);
+
+            $set->setPname($rs["pName"]);
+            $set->setAdvisorEmail($rs['email']);
             array_push($arr, $set);
         }
 

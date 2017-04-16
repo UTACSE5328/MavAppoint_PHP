@@ -18,7 +18,7 @@ class DeleteWaitListSchedule extends SQLCmd
     }
 
     function queryDB(){
-        $query = "DELETE FROM wait_list_schedule where id = '$this->id'";
+        $query = "DELETE FROM ma_wait_list_schedule where id = '$this->id'";
         $this->result = $this->conn->query($query);
     }
 

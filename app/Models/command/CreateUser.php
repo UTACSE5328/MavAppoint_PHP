@@ -26,7 +26,9 @@ class CreateUser extends SQLCmd
         $password = md5($this->user->getPassword());
         $role = $this->user->getRole();
 
-        $query = "INSERT INTO user (email,password,role) values('$email','$password','$role')";
+        $query = "INSERT INTO ma_user 
+                  (email,password,role) 
+                  VALUES('$email','$password','$role')";
         $res = $this->conn->query($query);
 
         if ($res) {
@@ -37,14 +39,18 @@ class CreateUser extends SQLCmd
             $majors = $this->user->getMajors();
 
             foreach ($majors as $major) {
-                $query = "INSERT INTO major_user (name, userId) VALUE ('$major','$id')";
+                $query = "INSERT INTO ma_major_user 
+                          (name, userId) 
+                          VALUES ('$major','$id')";
                 $this->conn->query($query);
             }
 
             $departments = $this->user->getDepartments();
 
             foreach ($departments as $department) {
-                $query = "INSERT INTO department_user (name, userId) VALUES ('$department','$id')";
+                $query = "INSERT INTO ma_department_user 
+                          (name, userId) 
+                          VALUES ('$department','$id')";
                 $this->conn->query($query);
             }
 

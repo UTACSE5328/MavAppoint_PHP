@@ -20,9 +20,13 @@ class UpdateNotification extends SQLCmd{
     function queryDB(){
         $id = $this->user->getUserId();
         if($this->user instanceof AdvisorUser) {
-            $query = "UPDATE user_advisor SET notification = '$this->notification' WHERE userId = '$id'";
+            $query = "UPDATE ma_user_advisor 
+                      SET notification = '$this->notification' 
+                      WHERE userId = '$id'";
         }else{
-            $query = "UPDATE user_student SET notification = '$this->notification' WHERE userId = '$id'";
+            $query = "UPDATE ma_user_student 
+                      SET notification = '$this->notification' 
+                      WHERE userId = '$id'";
         }
         $this->conn->query($query);
     }

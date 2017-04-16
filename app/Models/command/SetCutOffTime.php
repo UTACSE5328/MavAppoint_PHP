@@ -21,7 +21,7 @@ class SetCutOffTime extends SQLCmd
     function queryDB()
     {
         if ($this->time >= 0) {
-            $query = "UPDATE  user_advisor set cutofftime = '$this->time' where userId = '$this->id'";
+            $query = "UPDATE  ma_user_advisor set cutOffTime = '$this->time' where userId = '$this->id'";
             $this->result = $this->conn->query($query);
         }
     }

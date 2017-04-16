@@ -15,9 +15,9 @@ class GetMajor extends SQLCmd{
 
     function queryDB(){
         if($this->id == null)
-            $query = "SELECT name FROM Major";
+            $query = "SELECT name FROM ma_major";
         else
-            $query = "select name from major_user where userId ='$this->id'";
+            $query = "select name from ma_major_user where userId ='$this->id'";
 
         $this->result = $this->conn->query($query);
     }

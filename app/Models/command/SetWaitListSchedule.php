@@ -30,15 +30,17 @@ class SetWaitListSchedule extends SQLCmd
         $student_email = $this->apt->getStudentEmail();
         $student_cell = $this->apt->getStudentPhone();
 
-        $query = "SELECT COUNT(*) from wait_list_schedule 
-                  where appointment_id ='$appointment_id' and student_id ='$student_id'";
+        $query = "SELECT COUNT(*) 
+                  FROM ma_wait_list_schedule 
+                  where aptId ='$appointment_id' 
+                  AND studentId ='$student_id'";
         $count = $this->conn->query($query)->fetch_assoc()['COUNT(*)'];
 
         if ($count == 0) {
-            $query = "Insert into wait_list_schedule 
-                      (appointment_id,student_user_id, student_id, type, description, student_email, student_cell)
-                        values ('$appointment_id','$student_user_id','$student_id','$type','$description',
-                        '$student_email','$student_cell')";
+            $query = "INSERT INTO ma_wait_list_schedule 
+                      (aptId,studentUserId,studentId,type,description,studentEmail,studentCell)
+                      VALUES ('$appointment_id','$student_user_id','$student_id','$type','$description',
+                      '$student_email','$student_cell')";
             $this->conn->query($query);
 
             if($this->conn->affected_rows > 0)

@@ -15,7 +15,7 @@ class GetStudentEmails extends SQLCmd{
     }
 
     function queryDB(){
-        $query = "SELECT email FROM user where role = 'student'";
+        $query = "SELECT email FROM ma_user where role = 'student'";
         $this->result = $this->conn->query($query);
     }
 

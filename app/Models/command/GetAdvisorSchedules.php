@@ -22,21 +22,22 @@ class GetAdvisorSchedules extends SQLCmd{
         $num = count($this->advisors);
         $arr = array();
         for($i=0;$i<$num;++$i) {
-            $advisor = $this->advisors[$i];
+            $pName = $this->advisors[$i];
 
             if($this->available)
-//                $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor
-//                            WHERE User_Advisor.userid=Advising_Schedule.userid
-//                            AND User_Advisor.pname='$advisor' ";
-                $query = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor
-                          WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid
-                          AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname= '$advisor' AND studentId is null";
+                $query = "SELECT pName,date,start,end,id 
+                          FROM ma_user,ma_advising_schedule,ma_user_advisor
+                          WHERE ma_user.userId=ma_user_advisor.userId 
+                          AND ma_user.userId= ma_advising_schedule.userId
+                          AND ma_user_advisor.pName= '$pName' 
+                          AND studentId is null";
 
             else
-                $query = "SELECT id,User_Advisor.pName,date,start,end,studentId FROM Advising_Schedule,User_Advisor 
-                            WHERE User_Advisor.userid=Advising_Schedule.userid 
-                            AND User_Advisor.pname='$advisor' 
-                            AND Advising_Schedule.studentId is not null";
+                $query = "SELECT id,ma_user_advisor.pName,date,start,end,studentId 
+                          FROM ma_advising_schedule,ma_user_advisor 
+                          WHERE ma_user_advisor.userId=ma_advising_schedule.userId 
+                          AND ma_user_advisor.pName='$pName' 
+                          AND ma_advising_schedule.studentId is not null";
 
             $res = $this->conn->query($query);
 
@@ -54,7 +55,7 @@ class GetAdvisorSchedules extends SQLCmd{
             $rs = $this->result[$i];
 
             $set = new PrimitiveTimeSlot();
-            $set->setName($rs["pname"]);
+            $set->setName($rs["pName"]);
             $set->setDate($rs["date"]);
             $set->setStartTime($rs["start"]);
             $set->setEndTime($rs["end"]);

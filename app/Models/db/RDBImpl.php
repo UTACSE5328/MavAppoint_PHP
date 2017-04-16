@@ -185,18 +185,30 @@ class RDBImpl implements DBImplInterface{
             $conn = new \mysqli( env("DB_HOST"),env("DB_USERNAME"),env("DB_PASSWORD"),env("DB_DATABASE"));
             if($includeReserved == true && $date!=null){
                 // get one specific adviser's all time slots(include reserved).
-                $command = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor "
-                    . "WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$name'";
+                $command = "SELECT pName,date,start,end,id 
+                            FROM ma_user,ma_advising_schedule,ma_user_advisor 
+                            WHERE ma_user.userId=ma_user_advisor.userId 
+                            AND ma_user.userId=ma_advising_schedule.userId 
+                            AND ma_user.userId=ma_advising_schedule.userId 
+                            AND ma_user_advisor.pName='$name'";
 
             }else{
                 if ($name === "all" && $includeReserved==false) {
                     //get all advisers' available time slots.
-                    $command = "SELECT pname,date,start,end,id FROM user,Advising_Schedule,User_Advisor "
-                        . "WHERE user.userid=User_Advisor.userid AND user.userid=Advising_Schedule.userid AND studentId is null";
+                    $command = "SELECT pName,date,start,end,id 
+                                FROM ma_user,ma_advising_schedule,ma_user_advisor 
+                                WHERE ma_user.userId=ma_user_advisor.userId 
+                                AND ma_user.userId=ma_advising_schedule.userId 
+                                AND studentId is null";
                 } else {
                     //get one specific adviser's available time slots
-                    $command = "SELECT pname,date,start,end,id FROM USER,Advising_Schedule,User_Advisor "
-                        . "WHERE USER.userid=User_Advisor.userid AND USER.userid=Advising_Schedule.userid AND USER.userid=Advising_Schedule.userid AND User_Advisor.pname='$name' AND studentId is null";
+                    $command = "SELECT pName,date,start,end,id 
+                                FROM ma_user,ma_advising_schedule,ma_user_advisor 
+                                WHERE ma_user.userId=ma_user_advisor.userId 
+                                AND ma_user.userId=ma_advising_schedule.userId 
+                                AND ma_user.userId=ma_advising_schedule.userId 
+                                AND ma_user_advisor.pName='$name' 
+                                AND studentId is null";
                 }
 
             }
@@ -207,7 +219,7 @@ class RDBImpl implements DBImplInterface{
 
             while ($rs = mysqli_fetch_assoc($res)) {
                 $set = new PrimitiveTimeSlot();
-                $set->setName($rs["pname"]);
+                $set->setName($rs["pName"]);
                 $set->setDate($rs["date"]);
                 $set->setStartTime($rs["start"]);
                 $set->setEndTime($rs["end"]);
@@ -250,8 +262,6 @@ class RDBImpl implements DBImplInterface{
         } catch (\Exception $e) {
 
         }
-//        echo json_encode($scheduleForDisplay);
-//        die();
         return $adviserSchedule;
     }
 
@@ -289,11 +299,6 @@ class RDBImpl implements DBImplInterface{
     {
         $cmd = new Command\GetStudent($email);
 
-        return $cmd->execute();
-    }
-
-    function getStudentByNetID($netid){
-        $cmd = new Command\GetStudentByNetID($netid);
         return $cmd->execute();
     }
 

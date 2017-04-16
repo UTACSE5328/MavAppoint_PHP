@@ -132,10 +132,6 @@ class DatabaseManager{
         return $this->impl->getStudent($email);
     }
 
-    function getStudentByNetID($netid){
-        return $this->impl->getStudentByNetID($netid);
-    }
-
     function getAdmin($email){
         return $this->impl->getAdmin($email);
     }

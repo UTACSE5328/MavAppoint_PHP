@@ -24,7 +24,7 @@ class GetCSEUser extends SQLCmd
 
     function queryDB()
     {
-        $query = "SELECT * FROM cse_users where Fname='$this->Fname'";
+        $query = "SELECT * FROM users where Fname='$this->Fname'";
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
 

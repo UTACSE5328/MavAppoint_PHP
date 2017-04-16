@@ -32,14 +32,19 @@ class UpdateAppointment extends SQLCmd
         $start = $this->apt->getAdvisingStartTime();
         $end = $this->apt->getAdvisingEndTime();
 
-        $query = "UPDATE appointments SET student_userId='$student_userId',studentId='$student_id',
-            type = '$type', description = '$description', student_email = '$student_email',
-            student_cell = '$student_cell' where Id = '$appointment_id'";
+        $query = "UPDATE ma_appointments 
+                  SET studentUserId='$student_userId',studentId='$student_id',
+                  type = '$type', description = '$description', studentEmail = '$student_email',
+                  studentCell = '$student_cell' where id = '$appointment_id'";
 
         $this->conn->query($query);
         $this->result = mysqli_affected_rows($this->conn);
 
-        $query = "UPDATE advising_schedule SET studentId='$student_id' where date='$date' AND start >='$start' AND end <='$end'";
+        $query = "UPDATE ma_advising_schedule 
+                  SET studentId='$student_id' 
+                  WHERE date='$date' 
+                  AND start >='$start' 
+                  AND end <='$end'";
         $this->conn->query($query);
     }
 

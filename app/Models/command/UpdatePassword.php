@@ -15,7 +15,8 @@ class UpdatePassword extends SQLCmd {
 	}
 
 	function queryDB() {
-		$query = "UPDATE user SET password='$this->password', validated = 0 where email='$this->email'";
+		$query = "UPDATE ma_user 
+                  SET password='$this->password', validated = 0 where email='$this->email'";
 		$this->conn->query($query);
 
 		if (mysqli_affected_rows($this->conn) == 0) {

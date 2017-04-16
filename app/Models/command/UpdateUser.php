@@ -21,8 +21,9 @@ class UpdateUser extends SQLCmd{
         $role = $this->user->getRole();
         $validate = $this->user->getRole();
 
-        $query = "UPDATE User SET email = '$email', password = '$password', role = '$role', validated = '$validate'
-                    WHERE userId='$id'";
+        $query = "UPDATE ma_user 
+                  SET email = '$email', password = '$password', role = '$role', validated = '$validate'
+                  WHERE userId='$id'";
         $this->result = $this->conn->query($query);
     }
 

@@ -20,7 +20,7 @@ class DeleteAppointmentType extends SQLCmd{
         $type = $this->at->getType();
         $duration = $this->at->getDuration();
 
-        $query = "DELETE FROM appointment_types WHERE userid = '$this->id' and type = '$type' and duration = '$duration'";
+        $query = "DELETE FROM ma_appointment_types WHERE userId = '$this->id' and type = '$type' and duration = '$duration'";
         $this->result = $this->conn->query($query);
     }
 

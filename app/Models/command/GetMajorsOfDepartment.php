@@ -14,7 +14,7 @@ class GetMajorsOfDepartment extends SQLCmd{
     }
 
     function queryDB(){
-        $query = "SELECT name from major where dep_name='$this->name'";
+        $query = "SELECT name from ma_major where depName='$this->name'";
 
         $this->result          = $this->conn->query($query);
     }

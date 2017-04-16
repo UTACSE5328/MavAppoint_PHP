@@ -18,8 +18,8 @@ class GetWaitListScheduleCount extends SQLCmd
     }
 
     function queryDB(){
-        $query = "SELECT COUNT(*) FROM wait_list_schedule 
-                    where appointment_id = '$this->appointment_id'";
+        $query = "SELECT COUNT(*) FROM ma_wait_list_schedule 
+                    where aptId = '$this->appointment_id'";
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
 

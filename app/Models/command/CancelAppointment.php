@@ -15,7 +15,8 @@ class CancelAppointment extends SQLCmd{
     }
 
     function queryDB(){
-        $query = "SELECT count(*),date,start, end from Appointments where id='$this->id'";
+        $query = "SELECT count(*),date,start, end 
+                  FROM ma_appointments WHERE id='$this->id'";
 
         $res = $this->conn->query($query)->fetch_assoc();
         $date = $res['date'];
@@ -24,9 +25,14 @@ class CancelAppointment extends SQLCmd{
 
         if($res['count(*)'] == 1){
             $this->result = true;
-            $query = "DELETE FROM Appointments where id='$this->id'";
+            $query = "DELETE FROM ma_apointments 
+                      WHERE id='$this->id'";
             $this->conn->query($query);
-            $query = "UPDATE Advising_Schedule SET studentId=null where date='$date' AND start >='$start' AND end <='$end'";
+            $query = "UPDATE ma_advising_schedule 
+                      SET studentId=null 
+                      WHERE date='$date' 
+                      AND start >='$start' 
+                      AND end <='$end'";
             $this->conn->query($query);
         }else{
             $this->result = false;

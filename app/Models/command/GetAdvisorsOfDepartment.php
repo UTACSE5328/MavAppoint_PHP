@@ -16,10 +16,11 @@ class GetAdvisorsOfDepartment extends SQLCmd{
     }
 
     function queryDB(){
-        $query = "select User_advisor.*,user.*
-                    from user_advisor,department_user,user
-                    where department_user.userid=user_advisor.userid 
-                    and user.userid=user_advisor.userid  and department_user.name = '$this->dep'";
+        $query = "SELECT ma_user_advisor.*,ma_user.*
+                  FROM ma_user_advisor,ma_department_user,ma_user
+                  WHERE ma_department_user.userId=ma_user_advisor.userId 
+                  AND ma_user.userId=ma_user_advisor.userId  
+                  AND ma_department_user.name = '$this->dep'";
         $this->result = $this->conn->query($query);
     }
 
@@ -30,9 +31,9 @@ class GetAdvisorsOfDepartment extends SQLCmd{
             $user->setUserId($rs['userId']);
             $user->setPName($rs['pName']);
             $user->setNotification($rs['notification']);
-            $user->setNameLow($rs['name_low']);
-            $user->setNameHigh($rs['name_high']);
-            $user->setDegType($rs['degree_types']);
+            $user->setNameLow($rs['nameLow']);
+            $user->setNameHigh($rs['nameHigh']);
+            $user->setDegType($rs['degreeTypes']);
             $user->setCutOffPreference($rs['cutOffTime']);
             $user->setEmail($rs['email']);
             $user->setPassword($rs['password']);

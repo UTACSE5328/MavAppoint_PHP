@@ -18,9 +18,13 @@ class GetAppointment extends SQLCmd{
     }
 
     function queryDB(){
-        $query = "SELECT date,start,end,type FROM appointments a,user u 
-                  WHERE a.student_userid=u.userid AND u.email='$this->email' AND date >='$this->date' ORDER BY date,start LIMIT 1";
-        $this->result          = $this->conn->query($query)->fetch_assoc();
+        $query = "SELECT date,start,end,type 
+                  FROM ma_appointments a,ma_user u 
+                  WHERE a.studentUserId=u.userId 
+                  AND u.email='$this->email' 
+                  AND date >='$this->date' 
+                  ORDER BY date,start LIMIT 1";
+        $this->result = $this->conn->query($query)->fetch_assoc();
     }
 
     function processResult(){

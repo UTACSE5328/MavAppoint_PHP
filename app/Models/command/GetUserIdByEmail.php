@@ -16,9 +16,9 @@ class GetUserIdByEmail extends SQLCmd {
 	}
 
 	function queryDB() {
-		$query        = "SELECT userid FROM user WHERE email= '$this->email'";
+		$query        = "SELECT userId FROM ma_user WHERE email= '$this->email'";
 		$res          = $this->conn->query($query);
-		$this->result = mysqli_fetch_array($res)['userid'];
+		$this->result = mysqli_fetch_array($res)['userId'];
 	}
 
 	function processResult() {

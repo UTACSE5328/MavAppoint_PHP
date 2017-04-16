@@ -23,11 +23,11 @@ class GetCSEStudent extends SQLCmd
 
     function queryDB()
     {
-        $query = "SELECT * FROM cse_students where STUID='$this->studentId'";
+        $query = "SELECT * FROM students where STUID='$this->studentId'";
         $this->result = $this->conn->query($query)->fetch_assoc();
 
         if ($this->result == null) {
-            $query = "SELECT * FROM cse_graduates where STUID='$this->studentId'";
+            $query = "SELECT * FROM graduates where STUID='$this->studentId'";
             $this->result = $this->conn->query($query)->fetch_assoc();
         }
     }

@@ -16,7 +16,7 @@ class GetAdmin extends SQLCmd{
     }
 
     function queryDB(){
-        $query = "SELECT * FROM User where EMAIL='$this->email'";
+        $query = "SELECT * FROM ma_user WHERE email='$this->email'";
         $this->result = $this->conn->query($query)->fetch_assoc();
     }
 

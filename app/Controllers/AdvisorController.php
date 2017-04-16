@@ -36,6 +36,7 @@ class advisorController
             $dbm = new DatabaseManager();
             $advisor = $dbm->getAdvisor($this->email);
             $scheduleObjectArr = $dbm->getAdvisorSchedule($advisor->getPName());
+
             if (sizeof($scheduleObjectArr) != 0) {
                 foreach ($scheduleObjectArr as $schedule){
                     $tempSchedules[] = [
@@ -43,13 +44,9 @@ class advisorController
                         "date" => $schedule->getDate(),
                         "startTime" => $schedule->getStartTime(),
                         "endTime" => $schedule->getEndTime(),
-
                     ];
 
                 }
-
-
-
             }
 
 
@@ -62,7 +59,6 @@ class advisorController
                         "advisingStartTime" => $appointment->getAdvisingStartTime(),
                         "advisingEndTime" => $appointment->getAdvisingEndTime(),
                         "appointmentType" => $appointment->getAppointmentType()
-//                        "appointmentType" => $appointment->getAppointmentType()."-".$advisor->getPName()
                     ]
                     );
 

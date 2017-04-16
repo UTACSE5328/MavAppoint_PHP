@@ -19,10 +19,16 @@ class DeleteTimeSlot extends SQLCmd{
         $date = $this->time->getDate();
         $start = $this->time->getStartTime();
         $end = $this->time->getEndTime();
-        $pname = $this->time->getEmail();// 'email' of the AllocateTime object stored pname
+        $pName = $this->time->getEmail();// 'email' of the AllocateTime object stored pname
 
-        $query = "DELETE a FROM advising_schedule a JOIN User_Advisor b ON a.userid=b.userid WHERE date='$date' AND start >='$start' AND end <='$end'"
-            ."AND b.pname='$pname'";
+        $query = "DELETE Schedule 
+                  FROM ma_advising_schedule Schedule 
+                  JOIN ma_user_advisor Advisor 
+                  ON Schedule.userid=Advisor.userid 
+                  WHERE date='$date' 
+                  AND start >='$start' 
+                  AND end <='$end' 
+                  AND Advisor.pName='$pName'";
 
         $this->result = $this->conn->query($query);
     }

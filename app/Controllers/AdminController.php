@@ -56,6 +56,7 @@ class adminController extends BasicController
         $manager = new db\DatabaseManager();
 
         $department = $_REQUEST['drp_department'];
+
         $email = $_REQUEST['email'];
         $name = $_REQUEST['pname'];
 
@@ -63,8 +64,9 @@ class adminController extends BasicController
         $loginUser->setEmail($email);
         $loginUser->setPassword("password");
         $loginUser->setRole("advisor");
-        $loginUser->setDepartments(($department));
-        $loginUser->setMajors("Software Engineering");
+        $loginUser->setDepartments([$department]);
+        $majors = $manager->getMajorsOfDepartment($department);
+        $loginUser->setMajors($majors);
 
 
         $id = $manager->createUser($loginUser);
